@@ -21,7 +21,7 @@ struct PlayerCannon
 
 	float width;
 	float hieght;
-	void SetSize( float a_Width, float a_Hieght)
+	void SetSize(float a_Width, float a_Hieght)
 	{
 		width = a_Width;
 		hieght = a_Hieght;
@@ -65,7 +65,7 @@ struct PlayerCannon
 		if (IsKeyDown(moveRightKey))
 		{
 			xPos += a_timeStep * a_speed;
-			if (xPos > (rightMoveExtreeme - width*.5f))
+			if (xPos >(rightMoveExtreeme - width*.5f))
 			{
 				xPos = (rightMoveExtreeme - width*.5f);
 			}
@@ -77,35 +77,35 @@ PlayerCannon player;
 
 /*struct Enemy
 {
-	bool Move(float a_DeltaTime, int a_Direction)
-	{
-		if (a_Direction == /*left)
-		{
-			//Move left
-			if (/*Moved too far left )
-			{
-				return true;
-			}
-		}
+bool Move(float a_DeltaTime, int a_Direction)
+{
+if (a_Direction == /*left)
+{
+//Move left
+if (/*Moved too far left )
+{
+return true;
+}
+}
 
-		if (a_Direction == /*right)
-		{
-			//Move right
-			if ()
-			{
-				return true;
-			}
-		}
-		 
-		if (a_Direction == /*down)
-		{
-			//Move down
-			if (/*Moved to far down)
-			{
+if (a_Direction == /*right)
+{
+//Move right
+if ()
+{
+return true;
+}
+}
 
-			}
-		}
-	}
+if (a_Direction == /*down)
+{
+//Move down
+if (/*Moved to far down)
+{
+
+}
+}
+}
 };
 
 Enemy enemy; */
@@ -146,7 +146,7 @@ const char* invadersFont = "./fonts/invaders.fnt";
 
 int main(int argc, char* argv[])
 {
-	
+
 
 	//screen and window set up
 	Initialise(672, 780, false, "Space Invaders Clone");
@@ -182,61 +182,61 @@ int main(int argc, char* argv[])
 
 
 	//Space invaders font
-	
+
 
 	GAMESTATES eCurrentState = eMAIN_MENU;
 
-	
-	
+
+
 	AddFont(invadersFont);
 
-	
-		//Game Loop
-		do
+
+	//Game Loop
+	do
+	{
+
+		ClearScreen();
+		float deltaT = GetDeltaTime();
+		switch (eCurrentState)
 		{
-			
-			ClearScreen();
-			float deltaT = GetDeltaTime();
-			switch (eCurrentState)
+		start:
+		case eMAIN_MENU:
+			//Call function for main menu
+			UpdateMainMenu();
+			if (IsKeyDown(257))
 			{
-				start:
-				case eMAIN_MENU:
-					//Call function for main menu
-					UpdateMainMenu();
-					if (IsKeyDown(257))
-					{
-						eCurrentState = eGAMEPLAY;
-					}
+				eCurrentState = eGAMEPLAY;
+			}
 
-				break;
+			break;
 
-				case eGAMEPLAY:
-					//Game function
-					UpdateGameState(GetDeltaTime());
-					if (IsKeyDown(256))
-					{
-						eCurrentState = eMAIN_MENU;
-						goto start;
-					}
+		case eGAMEPLAY:
+			//Game function
+			UpdateGameState(GetDeltaTime());
+			if (IsKeyDown(256))
+			{
+				eCurrentState = eMAIN_MENU;
+				goto start;
+			}
 
-				break;
+			break;
 
-			case eEND:
-				break;
+		case eEND:
+			break;
 
-			default:
-				break;
+		default:
+			break;
 		}
-			
-		} while (FrameworkUpdate() != true);
-	
 
-		DestroySprite(player.spriteID);
-		//DestroySprite(arcadeMarquee);
+	} while (FrameworkUpdate() != true);
 
-		Shutdown();
 
-		return 0;
+	DestroySprite(player.spriteID);
+	//DestroySprite(arcadeMarquee);
+
+	Shutdown();
+
+	return 0;
 }
 
 
@@ -253,25 +253,7 @@ void UpdateMainMenu()
 
 void UpdateGameState(float deltaTime)
 {
-	
-
-/*	//Player Movement Hnadling code
-	if (IsKeyDown(65)) // Move Left
-	{
-		if (xPos >= 0) //Prevent Player from moving off the screen
-		{
-			xPos -= 0.3f; //Movement Speed
-		}
-	}
-
-	if (IsKeyDown(68)) //Move Right
-	{
-		if (xPos <= 668) //Prevent player from moving off the screen
-		{
-			xPos += 0.3f; // Movement Speed
-		}
-	}
-	*/
+	//player movement handled by player struct
 	player.Move(GetDeltaTime(), 150.f);
 	MoveSprite(player.spriteID, xPos, yPos);
 	DrawSprite(player.spriteID);
@@ -298,17 +280,17 @@ void UpdateGameState(float deltaTime)
 
 /*void CreateEnemies()
 {
-	float enemyX = screenWidth * 0.2f;
-	float enemyY = screenHieght * 0.7f;
-	for (int i = 0; i < 18; i++)
-	{
-		alienShips[i] = CreateSprite("./images/invaders/invaders_1_00.png", 64, 62, true);
-		MoveSprite( alienShips[i], enemyX, enemyY);
-		enemyX += 0.12 * screenWidth;
-		if (enemyX < screenWidth * 0.8f)
-		{
-			enemyX = screenWidth * 0.2f;
-			enemyY = 0.08 * screenHieght;
-		}
-	}
+float enemyX = screenWidth * 0.2f;
+float enemyY = screenHieght * 0.7f;
+for (int i = 0; i < 18; i++)
+{
+alienShips[i] = CreateSprite("./images/invaders/invaders_1_00.png", 64, 62, true);
+MoveSprite( alienShips[i], enemyX, enemyY);
+enemyX += 0.12 * screenWidth;
+if (enemyX < screenWidth * 0.8f)
+{
+enemyX = screenWidth * 0.2f;
+enemyY = 0.08 * screenHieght;
+}
+}
 }*/
