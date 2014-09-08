@@ -1,0 +1,54 @@
+﻿Merge remote-tracking branch 'origin/develop'
+
+Conflicts:
+	muitiplayertest/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/AIE Template.sdf
+	muitiplayertest/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/AIE Template.v12.suo
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/AIE Template.sdf
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/AIE Template.v12.suo
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/bin/AIE Template_d.exe
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/bin/AIE Template_d.pdb
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/obj/AIE Template.log
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/obj/AIE Template.tlog/AIE Template.lastbuildstate
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/obj/AIE Template.tlog/CL.read.1.tlog
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/obj/AIE Template.tlog/CL.write.1.tlog
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/obj/AIE Template.tlog/cl.command.1.tlog
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/obj/AIE Template.tlog/link.command.1.tlog
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/obj/AIE Template.tlog/link.read.1.tlog
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/obj/AIE Template.tlog/link.write.1.tlog
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/obj/main.obj
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/obj/vc120.idb
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/obj/vc120.pdb
+	spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/source/main.cpp
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	new file:   spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/resources/fonts/install_bmfont_1.13.exe.zip
+#	new file:   spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/resources/fonts/install_bmfont_1.13.exe/install_bmfont_1.13.exe
+#	modified:   spaceInvaders/AIE Year1 Framework VS2013/AIE Year1 Framework VS2013/source/main.cpp
+#	new file:   spaceInvaders/space_invaders_texture_pack.zip
+#	new file:   spaceInvaders/space_invaders_texture_pack/cannon.png
+#	new file:   spaceInvaders/space_invaders_texture_pack/invaders/invaders_1_00.png
+#	new file:   spaceInvaders/space_invaders_texture_pack/invaders/invaders_1_01.png
+#	new file:   spaceInvaders/space_invaders_texture_pack/invaders/invaders_2_00.png
+#	new file:   spaceInvaders/space_invaders_texture_pack/invaders/invaders_2_01.png
+#	new file:   spaceInvaders/space_invaders_texture_pack/invaders/invaders_3_00.png
+#	new file:   spaceInvaders/space_invaders_texture_pack/invaders/invaders_3_01.png
+#	new file:   spaceInvaders/space_invaders_texture_pack/invaders/invaders_4_00.png
+#	new file:   spaceInvaders/space_invaders_texture_pack/invaders/invaders_5_00.png
+#	new file:   spaceInvaders/space_invaders_texture_pack/invaders/invaders_6_00.png
+#	new file:   spaceInvaders/space_invaders_texture_pack/invaders/invaders_6_01.png
+#	new file:   spaceInvaders/space_invaders_texture_pack/invaders/invaders_7_01.png
+#
+
