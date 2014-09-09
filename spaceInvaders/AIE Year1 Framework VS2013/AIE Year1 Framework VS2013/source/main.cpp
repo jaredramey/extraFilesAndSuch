@@ -3,39 +3,6 @@
 
 //start of Main menu
 enum GAMESTATES
-<<<<<<< HEAD
- {
-	eMAIN_MENU,
-	eGAMEPLAY,
-	eEND
-		
-	};
-
-
-int main(int argc, char* argv[])
- {
-	//screen and window set up
-	Initialise(672, 780, false, "Space Invaders Clone");
-	const int screenWidth = 672;
-	const int screenHieght = 780;
-	
-	SetBackgroundColour(SColour(0x00, 0x00, 0x00, 0xFF));
-	
-	//player sprite
-	int playerCannon = CreateSprite("./images/cannon.png", 64, 32, true);
-	float xPos = 336;
-	float yPos = 100;
-	
-			//enemy sprites
-		unsigned int alienShips[18];
-	float enemyX = screenWidth * 0.2f;
-	float enemyY = screenHieght * 0.7f;
-	for (int i = 0; i < 18; i)
-	{
-		alienShips[i] = CreateSprite("./images/invaders/invaders_1_00.png", 64, 62, true);
-		MoveSprite(alienShips[i], enemyX, enemyY);
-		enemyX = 0.12 * screenWidth;
-=======
 {
 	eMAIN_MENU,
 	eGAMEPLAY,
@@ -163,7 +130,7 @@ struct Enemy
 	}
 
 	//Alien Movment Function
-	bool Move( int a_Direction)
+	bool Move(int a_Direction)
 	{
 		if (a_Direction == eLeft)
 		{
@@ -176,7 +143,7 @@ struct Enemy
 		if (a_Direction == eRight)
 		{
 			x += 1.f;
-			if ( x >= screenWidth)
+			if (x >= screenWidth)
 			{
 				return true;
 			}
@@ -188,7 +155,7 @@ struct Enemy
 		return false;
 	}
 };
-Enemy enemy; 
+Enemy enemy;
 
 Enemy alienShips[18];
 
@@ -226,7 +193,7 @@ int main(int argc, char* argv[])
 	player.y = 80.f;
 	player.SetMoveExtreeme(0.0f, screenWidth);
 	alienMove = 1;
-	
+
 
 	//set values for Aliens
 	enemy.SetSize(64.f, 32.f);
@@ -243,44 +210,12 @@ int main(int argc, char* argv[])
 		alienShips[i].y = enemyY;
 		MoveSprite(alienShips[i].alienID, enemyX, enemyY);
 		enemyX += 0.12 * screenWidth;
->>>>>>> origin/develop
 		if (enemyX > screenWidth * 0.8f)
 		{
 			enemyX = screenWidth * 0.2f;
 			enemyY -= 0.08 * screenHieght;
 		}
 	}
-<<<<<<< HEAD
-	
-		
-	//ect Sprites
-	int arcadeMarquee = CreateSprite("./images/Space-Invaders-Marquee.png", 672, 780, true);
-	float marqueeXPos = 336;
-	float marqueeYPos = 390;
-	
-	//Space invaders font
-	const char* invadersFont = "./fonts/invaders.fnt";
-	
-	//stuff to be displayed
-	char score1[10] = "00000";
-	char highScore[10] = "00000";
-	char score2[10] = "00000";
-	char credit[10] = "99";
-	char insertCoins[10] = "00";
-	char credits[10] = "01";
-	
-		GAMESTATES eCurrentState = eMAIN_MENU;
-	
-		AddFont(invadersFont);
-	
-		
-		
-	//Game Loop
-	do
-	{
-		
-		ClearScreen();
-=======
 
 
 
@@ -289,7 +224,7 @@ int main(int argc, char* argv[])
 
 
 	GAMESTATES eCurrentState = eMAIN_MENU;
-	
+
 
 
 
@@ -302,104 +237,16 @@ int main(int argc, char* argv[])
 
 		ClearScreen();
 		float deltaT = GetDeltaTime();
->>>>>>> origin/develop
 		switch (eCurrentState)
 		{
 		start:
 		case eMAIN_MENU:
-<<<<<<< HEAD
-			SetFont(invadersFont);
-			//initializing special invaders font
-			DrawSprite(arcadeMarquee); //(where did this come from?)
-			MoveSprite(arcadeMarquee, marqueeXPos, marqueeYPos);
-			DrawString(insertCoins, screenWidth * 0.43f, screenHieght - 275);
-			DrawString("INSERT COINS", screenWidth * 0.357f, screenHieght - 250);
-			DrawString(" / ", screenWidth * 0.4745f, screenHieght - 275);
-			DrawString(credits, screenWidth * 0.5f, screenHieght - 275);
-			DrawString("PRESS ENTER TO START", screenWidth * 0.27f, screenHieght - 400);
-				
-=======
 			//Call function for main menu
 			UpdateMainMenu();
->>>>>>> origin/develop
 			if (IsKeyDown(257))
 			{
 				eCurrentState = eGAMEPLAY;
 			}
-<<<<<<< HEAD
-				
-		break;
-				
-		case eGAMEPLAY:
-		//Player Variables
-		//float playerX = screenWidth * 0.5f;		(playerX & playerY replaced by xPos and yPos?)
-		//float playerY = screenHieght * 80.f;
-		MoveSprite(playerCannon, xPos, yPos);
-		DrawSprite(playerCannon);
-		SetFont(invadersFont);
-		//draw aliens
-		for (int i = 0; i < 18; i)
-		{
-			DrawSprite(alienShips[i]);
-		}
-						
-		//Player controls
-		if (IsKeyDown(65)) // Move Left
-		{
-			if (xPos >= 0) //Prevent Player from moving off the screen
-			{
-				xPos -= 0.3f; //Movement Speed
-			}
-		}
-						
-		if (IsKeyDown(68)) //Move Right
-		{
-			if (xPos <= 668) //Prevent player from moving off the screen
-			{
-				xPos = 0.3f; // Movement Speed
-			}
-		}
-						
-		//initializing special invaders font
-							
-							
-							
-		//Screen text
-		DrawString("SCORE <1>", screenWidth * 0.025f, screenHieght - 2);
-		DrawString("HIGH SCORE", screenWidth * 0.39f, screenHieght - 2);
-		DrawString("SCORE <2>", screenWidth * 0.79f, screenHieght - 2);
-		DrawString(score1, screenWidth * 0.05f, screenHieght - 30);
-		DrawString(highScore, screenWidth * 0.4345f, screenHieght - 30);
-		DrawString(score2, screenWidth * 0.82f, screenHieght - 30);
-						
-		//Line accross screen
-		//DrawLine(0, 40, screenWidth, 40, SColour(0x00, 0xFC, 0x00, 0xFF));
-							
-		if (IsKeyDown(256))
-		{
-			eCurrentState = eMAIN_MENU;
-			goto start;
-		}
-						
-		break;
-						
-	case eEND:
-		break;
-								
-	default:
-		break;
-		}
-		
-		} while (FrameworkUpdate() != true);
-		
-			
-		DestroySprite(playerCannon);
-		
-		Shutdown();
-		
-		return 0;
-	}
-=======
 
 			break;
 
@@ -450,7 +297,7 @@ void UpdateGameState(float deltaTime)
 	player.Move(GetDeltaTime(), 150.f);
 	MoveSprite(player.spriteID, xPos, yPos);
 	DrawSprite(player.spriteID);
-	
+
 	//alienShips[17].move(GetDeltaTime(), 100.f);
 	//enemy.Move(eCurrentDirection);
 	UpdateEnemyMove();
@@ -462,7 +309,7 @@ void UpdateGameState(float deltaTime)
 	}
 
 
-	
+
 	DrawLine(0, 40, screenWidth, 40, SColour(0x00, 0xFC, 0x00, 0xFF));
 
 	//Set Invaders font
@@ -481,59 +328,59 @@ void UpdateEnemyMove()
 {
 	direction = false;
 
+	for (int i = 0; i < 18; i++)
+	{
+		if (eCurrentDirection == eLeft)
+		{
+			alienShips[i].x -= .05f;
+			if (alienShips[i].x < 0) {
+				direction = true;
+			}
+		}
+
+		if (eCurrentDirection == eRight)
+		{
+			alienShips[i].x += .05f;
+			if (alienShips[i].x > screenWidth) {
+				direction = true;
+			}
+		}
+
+		MoveSprite(alienShips[i].alienID, alienShips[i].x, alienShips[i].y);
+	}
+
+	if (direction == true)
+	{
+		//Change direction from left to right
+		if (eCurrentDirection == eLeft) //Continue Here
+		{
+			eCurrentDirection = eRight;
+		}
+
+		//change the direction from right to left
+		else
+		{
+			eCurrentDirection = eLeft;
+		}
+
 		for (int i = 0; i < 18; i++)
 		{
-			if (eCurrentDirection == eLeft)
+			if (alienShips[i].y > 0)
 			{
-				alienShips[i].x -= .05f;
-				if (alienShips[i].x < 0) {
-					direction = true;
-				}
+
+				alienShips[i].y -= 2.f;
+
 			}
 
-			if (eCurrentDirection == eRight)
+			if (alienShips[i].y <= 40)
 			{
-				alienShips[i].x += .05f;
-				if (alienShips[i].x > screenWidth) {
-					direction = true;
-				}
-			}
+				SetFont(invadersFont);
+				DrawString("GAME OVER", screenWidth * 0.31f, screenHieght * 0.5f);
 
-			MoveSprite(alienShips[i].alienID, alienShips[i].x, alienShips[i].y);
+			}
 		}
-	 
-		if (direction == true)
-		{
-			//Change direction from left to right
-			if (eCurrentDirection == eLeft ) //Continue Here
-			{
-				eCurrentDirection = eRight;
-			}
 
-			//change the direction from right to left
-			else
-			{
-				eCurrentDirection = eLeft;
-			}
-
-			for (int i = 0; i < 18; i++)
-			{
-				if (alienShips[i].y > 0)
-				{
-
-					alienShips[i].y -= 2.f;
-
-				}
-
-				if (alienShips[i].y <= 40)
-				{
-					SetFont(invadersFont);
-					DrawString("GAME OVER", screenWidth * 0.31f, screenHieght * 0.5f);
-
-				}
-			}
-
-		}
+	}
 }
 
 /*void CreateEnemies()
@@ -552,4 +399,3 @@ enemyY = 0.08 * screenHieght;
 }
 }
 }*/
->>>>>>> origin/develop
