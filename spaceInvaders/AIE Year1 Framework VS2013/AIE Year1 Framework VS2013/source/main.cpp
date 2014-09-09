@@ -10,8 +10,38 @@ enum GAMESTATES
 
 };
 
+enum DIRSTATE
+{
+	eRight,
+	eLeft,
+	eDown
+};
+
+//Global Variables
+//stuff to be displayed
+char score1[10] = "00000";
+char highScore[10] = "00000";
+char score2[10] = "00000";
+char credit[10] = "99";
+char insertCoins[10] = "00";
+char credits[10] = "01";
+
+
+int alienMove;
+
+const int screenWidth = 672;
+const int screenHieght = 780;
 float xPos = 336;
 float yPos = 100;
+bool direction;
+
+DIRSTATE eCurrentDirection = eLeft;
+
+//Function Prototype calls
+void UpdateMainMenu();
+void UpdateGameState(float deltaTime);
+void UpdateEnemyMove();
+//void CreateEnemies();
 
 //Initializing structurs
 
@@ -75,50 +105,60 @@ struct PlayerCannon
 };
 PlayerCannon player;
 
-/*struct Enemy
+struct Enemy
 {
-bool Move(float a_DeltaTime, int a_Direction)
-{
-if (a_Direction == /*left)
-{
-//Move left
-if (/*Moved too far left )
-{
-return true;
-}
-}
+	unsigned int alienID;
 
-if (a_Direction == /*right)
-{
-//Move right
-if ()
-{
-return true;
-}
-}
+	float x;
+	float y;
 
-if (a_Direction == /*down)
-{
-//Move down
-if (/*Moved to far down)
-{
+	float width;
+	float hieght;
+	void SetSize(float a_Width, float a_Hieght)
+	{
+		width = a_Width;
+		hieght = a_Hieght;
+	}
 
-}
-}
-}
+	unsigned int leftMoveExtreeme;
+	unsigned int rightMoveExtreeme;
+	void SetMoveExtreeme(unsigned int a_leftExtreeme, unsigned int a_rightExtreeme)
+	{
+		leftMoveExtreeme = a_leftExtreeme;
+		rightMoveExtreeme = a_rightExtreeme;
+	}
+
+	//Alien Movment Function
+	bool Move( int a_Direction)
+	{
+		if (a_Direction == eLeft)
+		{
+			x -= 1;
+			if (x <= 0)
+			{
+				return true;
+			}
+		}
+		if (a_Direction == eRight)
+		{
+			x += 1.f;
+			if ( x >= screenWidth)
+			{
+				return true;
+			}
+		}
+		if (a_Direction == eDown)
+		{
+			y -= screenHieght * 0.2f;
+		}
+		return false;
+	}
 };
+Enemy enemy; 
 
-Enemy enemy; */
+Enemy alienShips[18];
 
 
-
-//Function Prototype calls
-void UpdateMainMenu();
-void UpdateGameState(float deltaTime);
-//void CreateEnemies();
-//Sprite Creation
-//player sprite
-//int playerCannon = CreateSprite("./images/cannon.png", 64, 32, true)
 
 
 //ect Sprites
@@ -127,19 +167,7 @@ float marqueeXPos = 336;
 float marqueeYPos = 390;
 
 
-//Global Variables
-//stuff to be displayed
-char score1[10] = "00000";
-char highScore[10] = "00000";
-char score2[10] = "00000";
-char credit[10] = "99";
-char insertCoins[10] = "00";
-char credits[10] = "01";
 
-unsigned int alienShips[18];
-
-const int screenWidth = 672;
-const int screenHieght = 780;
 
 //Add Invaders Font
 const char* invadersFont = "./fonts/invaders.fnt";
@@ -163,13 +191,23 @@ int main(int argc, char* argv[])
 	player.x = screenWidth * 0.5f;
 	player.y = 80.f;
 	player.SetMoveExtreeme(0.0f, screenWidth);
+	alienMove = 1;
+	
+
+	//set values for Aliens
+	enemy.SetSize(64.f, 62.f);
+	enemy.SetMoveExtreeme(0.0f, screenWidth);
+	enemy.alienID = CreateSprite("./images/invaders/invaders_1_00.png", enemy.width, enemy.hieght, true);
 
 	float enemyX = screenWidth * 0.2f;
 	float enemyY = screenHieght * 0.7f;
+
 	for (int i = 0; i < 18; ++i)
 	{
-		alienShips[i] = CreateSprite("./images/invaders/invaders_1_00.png", 64, 62, true);
-		MoveSprite(alienShips[i], enemyX, enemyY);
+		alienShips[i].alienID = CreateSprite("./images/invaders/invaders_1_00.png", 64, 62, true);
+		alienShips[i].x = enemyX;
+		alienShips[i].y = enemyY;
+		MoveSprite(alienShips[i].alienID, enemyX, enemyY);
 		enemyX += 0.12 * screenWidth;
 		if (enemyX > screenWidth * 0.8f)
 		{
@@ -185,6 +223,7 @@ int main(int argc, char* argv[])
 
 
 	GAMESTATES eCurrentState = eMAIN_MENU;
+	
 
 
 
@@ -257,13 +296,19 @@ void UpdateGameState(float deltaTime)
 	player.Move(GetDeltaTime(), 150.f);
 	MoveSprite(player.spriteID, xPos, yPos);
 	DrawSprite(player.spriteID);
+	
+	//alienShips[17].move(GetDeltaTime(), 100.f);
+	//enemy.Move(eCurrentDirection);
+	UpdateEnemyMove();
 
 	//Draw Alien Ships
 	for (int i = 0; i < 18; ++i)
 	{
-		DrawSprite(alienShips[i]);
+		DrawSprite(alienShips[i].alienID);
 	}
 
+
+	
 	DrawLine(0, 40, screenWidth, 40, SColour(0x00, 0xFC, 0x00, 0xFF));
 
 	//Set Invaders font
@@ -276,6 +321,50 @@ void UpdateGameState(float deltaTime)
 	DrawString(score1, screenWidth * 0.05f, screenHieght - 30);
 	DrawString(highScore, screenWidth * 0.4345f, screenHieght - 30);
 	DrawString(score2, screenWidth * 0.82f, screenHieght - 30);
+}
+
+void UpdateEnemyMove()
+{
+	direction = false;
+
+		for (int i = 0; i < 18; i++)
+		{
+			if (eCurrentDirection == eLeft)
+			{
+				alienShips[i].x -= .05f;
+				if (alienShips[i].x < 0) {
+					direction = true;
+				}
+			}
+
+			if (eCurrentDirection == eRight)
+			{
+				alienShips[i].x += 0.05f;
+				if (alienShips[i].x > screenWidth) {
+					direction = true;
+				}
+			}
+
+			if (eCurrentDirection == eDown)
+			{
+				alienShips[i].y -= .1f;
+			}
+
+			MoveSprite(alienShips[i].alienID, alienShips[i].x, alienShips[i].y);
+		}
+	 
+		if (direction == true)
+		{
+			if (eCurrentDirection == eLeft)
+			{
+				eCurrentDirection = eRight;
+			}
+
+			else
+			{
+				eCurrentDirection = eLeft;
+			}
+		}
 }
 
 /*void CreateEnemies()
