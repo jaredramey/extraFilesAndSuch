@@ -47,33 +47,33 @@ void UpdateEnemyMove();
 struct PlayerCannon
 {
 	unsigned int spriteID;
-
 	float width;
 	float hieght;
+	float x;
+	float y;
+	unsigned int moveLeftKey;
+	unsigned int moveRightKey;
+	unsigned int leftMoveExtreeme;
+	unsigned int rightMoveExtreeme;
+
 	void SetSize(float a_Width, float a_Hieght)
 	{
 		width = a_Width;
 		hieght = a_Hieght;
 	}
 
-	float x;
-	float y;
 	void SetPosition(float a_x, float a_y)
 	{
 		x = a_x;
 		y = a_y + y;
 	}
 
-	unsigned int moveLeftKey;
-	unsigned int moveRightKey;
 	void SetMovementKey(unsigned int a_moveLeft, unsigned int a_moveRight)
 	{
 		moveLeftKey = a_moveLeft;
 		moveRightKey = a_moveRight;
 	}
 
-	unsigned int leftMoveExtreeme;
-	unsigned int rightMoveExtreeme;
 	void SetMoveExtreeme(unsigned int a_leftExtreeme, unsigned int a_rightExtreeme)
 	{
 		leftMoveExtreeme = a_leftExtreeme;
@@ -107,6 +107,7 @@ PlayerCannon player;
 struct Enemy
 {
 	unsigned int alienID;
+	unsigned int speed;
 
 	float x;
 	float y;
@@ -128,29 +129,30 @@ struct Enemy
 	}
 
 	//Alien Movment Function
-	bool Move(int a_Direction)
+	void Move(int a_deltaTime)
 	{
-		if (a_Direction == eLeft)
+		for (int i = 0; i < 18; i++)
 		{
-			x -= 1;
-			if (x <= 0)
+			if (eCurrentDirection == eLeft)
 			{
-				return true;
+				x -= speed * a_deltaTime;
+				if (eCurrentDirection == eLeft)
+				{
+					eCurrentDirection == eRight;
+					y -= 4;
+				}
+			}
+
+			if (eCurrentDirection == eRight)
+			{
+				x -= speed * a_deltaTime;
+				if (eCurrentDirection == eRight)
+				{
+					eCurrentDirection == eLeft;
+					y -= 4;
+				}
 			}
 		}
-		if (a_Direction == eRight)
-		{
-			x += 1.f;
-			if (x >= screenWidth)
-			{
-				return true;
-			}
-		}
-		if (a_Direction == eDown)
-		{
-			y -= screenHieght * 0.2f;
-		}
-		return false;
 	}
 };
 Enemy enemy;
@@ -188,10 +190,11 @@ int main(int argc, char* argv[])
 	enemy.alienID = CreateSprite("./images/invaders/invaders_1_00.png", enemy.width, enemy.hieght, true);
 	float enemyX = screenWidth * 0.2f;
 	float enemyY = screenHieght * 0.7f;
+	enemy.speed = .04f;
 
 	for (int i = 0; i < 18; ++i)
 	{
-		alienShips[i].alienID = CreateSprite("./images/invaders/invaders_1_00.png", 64, 62, true);
+		alienShips[i].alienID = CreateSprite("./images/invaders/invaders_1_00.png", 64, 32, true);
 		alienShips[i].x = enemyX;
 		alienShips[i].y = enemyY;
 		MoveSprite(alienShips[i].alienID, enemyX, enemyY);
@@ -284,13 +287,14 @@ void UpdateGameState(float deltaTime)
 	DrawSprite(player.spriteID);
 
 	//alienShips[17].move(GetDeltaTime(), 100.f);
-	//enemy.Move(eCurrentDirection);
+	//enemy.Move(GetDeltaTime());
 	UpdateEnemyMove();
 
 	//Draw Alien Ships
 	for (int i = 0; i < 18; ++i)
 	{
 		DrawSprite(alienShips[i].alienID);
+		//MoveSprite(alienShips[i].alienID, alienShips[i].x, alienShips[i].y);
 	}
 
 	//draw line to show where the aliens are trying to get to
@@ -317,16 +321,16 @@ void UpdateEnemyMove()
 	{
 		if (eCurrentDirection == eLeft)
 		{
-			alienShips[i].x -= .05f;
-			if (alienShips[i].x < 0) {
+			alienShips[i].x -= .04f;
+			if (alienShips[i].x < 30) {
 				direction = true;
 			}
 		}
 
 		if (eCurrentDirection == eRight)
 		{
-			alienShips[i].x += .05f;
-			if (alienShips[i].x > screenWidth) {
+			alienShips[i].x += .04f;
+			if (alienShips[i].x > (screenWidth-30)) {
 				direction = true;
 			}
 		}
@@ -353,7 +357,7 @@ void UpdateEnemyMove()
 			if (alienShips[i].y > 0)
 			{
 
-				alienShips[i].y -= 2.f;
+				alienShips[i].y -= 4.f;
 
 			}
 
