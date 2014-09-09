@@ -196,7 +196,7 @@ int main(int argc, char* argv[])
 	
 
 	//set values for Aliens
-	enemy.SetSize(64.f, 62.f);
+	enemy.SetSize(64.f, 32.f);
 	enemy.SetMoveExtreeme(0.0f, screenWidth);
 	enemy.alienID = CreateSprite("./images/invaders/invaders_1_00.png", enemy.width, enemy.hieght, true);
 
@@ -332,7 +332,7 @@ void UpdateEnemyMove()
 		{
 			if (eCurrentDirection == eLeft)
 			{
-				alienShips[i].x -= .05f;
+				alienShips[i].x -= .025f;
 				if (alienShips[i].x < 0) {
 					direction = true;
 				}
@@ -340,16 +340,10 @@ void UpdateEnemyMove()
 
 			if (eCurrentDirection == eRight)
 			{
-				alienShips[i].x += 0.05f;
+				alienShips[i].x += .025f;
 				if (alienShips[i].x > screenWidth) {
 					direction = true;
 				}
-			}
-
-			if (eCurrentDirection == eDown)
-			{
-				alienShips[i].y -= .1f;
-				direction = true;
 			}
 
 			MoveSprite(alienShips[i].alienID, alienShips[i].x, alienShips[i].y);
@@ -369,6 +363,22 @@ void UpdateEnemyMove()
 				eCurrentDirection = eLeft;
 			}
 
+			for (int i = 0; i < 18; i++)
+			{
+				if (alienShips[i].y > 0)
+				{
+
+					alienShips[i].y -= 1.f;
+
+				}
+
+				else if (alienShips[i].y <= 40)
+				{
+					SetFont(invadersFont);
+					DrawString("GAME OVER", screenWidth * 0.31f, screenHieght * 0.5f);
+
+				}
+			}
 
 		}
 }
