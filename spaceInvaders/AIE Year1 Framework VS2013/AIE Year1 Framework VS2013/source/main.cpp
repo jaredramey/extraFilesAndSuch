@@ -34,6 +34,7 @@ const int screenHieght = 780;
 float xPos = 336;
 float yPos = 100;
 bool direction;
+int leftRight;
 
 DIRSTATE eCurrentDirection = eLeft;
 
@@ -334,6 +335,7 @@ void UpdateEnemyMove()
 				alienShips[i].x -= .05f;
 				if (alienShips[i].x < 0) {
 					direction = true;
+					leftRight = 1;
 				}
 			}
 
@@ -342,6 +344,7 @@ void UpdateEnemyMove()
 				alienShips[i].x += 0.05f;
 				if (alienShips[i].x > screenWidth) {
 					direction = true;
+					leftRight = 2;
 				}
 			}
 
@@ -355,7 +358,7 @@ void UpdateEnemyMove()
 	 
 		if (direction == true)
 		{
-			if (eCurrentDirection == eLeft)
+			if (eCurrentDirection == eLeft ) //Continue Here
 			{
 				eCurrentDirection = eRight;
 			}
