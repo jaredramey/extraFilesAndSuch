@@ -10,6 +10,7 @@ enum GAMESTATES
 
 };
 
+//For handeling movement
 enum DIRSTATE
 {
 	eRight,
@@ -19,33 +20,30 @@ enum DIRSTATE
 
 //Global Variables
 //stuff to be displayed
-char score1[10] = "00000";
-char highScore[10] = "00000";
-char score2[10] = "00000";
-char credit[10] = "99";
-char insertCoins[10] = "00";
-char credits[10] = "01";
-
-
-int alienMove;
-
+const char* score1 = "00000";
+const char* highScore = "00000";
+const char* score2 = "00000";
+const char* credit = "99";
+const char* insertCoins = "00";
+const char* credits = "01";
+//Making the screen width and height
 const int screenWidth = 672;
 const int screenHieght = 780;
+//Ect. variables
 float xPos = 336;
 float yPos = 100;
 bool direction;
 int leftRight;
-
+int alienMove;
+//Making direction state global
 DIRSTATE eCurrentDirection = eLeft;
 
 //Function Prototype calls
 void UpdateMainMenu();
 void UpdateGameState(float deltaTime);
 void UpdateEnemyMove();
-//void CreateEnemies();
 
-//Initializing structurs
-
+//Initializing structures
 struct PlayerCannon
 {
 	unsigned int spriteID;
@@ -156,19 +154,12 @@ struct Enemy
 	}
 };
 Enemy enemy;
-
 Enemy alienShips[18];
-
-
-
 
 //ect Sprites
 int arcadeMarquee;
 float marqueeXPos = 336;
 float marqueeYPos = 390;
-
-
-
 
 //Add Invaders Font
 const char* invadersFont = "./fonts/invaders.fnt";
@@ -179,11 +170,8 @@ int main(int argc, char* argv[])
 
 	//screen and window set up
 	Initialise(672, 780, false, "Space Invaders Clone");
-
-
 	SetBackgroundColour(SColour(0x00, 0x00, 0x00, 0xFF));
 	arcadeMarquee = CreateSprite("./images/Space-Invaders-Marquee.png", 672, 780, true);
-
 
 	//set values for player
 	player.SetSize(64.f, 32.f);
@@ -194,12 +182,10 @@ int main(int argc, char* argv[])
 	player.SetMoveExtreeme(0.0f, screenWidth);
 	alienMove = 1;
 
-
 	//set values for Aliens
 	enemy.SetSize(64.f, 32.f);
 	enemy.SetMoveExtreeme(0.0f, screenWidth);
 	enemy.alienID = CreateSprite("./images/invaders/invaders_1_00.png", enemy.width, enemy.hieght, true);
-
 	float enemyX = screenWidth * 0.2f;
 	float enemyY = screenHieght * 0.7f;
 
@@ -216,20 +202,11 @@ int main(int argc, char* argv[])
 			enemyY -= 0.08 * screenHieght;
 		}
 	}
-
-
-
-
 	//Space invaders font
-
-
-	GAMESTATES eCurrentState = eMAIN_MENU;
-
-
-
-
 	AddFont(invadersFont);
 
+	//Set gamestate to Main menu
+	GAMESTATES eCurrentState = eMAIN_MENU;
 
 	//Game Loop
 	do
@@ -239,10 +216,13 @@ int main(int argc, char* argv[])
 		float deltaT = GetDeltaTime();
 		switch (eCurrentState)
 		{
+			//pointer to start at later when exiting gamestate
 		start:
 		case eMAIN_MENU:
 			//Call function for main menu
 			UpdateMainMenu();
+
+			//if enter is pressed change state to gameplay
 			if (IsKeyDown(257))
 			{
 				eCurrentState = eGAMEPLAY;
@@ -253,6 +233,8 @@ int main(int argc, char* argv[])
 		case eGAMEPLAY:
 			//Game function
 			UpdateGameState(GetDeltaTime());
+
+			//if ESC is pressed then exit to main menu
 			if (IsKeyDown(256))
 			{
 				eCurrentState = eMAIN_MENU;
@@ -282,6 +264,7 @@ int main(int argc, char* argv[])
 
 void UpdateMainMenu()
 {
+	//Everything to make main menu
 	DrawSprite(arcadeMarquee);
 	MoveSprite(arcadeMarquee, marqueeXPos, marqueeYPos);
 	SetFont(invadersFont);
@@ -293,6 +276,8 @@ void UpdateMainMenu()
 
 void UpdateGameState(float deltaTime)
 {
+	//playing the game
+
 	//player movement handled by player struct
 	player.Move(GetDeltaTime(), 150.f);
 	MoveSprite(player.spriteID, xPos, yPos);
@@ -308,8 +293,7 @@ void UpdateGameState(float deltaTime)
 		DrawSprite(alienShips[i].alienID);
 	}
 
-
-
+	//draw line to show where the aliens are trying to get to
 	DrawLine(0, 40, screenWidth, 40, SColour(0x00, 0xFC, 0x00, 0xFF));
 
 	//Set Invaders font
@@ -326,6 +310,7 @@ void UpdateGameState(float deltaTime)
 
 void UpdateEnemyMove()
 {
+	//loop to handel enemies moving left, right and down
 	direction = false;
 
 	for (int i = 0; i < 18; i++)
@@ -372,6 +357,7 @@ void UpdateEnemyMove()
 
 			}
 
+			//see if I can get this to work....
 			if (alienShips[i].y <= 40)
 			{
 				SetFont(invadersFont);
@@ -382,20 +368,3 @@ void UpdateEnemyMove()
 
 	}
 }
-
-/*void CreateEnemies()
-{
-float enemyX = screenWidth * 0.2f;
-float enemyY = screenHieght * 0.7f;
-for (int i = 0; i < 18; i++)
-{
-alienShips[i] = CreateSprite("./images/invaders/invaders_1_00.png", 64, 62, true);
-MoveSprite( alienShips[i], enemyX, enemyY);
-enemyX += 0.12 * screenWidth;
-if (enemyX < screenWidth * 0.8f)
-{
-enemyX = screenWidth * 0.2f;
-enemyY = 0.08 * screenHieght;
-}
-}
-}*/
