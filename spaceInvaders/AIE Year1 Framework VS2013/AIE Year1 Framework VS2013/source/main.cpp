@@ -335,7 +335,6 @@ void UpdateEnemyMove()
 				alienShips[i].x -= .05f;
 				if (alienShips[i].x < 0) {
 					direction = true;
-					leftRight = 1;
 				}
 			}
 
@@ -344,13 +343,13 @@ void UpdateEnemyMove()
 				alienShips[i].x += 0.05f;
 				if (alienShips[i].x > screenWidth) {
 					direction = true;
-					leftRight = 2;
 				}
 			}
 
 			if (eCurrentDirection == eDown)
 			{
 				alienShips[i].y -= .1f;
+				direction = true;
 			}
 
 			MoveSprite(alienShips[i].alienID, alienShips[i].x, alienShips[i].y);
@@ -358,15 +357,19 @@ void UpdateEnemyMove()
 	 
 		if (direction == true)
 		{
+			//Change direction from left to right
 			if (eCurrentDirection == eLeft ) //Continue Here
 			{
 				eCurrentDirection = eRight;
 			}
 
+			//change the direction from right to left
 			else
 			{
 				eCurrentDirection = eLeft;
 			}
+
+
 		}
 }
 
