@@ -332,7 +332,7 @@ void UpdateEnemyMove()
 		{
 			if (eCurrentDirection == eLeft)
 			{
-				alienShips[i].x -= .025f;
+				alienShips[i].x -= .05f;
 				if (alienShips[i].x < 0) {
 					direction = true;
 				}
@@ -340,7 +340,7 @@ void UpdateEnemyMove()
 
 			if (eCurrentDirection == eRight)
 			{
-				alienShips[i].x += .025f;
+				alienShips[i].x += .05f;
 				if (alienShips[i].x > screenWidth) {
 					direction = true;
 				}
@@ -368,11 +368,11 @@ void UpdateEnemyMove()
 				if (alienShips[i].y > 0)
 				{
 
-					alienShips[i].y -= 1.f;
+					alienShips[i].y -= 2.f;
 
 				}
 
-				else if (alienShips[i].y <= 40)
+				if (alienShips[i].y <= 40)
 				{
 					SetFont(invadersFont);
 					DrawString("GAME OVER", screenWidth * 0.31f, screenHieght * 0.5f);
