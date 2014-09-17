@@ -1,4 +1,5 @@
 ﻿#include "AIE.h"
+#include "Player.h"
 #include <iostream>
 
 //start of Main menu
@@ -44,7 +45,7 @@ void UpdateGameState(float deltaTime);
 void UpdateEnemyMove();
 
 //Initializing structures
-struct PlayerCannon
+/*struct PlayerCannon
 {
 	unsigned int spriteID;
 	float width;
@@ -84,25 +85,25 @@ struct PlayerCannon
 	{
 		if (IsKeyDown(moveLeftKey))
 		{
-			xPos -= a_timeStep * a_speed;
-			if (xPos < (leftMoveExtreeme + width*.5f))
+			x -= a_timeStep * a_speed;
+			if (x < (leftMoveExtreeme + width*.5f))
 			{
-				xPos = (leftMoveExtreeme + width*.5f);
+				x = (leftMoveExtreeme + width*.5f);
 			}
 		}
 
 		if (IsKeyDown(moveRightKey))
 		{
-			xPos += a_timeStep * a_speed;
-			if (xPos >(rightMoveExtreeme - width*.5f))
+			x += a_timeStep * a_speed;
+			if (x >(rightMoveExtreeme - width*.5f))
 			{
-				xPos = (rightMoveExtreeme - width*.5f);
+				x = (rightMoveExtreeme - width*.5f);
 			}
 		}
 		MoveSprite(spriteID, x, y);
 	}
 };
-PlayerCannon player;
+PlayerCannon player;*/
 
 struct Enemy
 {
@@ -176,12 +177,12 @@ int main(int argc, char* argv[])
 	arcadeMarquee = CreateSprite("./images/Space-Invaders-Marquee.png", 672, 780, true);
 
 	//set values for player
-	player.SetSize(64.f, 32.f);
-	player.SetMovementKey('A', 'D');
-	player.spriteID = CreateSprite("./images/cannon.png", player.width, player.hieght, true);
-	player.x = screenWidth * 0.5f;
-	player.y = 80.f;
-	player.SetMoveExtreeme(0.0f, screenWidth);
+	SetSize(64.f, 32.f);
+	SetMovementKey('A', 'D');
+	Player::Player().SetSpriteID(CreateSprite("./images/cannon.png", Player().GetWidth(), Player().GetHeight(), true));
+	x = screenWidth * 0.5f;
+	y = 80.f;
+	SetMoveExtreeme(0.0f, screenWidth);
 	alienMove = 1;
 
 	//set values for Aliens
@@ -256,7 +257,7 @@ int main(int argc, char* argv[])
 	} while (FrameworkUpdate() != true);
 
 
-	DestroySprite(player.spriteID);
+	DestroySprite(spriteID);
 	//DestroySprite(arcadeMarquee);
 
 	Shutdown();
@@ -282,9 +283,9 @@ void UpdateGameState(float deltaTime)
 	//playing the game
 
 	//player movement handled by player struct
-	player.Move(GetDeltaTime(), 150.f);
-	MoveSprite(player.spriteID, xPos, yPos);
-	DrawSprite(player.spriteID);
+	Move(GetDeltaTime(), 150.f);
+	MoveSprite(spriteID, x, y);
+	DrawSprite(spriteID);
 
 	//alienShips[17].move(GetDeltaTime(), 100.f);
 	//enemy.Move(GetDeltaTime());
