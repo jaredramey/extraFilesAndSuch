@@ -177,11 +177,15 @@ int main(int argc, char* argv[])
 	arcadeMarquee = CreateSprite("./images/Space-Invaders-Marquee.png", 672, 780, true);
 
 	//set values for player
-	SetSize(64.f, 32.f);
-	SetMovementKey('A', 'D');
+	//SetSize(64.f, 32.f);
+	Player::Player().SetHeight(32.f);
+	Player::Player().SetWidth(64.f);
+	//SetMovementKey('A', 'D');
+	Player::Player().SetMovementKey(65, 68);
 	Player::Player().SetSpriteID(CreateSprite("./images/cannon.png", Player().GetWidth(), Player().GetHeight(), true));
-	x = screenWidth * 0.5f;
-	y = 80.f;
+	Player::Player().SetPosition(screenWidth * 0.5f, 80.f);
+	//x = screenWidth * 0.5f;
+	//y = 80.f;
 	SetMoveExtreeme(0.0f, screenWidth);
 	alienMove = 1;
 
