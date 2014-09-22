@@ -36,6 +36,7 @@ float yPos = 100;
 bool direction;
 int leftRight;
 int alienMove;
+float deltaT;
 //Making direction state global
 DIRSTATE eCurrentDirection = eLeft;
 
@@ -139,7 +140,7 @@ struct Enemy
 				x -= speed * a_deltaTime;
 				if (eCurrentDirection == eLeft)
 				{
-					eCurrentDirection == eRight;
+					eCurrentDirection = eRight;
 					y -= 4;
 				}
 			}
@@ -149,7 +150,7 @@ struct Enemy
 				x -= speed * a_deltaTime;
 				if (eCurrentDirection == eRight)
 				{
-					eCurrentDirection == eLeft;
+					eCurrentDirection = eLeft;
 					y -= 4;
 				}
 			}
@@ -178,15 +179,15 @@ int main(int argc, char* argv[])
 
 	//set values for player
 	//SetSize(64.f, 32.f);
-	Player::Player().SetHeight(32.f);
-	Player::Player().SetWidth(64.f);
+	Player().SetHeight(32);
+	Player().SetWidth(64);
 	//SetMovementKey('A', 'D');
-	Player::Player().SetMovementKey(65, 68);
-	Player::Player().SetSpriteID(CreateSprite("./images/cannon.png", Player().GetWidth(), Player().GetHeight(), true));
-	Player::Player().SetPosition(screenWidth * 0.5f, 80.f);
+	Player().SetMovementKey(65, 68);
+	Player().SetSpriteID(CreateSprite("./images/cannon.png", Player().GetWidth(), Player().GetHeight(), true));
+	Player().SetPosition(screenWidth * 0.5, 80);
 	//x = screenWidth * 0.5f;
 	//y = 80.f;
-	SetMoveExtreeme(0.0f, screenWidth);
+	Player().SetMoveExtreeme(0.0, screenWidth);
 	alienMove = 1;
 
 	//set values for Aliens
@@ -221,7 +222,7 @@ int main(int argc, char* argv[])
 	{
 
 		ClearScreen();
-		float deltaT = GetDeltaTime();
+		deltaT = GetDeltaTime();
 		switch (eCurrentState)
 		{
 			//pointer to start at later when exiting gamestate
@@ -261,7 +262,7 @@ int main(int argc, char* argv[])
 	} while (FrameworkUpdate() != true);
 
 
-	DestroySprite(spriteID);
+	DestroySprite(Player().GetSpriteID());
 	//DestroySprite(arcadeMarquee);
 
 	Shutdown();
@@ -287,9 +288,9 @@ void UpdateGameState(float deltaTime)
 	//playing the game
 
 	//player movement handled by player struct
-	Move(GetDeltaTime(), 150.f);
-	MoveSprite(spriteID, x, y);
-	DrawSprite(spriteID);
+	Player().Move(deltaT, 150.f);
+	MoveSprite(Player().GetSpriteID(), Player().GetX(), Player().GetY());
+	DrawSprite(Player().GetSpriteID());
 
 	//alienShips[17].move(GetDeltaTime(), 100.f);
 	//enemy.Move(GetDeltaTime());

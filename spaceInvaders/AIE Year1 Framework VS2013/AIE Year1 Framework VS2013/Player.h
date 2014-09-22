@@ -17,14 +17,14 @@ public:
 	void SetSpriteID(unsigned int spriteID);
 	unsigned int GetSpriteID();
 
-	void SetWidth(float fWidth);
-	void SetHeight(float fHeight);
+	void SetWidth(float width);
+	void SetHeight(float heigth);
 
 	float GetWidth();
 	float GetHeight();
 
-	void SetX(float x);
-	void SetY(float y);
+	//void SetX();
+	//void SetY();
 
 	float GetX();
 	float GetY();

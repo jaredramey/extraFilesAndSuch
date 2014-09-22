@@ -5,9 +5,9 @@ Player::Player()
 {
 }
 
-void Player::SetSpriteID(unsigned int spriteID)
+void Player::SetSpriteID(unsigned int a_spriteID)
 {
-	this->spriteID = spriteID;
+	spriteID = a_spriteID;
 }
 
 unsigned int Player::GetSpriteID()
@@ -23,6 +23,12 @@ void Player::SetWidth(float width)
 void Player::SetHeight(float heigth)
 {
 	this->hieght = heigth;
+}
+
+void Player::SetPosition(float a_x, float a_y)
+{
+	x = a_x;
+	y = a_y;
 }
 
 float Player::GetWidth()
@@ -41,10 +47,14 @@ void Player::SetSize(float a_Width, float a_Hieght)
 	hieght = a_Hieght;
 }
 
-void Player::SetPosition(float a_x, float a_y)
+float Player::GetX()
 {
-	x = a_x;
-	y = a_y + y;
+	return x;
+}
+
+float Player::GetY()
+{
+	return y;
 }
 
 void Player::SetMovementKey(unsigned int a_moveLeft, unsigned int a_moveRight)
@@ -64,21 +74,21 @@ void Player::Move(float a_timeStep, float a_speed)
 	if (IsKeyDown(moveLeftKey))
 	{
 		x -= a_timeStep * a_speed;
-		if (x < (leftMoveExtreeme + width*.5f))
+		if (x < (leftMoveExtreeme + width*.5))
 		{
-			x = (leftMoveExtreeme + width*.5f);
+			x = (leftMoveExtreeme + width*.5);
 		}
 	}
 
 	if (IsKeyDown(moveRightKey))
 	{
 		x += a_timeStep * a_speed;
-		if (x >(rightMoveExtreeme - width*.5f))
+		if (x >(rightMoveExtreeme - width*.5))
 		{
-			x = (rightMoveExtreeme - width*.5f);
+			x = (rightMoveExtreeme - width*.5);
 		}
 	}
-	MoveSprite(spriteID, x, y);
+	//MoveSprite(this->spriteID, this->x, this->y);
 }
 
 

@@ -1,8 +1,28 @@
-﻿Build started 9/17/2014 10:13:23 AM.
+﻿Build started 9/22/2014 4:02:40 PM.
      1>Project "C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\spaceInvaders\AIE Year1 Framework VS2013\AIE Year1 Framework VS2013\AIE Template.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./ /I./include/ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\\" /Fd"obj\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Player.cpp
-         Player.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./ /I./include/ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\\" /Fd"obj\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt source\main.cpp
+         main.cpp
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(143): warning C4553: '==' : operator has no effect; did you intend '='?
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(153): warning C4553: '==' : operator has no effect; did you intend '='?
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(186): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(190): warning C4244: 'argument' : conversion from 'double' to 'unsigned int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(195): warning C4244: 'argument' : conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(196): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(199): warning C4244: '=' : conversion from 'float' to 'unsigned int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(207): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(211): warning C4305: '-=' : truncation from 'double' to 'float'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(280): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(281): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(282): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(282): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(313): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(314): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(315): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(316): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(317): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(318): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\spaceinvaders\aie year1 framework vs2013\aie year1 framework vs2013\source\main.cpp(374): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"bin\AIE Template_d.exe" /INCREMENTAL /NOLOGO /LIBPATH:./libs AIE_1st_Year_Framework_d.lib kernel32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"bin\AIE Template_d.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"bin\AIE Template_d.lib" /MACHINE:X86 obj\Player.obj
          obj\main.obj
@@ -39,4 +59,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.05
+Time Elapsed 00:00:01.40
