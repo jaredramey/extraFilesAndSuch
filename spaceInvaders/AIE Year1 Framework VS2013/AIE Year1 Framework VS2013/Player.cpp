@@ -88,7 +88,7 @@ void Player::Move(float a_timeStep, float a_speed)
 			x = (rightMoveExtreeme - width*.5);
 		}
 	}
-	//MoveSprite(this->spriteID, this->x, this->y);
+	MoveSprite(spriteID, x, y);
 }
 
 

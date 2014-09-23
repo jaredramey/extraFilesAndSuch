@@ -40,6 +40,8 @@ float deltaT;
 //Making direction state global
 DIRSTATE eCurrentDirection = eLeft;
 
+Player player = Player();
+
 //Function Prototype calls
 void UpdateMainMenu();
 void UpdateGameState(float deltaTime);
@@ -170,8 +172,6 @@ const char* invadersFont = "./fonts/invaders.fnt";
 
 int main(int argc, char* argv[])
 {
-
-
 	//screen and window set up
 	Initialise(672, 780, false, "Space Invaders Clone");
 	SetBackgroundColour(SColour(0x00, 0x00, 0x00, 0xFF));
@@ -179,15 +179,15 @@ int main(int argc, char* argv[])
 
 	//set values for player
 	//SetSize(64.f, 32.f);
-	Player().SetHeight(32);
-	Player().SetWidth(64);
+	player.SetHeight(32);
+	player.SetWidth(64);
 	//SetMovementKey('A', 'D');
-	Player().SetMovementKey(65, 68);
-	Player().SetSpriteID(CreateSprite("./images/cannon.png", Player().GetWidth(), Player().GetHeight(), true));
-	Player().SetPosition(screenWidth * 0.5, 80);
+	player.SetMovementKey(65, 68);
+	player.SetSpriteID(CreateSprite("./images/cannon.png", player.GetWidth(), player.GetHeight(), true));
+	player.SetPosition(screenWidth * 0.5, 80);
 	//x = screenWidth * 0.5f;
 	//y = 80.f;
-	Player().SetMoveExtreeme(0.0, screenWidth);
+	player.SetMoveExtreeme(0.0, screenWidth);
 	alienMove = 1;
 
 	//set values for Aliens
@@ -262,7 +262,7 @@ int main(int argc, char* argv[])
 	} while (FrameworkUpdate() != true);
 
 
-	DestroySprite(Player().GetSpriteID());
+	DestroySprite(player.GetSpriteID());
 	//DestroySprite(arcadeMarquee);
 
 	Shutdown();
@@ -288,9 +288,9 @@ void UpdateGameState(float deltaTime)
 	//playing the game
 
 	//player movement handled by player struct
-	Player().Move(GetDeltaTime(), 150.f);
-	MoveSprite(Player().GetSpriteID(), Player().GetX(), Player().GetY());
-	DrawSprite(Player().GetSpriteID());
+	player.Move(GetDeltaTime(), 150.f);
+	//MoveSprite(player.GetSpriteID(), player.GetX(), player.GetY());
+	DrawSprite(player.GetSpriteID());
 
 	//alienShips[17].move(GetDeltaTime(), 100.f);
 	//enemy.Move(GetDeltaTime());

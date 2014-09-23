@@ -15,6 +15,12 @@ private:
 public:
 	Player();
 
+	void SetSize(float a_Width, float a_Hieght);
+	void SetPosition(float a_x, float a_y);
+	void SetMovementKey(unsigned int a_moveLeft, unsigned int a_moveRight);
+	void SetMoveExtreeme(unsigned int a_leftExtreeme, unsigned int a_rightExtreeme);
+	void Move(float a_timeStep, float a_speed);
+
 	void SetSpriteID(unsigned int spriteID);
 	unsigned int GetSpriteID();
 
@@ -29,12 +35,6 @@ public:
 
 	float GetX();
 	float GetY();
-
-	void SetSize(float a_Width, float a_Hieght);
-	void SetPosition(float a_x, float a_y);
-	void SetMovementKey(unsigned int a_moveLeft, unsigned int a_moveRight);
-	void SetMoveExtreeme(unsigned int a_leftExtreeme, unsigned int a_rightExtreeme);
-	void Move(float a_timeStep, float a_speed);
 
 	~Player();
 };
