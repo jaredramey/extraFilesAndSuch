@@ -13,6 +13,7 @@ private:
 	unsigned int rightMoveExtreeme;
 
 public:
+	Player();
 
 	void SetSpriteID(unsigned int spriteID);
 	unsigned int GetSpriteID();
@@ -35,7 +36,6 @@ public:
 	void SetMoveExtreeme(unsigned int a_leftExtreeme, unsigned int a_rightExtreeme);
 	void Move(float a_timeStep, float a_speed);
 
-	Player();
 	~Player();
 };
 

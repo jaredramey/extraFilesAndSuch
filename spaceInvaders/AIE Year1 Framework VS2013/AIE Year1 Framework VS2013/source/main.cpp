@@ -288,7 +288,7 @@ void UpdateGameState(float deltaTime)
 	//playing the game
 
 	//player movement handled by player struct
-	Player().Move(deltaT, 150.f);
+	Player().Move(GetDeltaTime(), 150.f);
 	MoveSprite(Player().GetSpriteID(), Player().GetX(), Player().GetY());
 	DrawSprite(Player().GetSpriteID());
 
