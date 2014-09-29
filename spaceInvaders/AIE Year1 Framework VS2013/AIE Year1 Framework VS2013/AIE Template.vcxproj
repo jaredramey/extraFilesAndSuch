@@ -91,10 +91,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Highscores.cpp" />
+    <ClCompile Include="LeaderboardState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Highscores.h" />
+    <ClInclude Include="LeaderboardState.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

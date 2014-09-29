@@ -91,6 +91,37 @@ void Player::Move(float a_timeStep, float a_speed)
 	MoveSprite(spriteID, x, y);
 }
 
+void Player::Shoot(unsigned int a_textureID, float delta)
+{
+	if (IsKeyDown(32) && currentRealodBulletTime >= maxBulletReloadTime)
+	{
+			GetInactiveBullet().InitializeBullet(x, y, 0, 100, a_textureID);
+	}
+
+	currentRealodBulletTime += delta;
+}
+
+Bullet& Player::GetInactiveBullet()
+{
+	if (setTextures == false)
+	{
+		for (int i = 0; i < Max_Bullets; i++)
+		{
+			bullets[i].bulletTextureID = CreateSprite("./images/invaders/invaders_5_00.png", 15, 60, true);
+		}
+		setTextures = true;
+	}
+	for (int i = 0; i < Max_Bullets; i++)
+	{
+		if (!bullets[i].isActive && currentRealodBulletTime >= maxBulletReloadTime)
+		{
+			return bullets[i];
+		}
+		
+	}
+
+	return bullets[0];
+}
 
 Player::~Player()
 {

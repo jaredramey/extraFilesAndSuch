@@ -1,5 +1,6 @@
 ﻿#include "AIE.h"
 #include "Player.h"
+#include "Enemy.h"
 #include <iostream>
 
 //start of Main menu
@@ -19,6 +20,8 @@ enum DIRSTATE
 	eDown
 };
 
+DIRSTATE eCurrentDirection;
+
 //Global Variables
 //stuff to be displayed
 const char* score1 = "00000";
@@ -33,14 +36,17 @@ const int screenHieght = 780;
 //Ect. variables
 float xPos = 336;
 float yPos = 100;
+float deltaT;
 bool direction;
 int leftRight;
 int alienMove;
-float deltaT;
-//Making direction state global
-DIRSTATE eCurrentDirection = eLeft;
+int numAliens;
 
+//Declaring what I need from classes
+Enemy::Ships alienShips[18];
 Player player = Player();
+Enemy enemy = Enemy();
+Bullet bullet = Bullet();
 
 //Function Prototype calls
 void UpdateMainMenu();
@@ -108,59 +114,7 @@ void UpdateEnemyMove();
 };
 PlayerCannon player;*/
 
-struct Enemy
-{
-	unsigned int alienID;
-	unsigned int speed;
 
-	float x;
-	float y;
-
-	float width;
-	float hieght;
-	void SetSize(float a_Width, float a_Hieght)
-	{
-		width = a_Width;
-		hieght = a_Hieght;
-	}
-
-	unsigned int leftMoveExtreeme;
-	unsigned int rightMoveExtreeme;
-	void SetMoveExtreeme(unsigned int a_leftExtreeme, unsigned int a_rightExtreeme)
-	{
-		leftMoveExtreeme = a_leftExtreeme;
-		rightMoveExtreeme = a_rightExtreeme;
-	}
-
-	//Alien Movment Function
-	void Move(int a_deltaTime)
-	{
-		for (int i = 0; i < 18; i++)
-		{
-			if (eCurrentDirection == eLeft)
-			{
-				x -= speed * a_deltaTime;
-				if (eCurrentDirection == eLeft)
-				{
-					eCurrentDirection = eRight;
-					y -= 4;
-				}
-			}
-
-			if (eCurrentDirection == eRight)
-			{
-				x -= speed * a_deltaTime;
-				if (eCurrentDirection == eRight)
-				{
-					eCurrentDirection = eLeft;
-					y -= 4;
-				}
-			}
-		}
-	}
-};
-Enemy enemy;
-Enemy alienShips[18];
 
 //ect Sprites
 int arcadeMarquee;
@@ -172,6 +126,7 @@ const char* invadersFont = "./fonts/invaders.fnt";
 
 int main(int argc, char* argv[])
 {
+
 	//screen and window set up
 	Initialise(672, 780, false, "Space Invaders Clone");
 	SetBackgroundColour(SColour(0x00, 0x00, 0x00, 0xFF));
@@ -192,11 +147,11 @@ int main(int argc, char* argv[])
 
 	//set values for Aliens
 	enemy.SetSize(64.f, 32.f);
-	enemy.SetMoveExtreeme(0.0f, screenWidth);
-	enemy.alienID = CreateSprite("./images/invaders/invaders_1_00.png", enemy.width, enemy.hieght, true);
+	//alienShips[18].SetMoveExtreeme(0.0f, screenWidth);
+	enemy.SetSpriteID(CreateSprite("./images/invaders/invaders_1_00.png", enemy.GetWidth(), enemy.GetHeight(), true));
 	float enemyX = screenWidth * 0.2f;
 	float enemyY = screenHieght * 0.7f;
-	enemy.speed = .04f;
+	
 
 	for (int i = 0; i < 18; ++i)
 	{
@@ -287,13 +242,18 @@ void UpdateGameState(float deltaTime)
 {
 	//playing the game
 
-	//player movement handled by player struct
+	//Bullet Time
+	player.Shoot(bullet.bulletTextureID, GetDeltaTime());
+	for (int i = 0; i < Max_Bullets; i++)
+	{
+		player.bullets[i].Update(0.01f);
+		player.bullets[i].Draw();
+	}
+	//player movement handled by player class
 	player.Move(GetDeltaTime(), 150.f);
-	//MoveSprite(player.GetSpriteID(), player.GetX(), player.GetY());
 	DrawSprite(player.GetSpriteID());
 
-	//alienShips[17].move(GetDeltaTime(), 100.f);
-	//enemy.Move(GetDeltaTime());
+	//Goto updatenemymove for alien movement
 	UpdateEnemyMove();
 
 	//Draw Alien Ships
