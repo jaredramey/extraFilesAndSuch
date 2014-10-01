@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include <iostream>
+#include <vector>
 
 //start of Main menu
 enum GAMESTATES
@@ -40,18 +41,21 @@ float deltaT;
 bool direction;
 int leftRight;
 int alienMove;
-int numAliens;
+int numAliens = 18;
 
 //Declaring what I need from classes
-Enemy::Ships alienShips[18];
 Player player = Player();
 Enemy enemy = Enemy();
+//Enemy aliens = Enemy();
 Bullet bullet = Bullet();
+
+std::vector<Enemy> aliens;
+
 
 //Function Prototype calls
 void UpdateMainMenu();
 void UpdateGameState(float deltaTime);
-void UpdateEnemyMove();
+//void UpdateEnemyMove();
 
 //Initializing structures
 /*struct PlayerCannon
@@ -126,6 +130,7 @@ const char* invadersFont = "./fonts/invaders.fnt";
 
 int main(int argc, char* argv[])
 {
+	aliens.push_back(enemy);
 
 	//screen and window set up
 	Initialise(672, 780, false, "Space Invaders Clone");
@@ -134,31 +139,29 @@ int main(int argc, char* argv[])
 
 	//set values for player
 	//SetSize(64.f, 32.f);
-	player.SetHeight(32);
+	player.SetHeigth(32.f);
 	player.SetWidth(64);
-	//SetMovementKey('A', 'D');
-	player.SetMovementKey(65, 68);
-	player.SetSpriteID(CreateSprite("./images/cannon.png", player.GetWidth(), player.GetHeight(), true));
+	player.SetMovementKey('A', 'D');
+	player.SetSpriteID(CreateSprite("./images/cannon.png", player.GetWidth(), player.GetHeigth(), true));
 	player.SetPosition(screenWidth * 0.5, 80);
-	//x = screenWidth * 0.5f;
-	//y = 80.f;
 	player.SetMoveExtreeme(0.0, screenWidth);
+	player.SetSpeed((float)screenWidth);
 	alienMove = 1;
 
 	//set values for Aliens
-	enemy.SetSize(64.f, 32.f);
-	//alienShips[18].SetMoveExtreeme(0.0f, screenWidth);
-	enemy.SetSpriteID(CreateSprite("./images/invaders/invaders_1_00.png", enemy.GetWidth(), enemy.GetHeight(), true));
+	//enemy.SetSize(64.f, 32.f);
+	//unsigned int ship = (CreateSprite("./images/invaders/invaders_1_00.png", enemy.GetWidth(), enemy.GetHeigth(), true));
 	float enemyX = screenWidth * 0.2f;
 	float enemyY = screenHieght * 0.7f;
 	
 
 	for (int i = 0; i < 18; ++i)
 	{
-		alienShips[i].alienID = CreateSprite("./images/invaders/invaders_1_00.png", 64, 32, true);
-		alienShips[i].x = enemyX;
-		alienShips[i].y = enemyY;
-		MoveSprite(alienShips[i].alienID, enemyX, enemyY);
+		aliens[i].SetSize(64.f, 32.f);
+		aliens[i].SetSpriteID(CreateSprite("./images/invaders/invaders_1_00.png", aliens[i].GetWidth(), aliens[i].GetHeigth(), true));
+		aliens[i].SetX(enemyX);
+		aliens[i].SetY(enemyY);
+		MoveSprite(aliens[i].GetSpriteID(), aliens[i].GetX(), aliens[i].GetY());
 		enemyX += 0.12 * screenWidth;
 		if (enemyX > screenWidth * 0.8f)
 		{
@@ -250,16 +253,19 @@ void UpdateGameState(float deltaTime)
 		player.bullets[i].Draw();
 	}
 	//player movement handled by player class
-	player.Move(GetDeltaTime(), 150.f);
-	DrawSprite(player.GetSpriteID());
+	player.Update(deltaT);
+	player.Draw();
 
 	//Goto updatenemymove for alien movement
-	UpdateEnemyMove();
+	for (int i = 0; i < 18; i++)
+	{
+		aliens[i].Update(deltaT);
+	}
 
 	//Draw Alien Ships
 	for (int i = 0; i < 18; ++i)
 	{
-		DrawSprite(alienShips[i].alienID);
+		DrawSprite(aliens[i].GetSpriteID());
 		//MoveSprite(alienShips[i].alienID, alienShips[i].x, alienShips[i].y);
 	}
 
@@ -278,7 +284,7 @@ void UpdateGameState(float deltaTime)
 	DrawString(score2, screenWidth * 0.82f, screenHieght - 30);
 }
 
-void UpdateEnemyMove()
+/*void UpdateEnemyMove()
 {
 	//loop to handel enemies moving left, right and down
 	direction = false;
@@ -287,21 +293,21 @@ void UpdateEnemyMove()
 	{
 		if (eCurrentDirection == eLeft)
 		{
-			alienShips[i].x -= .04f;
-			if (alienShips[i].x < 30) {
+			aliens[i]. -= .04f;
+			if (aliens[i].x < 30) {
 				direction = true;
 			}
 		}
 
 		if (eCurrentDirection == eRight)
 		{
-			alienShips[i].x += .04f;
-			if (alienShips[i].x > (screenWidth-30)) {
+			aliens[i].x += .04f;
+			if (aliens[i].x >(screenWidth - 30)) {
 				direction = true;
 			}
 		}
 
-		MoveSprite(alienShips[i].alienID, alienShips[i].x, alienShips[i].y);
+		MoveSprite(aliens[i].alienID, aliens[i].x, aliens[i].y);
 	}
 
 	if (direction == true)
@@ -320,15 +326,15 @@ void UpdateEnemyMove()
 
 		for (int i = 0; i < 18; i++)
 		{
-			if (alienShips[i].y > 0)
+			if (aliens[i].y > 0)
 			{
 
-				alienShips[i].y -= 4.f;
+				aliens[i].y -= 4.f;
 
 			}
 
 			//see if I can get this to work....
-			if (alienShips[i].y <= 40)
+			if (aliens[i].y <= 40)
 			{
 				SetFont(invadersFont);
 				DrawString("GAME OVER", screenWidth * 0.31f, screenHieght * 0.5f);
@@ -337,4 +343,4 @@ void UpdateEnemyMove()
 		}
 
 	}
-}
+}*/

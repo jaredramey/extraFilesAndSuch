@@ -1,13 +1,14 @@
 #pragma once
+#include <iostream>
+#include <vector>
+#include "Entity.h"
 
-class Enemy
+class Enemy : public Entity
 {
 public:
 	Enemy();
 
-
-
-	struct Ships
+	/*struct Ships
 	{
 		unsigned int alienID;
 		unsigned int speed;
@@ -30,63 +31,29 @@ public:
 			leftMoveExtreeme = a_leftExtreeme;
 			rightMoveExtreeme = a_rightExtreeme;
 		}
+	};*/
 
-		//Alien Movment Function
-		/*void Move(int a_deltaTime)
-		{
-			for (int i = 0; i < 18; i++)
-			{
-				if (eCurrentDirection == eLeft)
-				{
-					x -= speed * a_deltaTime;
-					if (eCurrentDirection == eLeft)
-					{
-						eCurrentDirection = eRight;
-						y -= 4;
-					}
-				}
+	//std::vector<int> test;
 
-				if (eCurrentDirection == eRight)
-				{
-					x -= speed * a_deltaTime;
-					if (eCurrentDirection == eRight)
-					{
-						eCurrentDirection = eLeft;
-						y -= 4;
-					}
-				}
-			}
-		}*/
-	};
+	virtual void Update(float delta);
+	virtual void Draw();
 
+	void SetSpeed(float a_speed);
+	float GetSpeed();
 
-	//setters
-	void SetSpriteID(unsigned int a_spriteID);
-	void SetSize(float a_Width, float a_Hieght);
-	void SetPosition(float a_x, float a_y);
-	void UpdateEnemyMove();
-	void Move();
-	void Draw();
-	//void SetMoveExtreeme(unsigned int a_leftExtreeme, unsigned int a_rightExtreeme);
+	void SetDirection(int a_direction);
+	int GetDirection();
 
-	//Getters
-	unsigned int GetSpriteID();
-	float GetWidth();
-	float GetHeight();
-	float GetX();
-	float GetY();
+	void SetIsActive(bool a_isActive);
+	bool GetIsActive();
 
 	~Enemy();
 
 private:
-	unsigned int leftMoveExtreeme;
-	unsigned int rightMoveExtreeme;
-	unsigned int spriteID;
 
-	float x;
-	float y;
-
-	float width;
-	float height;
+	bool isActive;
+	float speed;
+	int direction;
+	
 };
 

@@ -4,53 +4,96 @@
 
 Enemy::Enemy()
 {
+	isActive = true;
 }
 
-void Enemy::SetSpriteID(unsigned int a_spriteID)
+void Enemy::Update(float delta)
 {
-	spriteID = a_spriteID;
+	bool thisDirection = false;
+
+	for (int i = 0; i < 18; i++)
+	{
+		if (isActive == true && direction == 1)
+		{
+			x -= .04f;
+			if (x < 30) {
+				thisDirection = true;
+			}
+		}
+
+		if (direction == 2)
+		{
+			x += .04f;
+			if (x >(672 - 30)) {
+				thisDirection = true;
+			}
+		}
+
+		//MoveSprite(spriteID, x, y);
+	}
+
+	if (thisDirection == true)
+	{
+		//Change direction from left to right
+		if (direction == 1) //Continue Here
+		{
+			direction = 2;
+		}
+
+		//change the direction from right to left
+		else
+		{
+			direction = 1;
+		}
+
+			if (y > 0)
+			{
+
+				y -= 4.f;
+
+			}
+		
+
+	}
 }
 
-void Enemy::SetSize(float a_Width, float a_Hieght)
+void Enemy::SetDirection(int a_direction)
 {
-	width = a_Width;
-	height = a_Hieght;
+	direction = a_direction;
 }
 
-void Enemy::SetPosition(float a_x, float a_y)
+int Enemy::GetDirection()
 {
-	x = a_x;
-	y = a_y;
+	return direction;
 }
 
-float Enemy::GetWidth()
+void Enemy::SetSpeed(float a_speed)
 {
-	return width;
+	speed = a_speed;
 }
 
-float Enemy::GetHeight()
+float Enemy::GetSpeed()
 {
-	return height;
+	return speed;
 }
 
-float Enemy::GetX()
+void Enemy::SetIsActive(bool a_isActive)
 {
-	return x;
+	isActive = a_isActive;
 }
 
-float Enemy::GetY()
+bool Enemy::GetIsActive()
 {
-	return y;
-}
-
-void Enemy::Move()
-{
-
+	return isActive;
 }
 
 void Enemy::Draw()
 {
-	
+	if (isActive)
+	{
+		MoveSprite(spriteID, x, y);
+		DrawSprite(spriteID);
+	}
 }
 
 /*void Enemy::UpdateEnemyMove()
