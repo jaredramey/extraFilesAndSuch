@@ -31,7 +31,7 @@ void Player::Shoot(unsigned int a_textureID, float delta)
 {
 	if (IsKeyDown(32) && currentRealodBulletTime >= maxBulletReloadTime)
 	{
-			GetInactiveBullet().InitializeBullet(x, y, 0, 100, a_textureID);
+			GetInactiveBullet().InitializeBullet(GetX(), GetY(), 0, 100, a_textureID);
 	}
 
 	currentRealodBulletTime += delta;

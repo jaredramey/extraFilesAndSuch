@@ -52,8 +52,6 @@ void Enemy::Update(float delta)
 				y -= 4.f;
 
 			}
-		
-
 	}
 }
 
