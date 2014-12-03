@@ -9,3 +9,8 @@ GameState::~GameState()
 {
 
 }
+
+void GameState::Quit()
+{
+	
+}

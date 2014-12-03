@@ -15,6 +15,8 @@ public:
 
 	GameState();
 	~GameState();
+
+	void Quit();
 	
 
 };
