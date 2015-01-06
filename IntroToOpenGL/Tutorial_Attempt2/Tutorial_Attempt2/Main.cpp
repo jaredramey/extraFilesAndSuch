@@ -60,8 +60,8 @@ int main()
 		myShape[i].fPositions[2] = 0.0f;
 		myShape[i].fPositions[3] = 1.0f;
 		myShape[i].fColours[0] = 0.0f;
-		myShape[i].fColours[1] = 0.0f;
-		myShape[i].fColours[2] = 1.0f;
+		myShape[i].fColours[1] = 1.0f;
+		myShape[i].fColours[2] = 0.0f;
 		myShape[i].fColours[3] = 1.0f;
 	}
 
@@ -69,19 +69,43 @@ int main()
 	GLuint uiVBO;
 	glGenBuffers(1, &uiVBO);
 
+	//check it succeeded
 	if (uiVBO != 0)
 	{
 		//bind VBO
 		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
-		//allocate space for verticies on the graphics card
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*3, NULL, GL_STATIC_DRAW);
+		//allocate space for vertices on the graphics card
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)* 3, NULL, GL_STATIC_DRAW);
 		//get pointer to allocated space on the graphics card
 		GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-		//copy data to the graphics card
-		memcpy(vBuffer, myShape, sizeof(Vertex)*3);
+		//copy data to graphics card
+		memcpy(vBuffer, myShape, sizeof(Vertex)* 3);
 		//unmap and unbind buffer
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	//create ID for an index buffer object
+	GLuint uiIBO;
+	glGenBuffers(1, &uiIBO);
+
+	if (uiIBO != 0)
+	{
+		//bind IBO
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
+		//allocate space for verticies on the graphics card
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3*sizeof(char), NULL, GL_STATIC_DRAW);
+		//get pointer to allocated space on the graphics card
+		GLvoid* iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
+		//specify the order we'd like to draw our verticies
+		//In this case, they are in sequintial order
+		for (int i = 0; i < 3; i++)
+		{
+			((char*)iBuffer)[i] = i;
+		}
+		//unmap and unbind buffer
+		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
 
@@ -116,8 +140,14 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		//send orthographic projection info to shader
+		glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
+
+		//enable shaders
+		glUseProgram(uiProgramFlat);
+
 		//draw code goes here
-		/* //old draw code
+		/* //oldest draw code
 		//enable shaders
 		glUseProgram(uiProgramFlat);
 
@@ -132,11 +162,8 @@ int main()
 		//draw to screen
 		glDrawArrays(GL_TRIANGLES, 0, 3); */
 
-		//send orthographic projection info to shader
-		glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
-
-		//New Draw Code
-		glUseProgram(uiProgramFlat);
+		//Old Draw Code
+		/*glUseProgram(uiProgramFlat);
 
 		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
 
@@ -148,15 +175,32 @@ int main()
 		vertices (A whole Vertex structure instance) and the offset of the data
 		from the beginning of the structure instance. The positions are at the
 		start, so their offset is 0. But the colours are after the positions, so
-		they are offset by the size of the position data */
+		they are offset by the size of the position data 
+
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float)*4));
 
 		//draw to the screen
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);*/
 
+		//bind vertex buffer and index buffer
+		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
+
+		//enable the vertex array states
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float)*4));
+
+		//draw to the screen
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, NULL);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 		//swap front and back buffers
 		glfwSwapBuffers(window);
@@ -164,6 +208,9 @@ int main()
 		//poll for and process events
 		glfwPollEvents();
 	}
+
+	//delete the index buffer to free up allocated memory
+	glDeleteBuffers(1, &uiIBO);
 
 	glfwTerminate();
 	return 0;
