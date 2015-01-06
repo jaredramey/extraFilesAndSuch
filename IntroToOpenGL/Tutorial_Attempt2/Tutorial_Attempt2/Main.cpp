@@ -10,6 +10,12 @@ GLuint CreateShader(GLenum a_eShaderType, const char *a_strShaderFile);
 GLuint CreateProgram(const char *a_vertex, const char *a_frag);
 float* getOrtho(float left, float right, float bottom, float top, float a_fNear, float a_fFar);
 
+//Vertex struct
+struct Vertex
+{
+	float fPositions[4];
+	float fColours[4];
+};
 
 int main()
 {
@@ -41,7 +47,45 @@ int main()
 		return -1;
 	}
 
+	//create some verticies
+	Vertex* myShape = new Vertex[3];
+	myShape[0].fPositions[0] = 1024 / 2.0;
+	myShape[0].fPositions[1] = 720 / 2.0 + 150.0f;
+	myShape[1].fPositions[0] = 1024 / 2.0 - 100.0f;
+	myShape[1].fPositions[1] = 720 / 2.0 - 100.0f;
+	myShape[2].fPositions[0] = 1024 / 2.0 + 100.0f;
+	myShape[2].fPositions[1] = 720 / 2.0 - 100.0f;
+	for (int i = 0; i < 3; i++)
+	{
+		myShape[i].fPositions[2] = 0.0f;
+		myShape[i].fPositions[3] = 1.0f;
+		myShape[i].fColours[0] = 0.0f;
+		myShape[i].fColours[1] = 0.0f;
+		myShape[i].fColours[2] = 1.0f;
+		myShape[i].fColours[3] = 1.0f;
+	}
 
+	//create ID for a vertex buffer object
+	GLuint uiVBO;
+	glGenBuffers(1, &uiVBO);
+
+	if (uiVBO != 0)
+	{
+		//bind VBO
+		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
+		//allocate space for verticies on the graphics card
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*3, NULL, GL_STATIC_DRAW);
+		//get pointer to allocated space on the graphics card
+		GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+		//copy data to the graphics card
+		memcpy(vBuffer, myShape, sizeof(Vertex)*3);
+		//unmap and unbind buffer
+		glUnmapBuffer(GL_ARRAY_BUFFER);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+
+/*	//Old Verticy code
 	const float vertexPositions[] =
 	{
 		1024/2.0, 720/2.0 + 200.0f, 0.0f, 1.0f,
@@ -55,8 +99,9 @@ int main()
 		0.0f, 1.0f, 0.0f, 1.0f,
 		0.0f, 0.0f, 1.0f, 1.0f,
 	};
+	*/
 
-	//crate shader program
+	//create shader program
 	GLuint uiProgramFlat = CreateProgram("VertexShader.glsl", "FlatFragmentShader.glsl");
 
 	//find the position of the matrix var in the shader so we can send info there later
@@ -68,15 +113,13 @@ int main()
 	//loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
 	{
-		//draw code goes here
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		//draw code goes here
+		/* //old draw code
 		//enable shaders
 		glUseProgram(uiProgramFlat);
-
-		//send orthographic projection info to shader
-		glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
 
 		//enable the vertex array state, since we're sending in an array of verticies
 		glEnableVertexAttribArray(0);
@@ -87,7 +130,33 @@ int main()
 		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, VertexColours);
 
 		//draw to screen
+		glDrawArrays(GL_TRIANGLES, 0, 3); */
+
+		//send orthographic projection info to shader
+		glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
+
+		//New Draw Code
+		glUseProgram(uiProgramFlat);
+
+		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
+
+		//enable the vertex array states
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+
+		/*Since the data is in the same array, we need to specify the gap between
+		vertices (A whole Vertex structure instance) and the offset of the data
+		from the beginning of the structure instance. The positions are at the
+		start, so their offset is 0. But the colours are after the positions, so
+		they are offset by the size of the position data */
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float)*4));
+
+		//draw to the screen
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 
 		//swap front and back buffers
 		glfwSwapBuffers(window);
