@@ -47,6 +47,18 @@ int main()
 		return -1;
 	}
 
+	//Testing a square verticy
+	Vertex* mySquare = new Vertex[4];
+	mySquare[0].fPositions[0] = 1024 / 2.0;
+	mySquare[0].fPositions[1] = 720 / 2.0 + 150.0f;
+	mySquare[1].fPositions[0] = 1024 / 2.0 - 100.0f;
+	mySquare[1].fPositions[1] = 720 / 2.0 - 100.0f;
+	mySquare[2].fPositions[0] = 1024 / 2.0;
+	mySquare[2].fPositions[1] = 720 / 2.0;
+	{
+	}; 
+
+
 	//create some verticies
 	Vertex* myShape = new Vertex[3];
 	myShape[0].fPositions[0] = 1024 / 2.0;
@@ -59,10 +71,10 @@ int main()
 	{
 		myShape[i].fPositions[2] = 0.0f;
 		myShape[i].fPositions[3] = 1.0f;
-		myShape[i].fColours[0] = 0.0f;
+		myShape[i].fColours[0] = 1.0f;
 		myShape[i].fColours[1] = 1.0f;
-		myShape[i].fColours[2] = 0.0f;
-		myShape[i].fColours[3] = 1.0f;
+		myShape[i].fColours[2] = 1.0f;
+		myShape[i].fColours[3] = 0.0f;
 	}
 
 	//create ID for a vertex buffer object
