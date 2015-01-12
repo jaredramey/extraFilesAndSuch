@@ -4,13 +4,16 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <iostream>
 #include "Entity.h"
 #include "Player.h"
+#include "SOIL.h"
 
 //Function Prototypes
 GLuint CreateShader(GLenum a_eShaderType, const char *a_strShaderFile);
 GLuint CreateProgram(const char *a_vertex, const char *a_frag);
 float* getOrtho(float left, float right, float bottom, float top, float a_fNear, float a_fFar);
+unsigned int loadTexture(const char* a_pFileName, int & a_iWidth, int & a_iHeight, int a_iBPP);
 
 Entity create;
 
@@ -56,11 +59,35 @@ int main()
 	{
 		PlayerShape[i].fPositions[2] = 0.0f;
 		PlayerShape[i].fPositions[3] = 1.0f;
+		//Add Color
 		PlayerShape[i].fColours[0] = 1.0f;
 		PlayerShape[i].fColours[1] = 1.0f;
 		PlayerShape[i].fColours[2] = 0.0f;
 		PlayerShape[i].fColours[3] = 0.0f;
+		//Set up the UVs
+		PlayerShape[0].fUVs[0] = 0.5f; //<-- Top of triangle
+		PlayerShape[0].fUVs[1] = 1.0f;
+		PlayerShape[1].fUVs[0] = 0.0f; //<-- Bottom Left
+		PlayerShape[1].fUVs[1] = 0.0f;
+		PlayerShape[2].fUVs[0] = 1.0f; //<-- Bottom Right
+		PlayerShape[2].fUVs[1] = 0.0f;
 	}
+	// \/\/\/\/ Just for the rainbow effect \/\/\/\/
+	//Top point color
+	PlayerShape[0].fColours[0] = 1.0f;
+	PlayerShape[0].fColours[1] = 0.0f;
+	PlayerShape[0].fColours[2] = 0.0f;
+	PlayerShape[0].fColours[3] = 1.0f;
+	//Bottom Left color
+	PlayerShape[1].fColours[0] = 0.0f;
+	PlayerShape[1].fColours[1] = 1.0f;
+	PlayerShape[1].fColours[2] = 0.0f;
+	PlayerShape[1].fColours[3] = 1.0f;
+	//Bottom Right color
+	PlayerShape[2].fColours[0] = 0.0f;
+	PlayerShape[2].fColours[1] = 0.0f;
+	PlayerShape[2].fColours[2] = 1.0f;
+	PlayerShape[2].fColours[3] = 1.0f;
 
 	//create ID for a vertex buffer object
 	GLuint uiVBO;
@@ -105,9 +132,14 @@ int main()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
+	//create TextureID
+	int width = 50, height = 50, bpp = 4;
+	GLuint uiTextureID = loadTexture("myTexture.jpg", width, height, bpp);
 
 	//create shader program
 	GLuint uiProgramFlat = CreateProgram("VertexShader.glsl", "FlatFragmentShader.glsl");
+
+	GLuint uiProgramTextured = CreateProgram("VertexShader.glsl" , "TexturedFragmentShader.glsl");
 
 	//find the position of the matrix var in the shader so we can send info there later
 	GLuint MatrixIDFlat = glGetUniformLocation(uiProgramFlat, "MVP");
@@ -125,24 +157,38 @@ int main()
 		glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
 
 		//enable shaders
-		glUseProgram(uiProgramFlat);
+		//glUseProgram(uiProgramFlat);
+		glUseProgram(uiProgramTextured);
 
-		//bind vertex buffer and index buffer
-		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
+		//Playing with movement
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		{
+			//move forward
+			for (int i = 0; i < 3; i++)
+			{
+
+			}
+		}
 
 		//enable the vertex array states
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(2);
 
+		//bind Texture
+		glBindTexture(GL_TEXTURE_2D, uiTextureID);
+		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Entity::TriangleVertex), 0);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Entity::TriangleVertex), (void*)(sizeof(float)* 4));
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Entity::TriangleVertex), (void*)(sizeof(float)*4));
+		//now to worry about the UVs and send that info to the graphics card as well
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Entity::TriangleVertex), (void*)(sizeof(float)*8));
 
-		//draw to the screen
+		//Draw to screen
 		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, NULL);
-
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
 
 		//swap front and back buffers
 		glfwSwapBuffers(window);
@@ -271,4 +317,33 @@ float* getOrtho(float left, float right, float bottom, float top, float a_fNear,
 	toReturn[14] = -1 * ((a_fFar + a_fNear) / (a_fFar - a_fNear));
 	toReturn[15] = 1;
 	return toReturn;
+}
+
+
+unsigned int loadTexture(const char* a_pFileName, int & a_iWidth, int & a_iHeight, int a_iBPP)
+{
+	unsigned int uiTextureID = 0;
+	//check if the file exists
+	if (a_pFileName != nullptr)
+	{
+		//read in image data from file
+		unsigned char* pImageData = SOIL_load_image(a_pFileName, &a_iWidth, &a_iHeight, &a_iBPP, SOIL_LOAD_AUTO);
+
+		//check for a successful read
+		if (pImageData)
+		{
+			//create openGL texture handle
+			uiTextureID = SOIL_create_OGL_texture(pImageData, a_iWidth, a_iHeight, a_iBPP, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS| SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+
+			//clear what was read in from file now that it's stored in the handle
+			SOIL_free_image_data(pImageData);
+		}
+
+		//check for errors
+		if (uiTextureID == 0)
+		{
+			std::cerr << "SOIL loading error: " << SOIL_last_result() << std::endl;
+		}
+		return uiTextureID;
+	}
 }

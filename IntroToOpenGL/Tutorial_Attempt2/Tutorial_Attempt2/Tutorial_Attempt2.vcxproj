@@ -42,6 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glew-1.11.0-win32\glew-1.11.0\include\GL;C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW;$(IncludePath)</IncludePath>
+    <ReferencePath>C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\Tutorial_Attempt2;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -54,13 +55,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glew-1.11.0-win32\glew-1.11.0\include\GL;C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glew-1.11.0-win32\glew-1.11.0\include\GL;C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW;C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\Tutorial_Attempt2\Tutorial_Attempt2\SOIL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glew-1.11.0-win32\glew-1.11.0\lib\Release\Win32;C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glew-1.11.0-win32\glew-1.11.0\include\GL;C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\lib-msvc120;C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\soil\Simple OpenGL Image Library\projects\VC8\Debug;C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glew-1.11.0-win32\glew-1.11.0\lib\Release\Win32;C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glew-1.11.0-win32\glew-1.11.0\include\GL;C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\lib-msvc120;C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\IntroToOpenGL\glfw-3.0.4.bin.WIN32\glfw-3.0.4.bin.WIN32\include\GLFW;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;glew32.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -94,6 +95,9 @@
   <ItemGroup>
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Player.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="myTexture.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

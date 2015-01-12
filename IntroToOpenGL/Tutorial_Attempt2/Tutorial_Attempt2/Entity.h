@@ -9,6 +9,7 @@ public:
 	{
 		float fPositions[4];
 		float fColours[4];
+		float fUVs[2];
 	};
 
 	struct QuadVertex
