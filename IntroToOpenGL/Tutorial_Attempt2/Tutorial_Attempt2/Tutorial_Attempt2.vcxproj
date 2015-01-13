@@ -97,7 +97,16 @@
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="frame-1.png" />
+    <Image Include="frame-2.png" />
+    <Image Include="frame-3.png" />
+    <Image Include="frame-4.png" />
+    <Image Include="frame-5.png" />
+    <Image Include="frame-6.png" />
+    <Image Include="frame-7.png" />
+    <Image Include="frame-8.png" />
     <Image Include="myTexture.jpg" />
+    <Image Include="snail_4.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

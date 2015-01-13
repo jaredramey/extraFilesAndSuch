@@ -28,7 +28,7 @@ int main()
 
 	//create a windowed mode window and it's OpenGL context
 	GLFWwindow* window;
-	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(1024, 720, "Hello World", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -47,47 +47,50 @@ int main()
 		return -1;
 	}
 
-	//Testing player class possibilities
-	Entity::TriangleVertex* PlayerShape = new Entity::TriangleVertex[3];
-	PlayerShape[0].fPositions[0] = 1024 / 2.0;
-	PlayerShape[0].fPositions[1] = 720 / 2.0 + 100.0f;
-	PlayerShape[1].fPositions[0] = 1024 / 2.0 - 100.0f;
-	PlayerShape[1].fPositions[1] = 720 / 2.0 - 100.0f;
-	PlayerShape[2].fPositions[0] = 1024 / 2.0 + 100.0f;
-	PlayerShape[2].fPositions[1] = 720 / 2.0 - 100.0f;
-	for (int i = 0; i < 3; i++)
+	Entity::QuadVertex* PlayerShape = new Entity::QuadVertex[4];
+	PlayerShape[0].fPositions[0] = 1024 / 2.0 - 200.0f;
+	PlayerShape[0].fPositions[1] = 720 / 2.0;
+	PlayerShape[1].fPositions[0] = 1024 / 2.0 - 200.0f;
+	PlayerShape[1].fPositions[1] = 720 / 2.0 - 200.0f;
+	PlayerShape[2].fPositions[0] = 1024 / 2.0 + 200.0f;
+	PlayerShape[2].fPositions[1] = 720 / 2.0 - 200.0f;
+	PlayerShape[3].fPositions[0] = 1024 / 2.0 + 200.0f;
+	PlayerShape[3].fPositions[1] = 720 / 2.0;
+	for (int i = 0; i < 4; i++)
 	{
 		PlayerShape[i].fPositions[2] = 0.0f;
 		PlayerShape[i].fPositions[3] = 1.0f;
-		//Add Color
-		PlayerShape[i].fColours[0] = 1.0f;
-		PlayerShape[i].fColours[1] = 1.0f;
-		PlayerShape[i].fColours[2] = 0.0f;
-		PlayerShape[i].fColours[3] = 0.0f;
 		//Set up the UVs
-		PlayerShape[0].fUVs[0] = 0.5f; //<-- Top of triangle
+		PlayerShape[0].fUVs[0] = 0.0f; //<-- Top Left
 		PlayerShape[0].fUVs[1] = 1.0f;
 		PlayerShape[1].fUVs[0] = 0.0f; //<-- Bottom Left
 		PlayerShape[1].fUVs[1] = 0.0f;
 		PlayerShape[2].fUVs[0] = 1.0f; //<-- Bottom Right
 		PlayerShape[2].fUVs[1] = 0.0f;
+		PlayerShape[3].fUVs[0] = 1.0f; //<-- Top Right
+		PlayerShape[3].fUVs[1] = 1.0f;
 	}
 	// \/\/\/\/ Just for the rainbow effect \/\/\/\/
 	//Top point color
 	PlayerShape[0].fColours[0] = 1.0f;
-	PlayerShape[0].fColours[1] = 0.0f;
-	PlayerShape[0].fColours[2] = 0.0f;
-	PlayerShape[0].fColours[3] = 1.0f;
+	PlayerShape[0].fColours[1] = 1.0f;
+	PlayerShape[0].fColours[2] = 1.0f;
+	PlayerShape[0].fColours[3] = 0.0f;
 	//Bottom Left color
-	PlayerShape[1].fColours[0] = 0.0f;
+	PlayerShape[1].fColours[0] = 1.0f;
 	PlayerShape[1].fColours[1] = 1.0f;
-	PlayerShape[1].fColours[2] = 0.0f;
-	PlayerShape[1].fColours[3] = 1.0f;
+	PlayerShape[1].fColours[2] = 1.0f;
+	PlayerShape[1].fColours[3] = 0.0f;
 	//Bottom Right color
-	PlayerShape[2].fColours[0] = 0.0f;
-	PlayerShape[2].fColours[1] = 0.0f;
+	PlayerShape[2].fColours[0] = 1.0f;
+	PlayerShape[2].fColours[1] = 1.0f;
 	PlayerShape[2].fColours[2] = 1.0f;
-	PlayerShape[2].fColours[3] = 1.0f;
+	PlayerShape[2].fColours[3] = 0.0f;
+	//Top Right color
+	PlayerShape[3].fColours[0] = 1.0f;
+	PlayerShape[3].fColours[1] = 1.0f;
+	PlayerShape[3].fColours[2] = 1.0f;
+	PlayerShape[3].fColours[3] = 0.0f;
 
 	//create ID for a vertex buffer object
 	GLuint uiVBO;
@@ -99,11 +102,11 @@ int main()
 		//bind VBO
 		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
 		//allocate space for vertices on the graphics card
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Entity::TriangleVertex)* 3, NULL, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Entity::QuadVertex)* 4, NULL, GL_STATIC_DRAW);
 		//get pointer to allocated space on the graphics card
 		GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 		//copy data to graphics card
-		memcpy(vBuffer, PlayerShape, sizeof(Entity::TriangleVertex) * 3);
+		memcpy(vBuffer, PlayerShape, sizeof(Entity::QuadVertex) * 4);
 		//unmap and unbind buffer
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -118,12 +121,12 @@ int main()
 		//bind IBO
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
 		//allocate space for verticies on the graphics card
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3*sizeof(char), NULL, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4*sizeof(char), NULL, GL_STATIC_DRAW);
 		//get pointer to allocated space on the graphics card
 		GLvoid* iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
 		//specify the order we'd like to draw our verticies
 		//In this case, they are in sequintial order
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			((char*)iBuffer)[i] = i;
 		}
@@ -133,8 +136,19 @@ int main()
 	}
 
 	//create TextureID
-	int width = 50, height = 50, bpp = 4;
-	GLuint uiTextureID = loadTexture("myTexture.jpg", width, height, bpp);
+	int width = 927, height = 633, bpp = 4;
+	GLuint uiTextureID = loadTexture("frame-1.png", width, height, bpp);
+	GLuint uiTextureID2 = loadTexture("frame-2.png", width, height, bpp);
+	GLuint uiTextureID3 = loadTexture("frame-3.png", width, height, bpp);
+	GLuint uiTextureID4 = loadTexture("frame-4.png", width, height, bpp);
+	GLuint uiTextureID5 = loadTexture("frame-5.png", width, height, bpp);
+	GLuint uiTextureID6 = loadTexture("frame-6.png", width, height, bpp);
+	GLuint uiTextureID7 = loadTexture("frame-7.png", width, height, bpp);
+	GLuint uiTextureID8 = loadTexture("frame-8.png", width, height, bpp);
+
+	//attempting to make a clock
+	float timer = 0.0;
+	bool isMoving = false;
 
 	//create shader program
 	GLuint uiProgramFlat = CreateProgram("VertexShader.glsl", "FlatFragmentShader.glsl");
@@ -152,11 +166,11 @@ int main()
 	{
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+		system("CLS");
 
 		//send orthographic projection info to shader
 		glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
 
-		//enable shaders
 		//glUseProgram(uiProgramFlat);
 		glUseProgram(uiProgramTextured);
 
@@ -164,10 +178,73 @@ int main()
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
 			//move forward
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 4; i++)
 			{
-
+				PlayerShape[i].fPositions[1] += 10.0f;
 			}
+			glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
+			GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+			//copy data to graphics card
+			memcpy(vBuffer, PlayerShape, sizeof(Entity::QuadVertex)*4);
+			//unmap and unbind buffer
+			glUnmapBuffer(GL_ARRAY_BUFFER);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			isMoving = true;
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		{
+			//move back
+			for (int i = 0; i < 4; i++)
+			{
+				PlayerShape[i].fPositions[1] -= 10.0f;
+			}
+			glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
+			GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+			//copy data to graphics card
+			memcpy(vBuffer, PlayerShape, sizeof(Entity::QuadVertex) * 4);
+			//unmap and unbind buffer
+			glUnmapBuffer(GL_ARRAY_BUFFER);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			isMoving = true;
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		{
+			//move left
+			for (int i = 0; i < 4; i++)
+			{
+				PlayerShape[i].fPositions[0] -= 10.0f;
+			}
+			glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
+			GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+			//copy data to graphics card
+			memcpy(vBuffer, PlayerShape, sizeof(Entity::QuadVertex) * 4);
+			//unmap and unbind buffer
+			glUnmapBuffer(GL_ARRAY_BUFFER);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			isMoving = true;
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		{
+			//move right
+			for (int i = 0; i < 4; i++)
+			{
+				PlayerShape[i].fPositions[0] += 10.0f;
+			}
+			glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
+			GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+			//copy data to graphics card
+			memcpy(vBuffer, PlayerShape, sizeof(Entity::QuadVertex) * 4);
+			//unmap and unbind buffer
+			glUnmapBuffer(GL_ARRAY_BUFFER);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			isMoving = true;
+		}
+		else
+		{
+			isMoving = false;
 		}
 
 		//enable the vertex array states
@@ -176,19 +253,67 @@ int main()
 		glEnableVertexAttribArray(2);
 
 		//bind Texture
-		glBindTexture(GL_TEXTURE_2D, uiTextureID);
+		//fleshing out the clock
+		if (timer == 1 || timer == 2 || timer == 3 || timer == 4)
+		{
+			glBindTexture(GL_TEXTURE_2D, uiTextureID);
+		}
+
+		else if (timer == 5 || timer == 6 || timer == 7 || timer == 8)
+		{
+			glBindTexture(GL_TEXTURE_2D, uiTextureID2);
+		}
+
+		else if (timer == 9 || timer == 10 || timer == 11 || timer == 12)
+		{
+			glBindTexture(GL_TEXTURE_2D, uiTextureID3);
+		}
+
+		else if (timer == 13 || timer == 14 || timer == 15 || timer == 16)
+		{
+			glBindTexture(GL_TEXTURE_2D, uiTextureID4);
+		}
+
+		else if (timer == 17 || timer == 18 || timer == 19 || timer == 20)
+		{
+			glBindTexture(GL_TEXTURE_2D, uiTextureID5);
+		}
+
+		else if (timer == 21 || timer == 22 || timer == 23 || timer == 24)
+		{
+			glBindTexture(GL_TEXTURE_2D, uiTextureID6);
+		}
+
+		else if (timer == 25 || timer == 26 || timer == 27 || timer == 28)
+		{
+			glBindTexture(GL_TEXTURE_2D, uiTextureID7);
+		}
+
+		else if (timer == 29 || timer == 30 || timer == 31 || timer == 32)
+		{
+
+				glBindTexture(GL_TEXTURE_2D, uiTextureID8);
+				timer = 0;
+		
+		}
+
+		//glBindTexture(GL_TEXTURE_2D, uiTextureID);
 		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
-		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Entity::TriangleVertex), 0);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Entity::TriangleVertex), (void*)(sizeof(float)*4));
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Entity::QuadVertex), 0);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Entity::QuadVertex), (void*)(sizeof(float)* 4));
 		//now to worry about the UVs and send that info to the graphics card as well
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Entity::TriangleVertex), (void*)(sizeof(float)*8));
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Entity::QuadVertex), (void*)(sizeof(float)* 8));
 
 		//Draw to screen
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, NULL);
+		glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, NULL);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
+		if (isMoving == true)
+		{
+			timer += 1;
+		}
 
 		//swap front and back buffers
 		glfwSwapBuffers(window);
@@ -318,7 +443,6 @@ float* getOrtho(float left, float right, float bottom, float top, float a_fNear,
 	toReturn[15] = 1;
 	return toReturn;
 }
-
 
 unsigned int loadTexture(const char* a_pFileName, int & a_iWidth, int & a_iHeight, int a_iBPP)
 {

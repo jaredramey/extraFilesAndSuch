@@ -14,8 +14,9 @@ public:
 
 	struct QuadVertex
 	{
-		float fPositions[5];
+		float fPositions[4];
 		float fColours[4];
+		float fUVs[3];
 	};
 
 	TriangleVertex triangleCreate;
