@@ -47,14 +47,17 @@ int main()
 		return -1;
 	}
 
+	/*glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);*/
+
 	Entity::QuadVertex* PlayerShape = new Entity::QuadVertex[4];
-	PlayerShape[0].fPositions[0] = 1024 / 2.0 - 200.0f;
+	PlayerShape[0].fPositions[0] = 1024 / 2.0 - 100.0f;
 	PlayerShape[0].fPositions[1] = 720 / 2.0;
-	PlayerShape[1].fPositions[0] = 1024 / 2.0 - 200.0f;
-	PlayerShape[1].fPositions[1] = 720 / 2.0 - 200.0f;
-	PlayerShape[2].fPositions[0] = 1024 / 2.0 + 200.0f;
-	PlayerShape[2].fPositions[1] = 720 / 2.0 - 200.0f;
-	PlayerShape[3].fPositions[0] = 1024 / 2.0 + 200.0f;
+	PlayerShape[1].fPositions[0] = 1024 / 2.0 - 100.0f;
+	PlayerShape[1].fPositions[1] = 720 / 2.0 - 100.0f;
+	PlayerShape[2].fPositions[0] = 1024 / 2.0 + 100.0f;
+	PlayerShape[2].fPositions[1] = 720 / 2.0 - 100.0f;
+	PlayerShape[3].fPositions[0] = 1024 / 2.0 + 100.0f;
 	PlayerShape[3].fPositions[1] = 720 / 2.0;
 	for (int i = 0; i < 4; i++)
 	{
@@ -80,17 +83,17 @@ int main()
 	PlayerShape[1].fColours[0] = 1.0f;
 	PlayerShape[1].fColours[1] = 1.0f;
 	PlayerShape[1].fColours[2] = 1.0f;
-	PlayerShape[1].fColours[3] = 0.0f;
+	PlayerShape[1].fColours[3] = 1.0f;
 	//Bottom Right color
 	PlayerShape[2].fColours[0] = 1.0f;
 	PlayerShape[2].fColours[1] = 1.0f;
 	PlayerShape[2].fColours[2] = 1.0f;
-	PlayerShape[2].fColours[3] = 0.0f;
+	PlayerShape[2].fColours[3] = 1.0f;
 	//Top Right color
 	PlayerShape[3].fColours[0] = 1.0f;
 	PlayerShape[3].fColours[1] = 1.0f;
 	PlayerShape[3].fColours[2] = 1.0f;
-	PlayerShape[3].fColours[3] = 0.0f;
+	PlayerShape[3].fColours[3] = 1.0f;
 
 	//create ID for a vertex buffer object
 	GLuint uiVBO;
@@ -135,9 +138,11 @@ int main()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
+	const char* myTexture = "frame-1.png";
+
 	//create TextureID
 	int width = 927, height = 633, bpp = 4;
-	GLuint uiTextureID = loadTexture("frame-1.png", width, height, bpp);
+	GLuint uiTextureID = loadTexture(myTexture, width, height, bpp);
 	GLuint uiTextureID2 = loadTexture("frame-2.png", width, height, bpp);
 	GLuint uiTextureID3 = loadTexture("frame-3.png", width, height, bpp);
 	GLuint uiTextureID4 = loadTexture("frame-4.png", width, height, bpp);
@@ -146,8 +151,11 @@ int main()
 	GLuint uiTextureID7 = loadTexture("frame-7.png", width, height, bpp);
 	GLuint uiTextureID8 = loadTexture("frame-8.png", width, height, bpp);
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	//attempting to make a clock
-	float timer = 0.0;
+	float timer = 1.0;
 	bool isMoving = false;
 
 	//create shader program
@@ -160,6 +168,7 @@ int main()
 
 	//set up the mapping of the screen to pixel co-ordinates. Try changing values and see what happens
 	float *orthographicProjection = getOrtho(0, 1080, 0, 720, 0, 180); 
+
 
 	//loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
@@ -272,29 +281,41 @@ int main()
 		else if (timer == 13 || timer == 14 || timer == 15 || timer == 16)
 		{
 			glBindTexture(GL_TEXTURE_2D, uiTextureID4);
+			if (isMoving == false)
+				timer = 0;
 		}
 
 		else if (timer == 17 || timer == 18 || timer == 19 || timer == 20)
 		{
+			if (isMoving == true)
 			glBindTexture(GL_TEXTURE_2D, uiTextureID5);
+			if (isMoving == false)
+				timer = 0;
 		}
 
 		else if (timer == 21 || timer == 22 || timer == 23 || timer == 24)
 		{
+			if (isMoving == true)
 			glBindTexture(GL_TEXTURE_2D, uiTextureID6);
+			if (isMoving == false)
+				timer = 0;
 		}
 
 		else if (timer == 25 || timer == 26 || timer == 27 || timer == 28)
 		{
+			if (isMoving == true)
 			glBindTexture(GL_TEXTURE_2D, uiTextureID7);
+			if (isMoving == false)
+				timer = 0;
 		}
 
 		else if (timer == 29 || timer == 30 || timer == 31 || timer == 32)
 		{
-
+			if (isMoving == true)
+			{
 				glBindTexture(GL_TEXTURE_2D, uiTextureID8);
+			}
 				timer = 0;
-		
 		}
 
 		//glBindTexture(GL_TEXTURE_2D, uiTextureID);
@@ -310,10 +331,7 @@ int main()
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-		if (isMoving == true)
-		{
 			timer += 1;
-		}
 
 		//swap front and back buffers
 		glfwSwapBuffers(window);
