@@ -95,6 +95,51 @@ int main()
 	PlayerShape[3].fColours[2] = 1.0f;
 	PlayerShape[3].fColours[3] = 1.0f;
 
+	Entity::QuadVertex* OtherShape = new Entity::QuadVertex[4];
+	OtherShape[0].fPositions[0] = 1024 / 2.0 - 100.0f;
+	OtherShape[0].fPositions[1] = 720 / 2.0;
+	OtherShape[1].fPositions[0] = 1024 / 2.0 - 100.0f;
+	OtherShape[1].fPositions[1] = 720 / 2.0 - 100.0f;
+	OtherShape[2].fPositions[0] = 1024 / 2.0 + 100.0f;
+	OtherShape[2].fPositions[1] = 720 / 2.0 - 100.0f;
+	OtherShape[3].fPositions[0] = 1024 / 2.0 + 100.0f;
+	OtherShape[3].fPositions[1] = 720 / 2.0;
+	for (int i = 0; i < 4; i++)
+	{
+		OtherShape[i].fPositions[2] = 0.0f;
+		OtherShape[i].fPositions[3] = 1.0f;
+		//Set up the UVs
+		OtherShape[0].fUVs[0] = 0.0f; //<-- Top Left
+		OtherShape[0].fUVs[1] = 1.0f;
+		OtherShape[1].fUVs[0] = 0.0f; //<-- Bottom Left
+		OtherShape[1].fUVs[1] = 0.0f;
+		OtherShape[2].fUVs[0] = 1.0f; //<-- Bottom Right
+		OtherShape[2].fUVs[1] = 0.0f;
+		OtherShape[3].fUVs[0] = 1.0f; //<-- Top Right
+		OtherShape[3].fUVs[1] = 1.0f;
+	}
+	// \/\/\/\/ Just for the rainbow effect \/\/\/\/
+	//Top point color
+	OtherShape[0].fColours[0] = 1.0f;
+	OtherShape[0].fColours[1] = 1.0f;
+	OtherShape[0].fColours[2] = 1.0f;
+	OtherShape[0].fColours[3] = 0.0f;
+	//Bottom Left color
+	OtherShape[1].fColours[0] = 1.0f;
+	OtherShape[1].fColours[1] = 1.0f;
+	OtherShape[1].fColours[2] = 1.0f;
+	OtherShape[1].fColours[3] = 1.0f;
+	//Bottom Right color
+	OtherShape[2].fColours[0] = 1.0f;
+	OtherShape[2].fColours[1] = 1.0f;
+	OtherShape[2].fColours[2] = 1.0f;
+	OtherShape[2].fColours[3] = 1.0f;
+	//Top Right color
+	OtherShape[3].fColours[0] = 1.0f;
+	OtherShape[3].fColours[1] = 1.0f;
+	OtherShape[3].fColours[2] = 1.0f;
+	OtherShape[3].fColours[3] = 1.0f;
+
 	//create ID for a vertex buffer object
 	GLuint uiVBO;
 	glGenBuffers(1, &uiVBO);
@@ -114,6 +159,7 @@ int main()
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
+
 
 	//create ID for an index buffer object
 	GLuint uiIBO;
@@ -138,6 +184,7 @@ int main()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
+
 	const char* myTexture = "frame-1.png";
 
 	//create TextureID
@@ -152,7 +199,7 @@ int main()
 	GLuint uiTextureID8 = loadTexture("frame-8.png", width, height, bpp);
 
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
 
 	//attempting to make a clock
 	float timer = 1.0;
@@ -256,10 +303,29 @@ int main()
 			isMoving = false;
 		}
 
+		//blend stuff
+		if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+		{
+			glBlendFunc(GL_SRC_ALPHA, GL_ZERO);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+		{
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+		{
+			glBlendFunc(GL_SRC_ALPHA, GL_DST_COLOR);
+		}
+
 		//enable the vertex array states
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
+		glEnableVertexAttribArray(3);
+		glEnableVertexAttribArray(4);
+		glEnableVertexAttribArray(5);
 
 		//bind Texture
 		//fleshing out the clock
@@ -326,8 +392,9 @@ int main()
 		//now to worry about the UVs and send that info to the graphics card as well
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Entity::QuadVertex), (void*)(sizeof(float)* 8));
 
+
 		//Draw to screen
-		glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, NULL);
+		glDrawElements(GL_QUADS, 8, GL_UNSIGNED_BYTE, NULL);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -342,6 +409,7 @@ int main()
 
 	//delete the index buffer to free up allocated memory
 	glDeleteBuffers(1, &uiIBO);
+
 
 	glfwTerminate();
 	return 0;
