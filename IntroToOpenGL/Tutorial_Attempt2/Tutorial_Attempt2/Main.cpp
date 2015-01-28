@@ -1,12 +1,20 @@
-#include <glew.h>
-#include <wglew.h>
-#include <glfw3.h>
+
+
 #include <vector>
 #include <string>
 #include <fstream>
 #include <iostream>
-#include "Entity.h"
+
+
+
+#include <glew.h>
+#include "glfont.h"
+//#include <wglew.h>
+#include <glfw3.h>
+
 #include "SOIL.h"
+
+#include "Entity.h"
 
 //Function Prototypes
 
@@ -30,7 +38,36 @@ int main()
 	float *orthographicProjection = getOrtho(0, 1080, 0, 720, 0, 180); */
 
 	Entity::TriangleVertex* test_Triangle = new Entity::TriangleVertex[3];
+	
+	
+	//trying to get glfont working
+	//Initialize OpenGL
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	//Initialize the viewport
+	glViewport(0, 0, 640, 480);
+
+	//Initialize OpenGL projection matrix
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0.0f, 640.0f, 480.0f, 0.0f, -2.0f, 2.0f);
+
+	//Clear back buffer
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	//Create font
+	GLuint textureName;
+	glGenTextures(1, &textureName);
+	PixelPerfectGLFont font;
+	try {
+		font.Create("DatFont.glf", textureName);
+	}
+	catch (GLFontError::InvalidFile) {
+		std::cerr << "Cannot load font\n";
+		abort();
+	}
 
 	float points2[] =
 	{
@@ -59,42 +96,40 @@ int main()
 	other.points[7] = 0.5f;
 	other.points[8] = 0.0f;
 
-	const char* vertex_shader =
-		"#version 400\n"
-		"in vec3 vp;"
-		"void main(){"
-		"gl_Position = vec4(vp, 1.0);"
-		"}";
-
-	const char* fragment_shader =
-		"#version 400\n"
-		"out vec4 frag_color;"
-		"void main(){"
-		"frag_color = vec4(0.0,0.0,1.0,1.0);"
-		"}";
-
-	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vs, 1, &vertex_shader, NULL);
-	glCompileShader(vs);
-	GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fs, 1, &fragment_shader, NULL);
-	glCompileShader(fs);
-	GLuint shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, fs);
-	glAttachShader(shaderProgram, vs);
-	glLinkProgram(shaderProgram);
-
+	bool drawTriangle;
 
 	//loop until the user closes the window
 	while (!glfwWindowShouldClose(start.window))
 	{
+		drawTriangle = false;
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glUseProgram(shaderProgram);
 		//send orthographic projection info to shader
 		//glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
+	
+		//Draw some stuff
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glEnable(GL_TEXTURE_2D);
+		glColor3f(1.0f, 1.0f, 1.0f);
 
-		start.DrawTriangle();
-		other.DrawTriangle();
+
+		try {
+			font.Begin();
+
+			font.TextOutThing("hello my wonderfull world", 400, 200, 0);
+			font.TextOutThing("Test", 50, 50, 0);
+		}
+		catch (GLFontError::InvalidFont) {
+			std::cerr << "Trying to draw with an uninitialized font\n";
+			abort();
+		}
+
+		glDisable(GL_TEXTURE_2D);
+		glLoadIdentity();
+
+			start.DrawTriangle();
+			other.DrawTriangle();
 
 		//swap front and back buffers
 		glfwSwapBuffers(start.window);
