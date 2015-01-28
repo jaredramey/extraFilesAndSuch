@@ -101,19 +101,16 @@ int main()
 	//loop until the user closes the window
 	while (!glfwWindowShouldClose(start.window))
 	{
-		drawTriangle = false;
-
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		//send orthographic projection info to shader
-		//glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
-	
 		//Draw some stuff
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		glEnable(GL_TEXTURE_2D);
 		glColor3f(1.0f, 1.0f, 1.0f);
 
-
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//send orthographic projection info to shader
+		//glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
+	
 		try {
 			font.Begin();
 
@@ -124,9 +121,7 @@ int main()
 			std::cerr << "Trying to draw with an uninitialized font\n";
 			abort();
 		}
-
-		glDisable(GL_TEXTURE_2D);
-		glLoadIdentity();
+		
 
 			start.DrawTriangle();
 			other.DrawTriangle();
@@ -137,6 +132,9 @@ int main()
 		//poll for and process events
 		glfwPollEvents();
 	}
+
+	glDisable(GL_TEXTURE_2D);
+	glLoadIdentity();
 
 	glfwTerminate();
 	return 0;

@@ -86,6 +86,7 @@ void Entity::DrawTriangle()
 
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glUseProgram(0);
 }
 
 
