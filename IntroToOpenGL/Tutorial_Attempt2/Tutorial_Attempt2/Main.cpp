@@ -5,8 +5,6 @@
 #include <fstream>
 #include <iostream>
 
-
-
 #include <glew.h>
 #include "glfont.h"
 //#include <wglew.h>
@@ -95,8 +93,6 @@ int main()
 	other.points[6] = 0.5f;
 	other.points[7] = 0.5f;
 	other.points[8] = 0.0f;
-
-	bool drawTriangle;
 
 	//loop until the user closes the window
 	while (!glfwWindowShouldClose(start.window))
