@@ -3,13 +3,9 @@
 #define _GRAPH_H_
 
 #include <string>
+#include <vector>
 
-struct Edge{
-	GraphNode* m_pStart;
-	GraphNode* m_pEnd;
-	float m_fCoast;
-
-};
+struct Edge;
 
 class GraphNode
 {
@@ -18,6 +14,18 @@ public:
 	~GraphNode();
 
 	int m_iNodeNumber;
+
+	typedef std::vector<Edge> EdgeList;
+	struct Edge{
+		GraphNode* m_pStart;
+		GraphNode* m_pEnd;
+		float m_fCoast;
+	};
+
+	Edge myEdges;
+	EdgeList connectedEdges;
+
+	void ConnectNodes(GraphNode& other);
 };
 
 #endif //_GRAPH_H_
