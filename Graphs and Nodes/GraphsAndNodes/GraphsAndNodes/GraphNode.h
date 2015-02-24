@@ -5,8 +5,6 @@
 #include <string>
 #include <vector>
 
-struct Edge;
-
 class GraphNode
 {
 public:
@@ -14,6 +12,8 @@ public:
 	~GraphNode();
 
 	int m_iNodeNumber;
+
+	struct Edge;
 
 	typedef std::vector<Edge> EdgeList;
 	struct Edge{
