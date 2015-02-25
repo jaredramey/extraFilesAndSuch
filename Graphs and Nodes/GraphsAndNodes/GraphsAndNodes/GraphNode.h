@@ -12,6 +12,7 @@ public:
 	~GraphNode();
 
 	int m_iNodeNumber;
+	bool m_bVisited;
 
 	struct Edge;
 

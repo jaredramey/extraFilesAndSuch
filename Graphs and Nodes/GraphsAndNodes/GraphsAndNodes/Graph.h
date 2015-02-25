@@ -1,6 +1,10 @@
 #pragma once
 #include <iostream>
 #include <algorithm>
+#include <time.h>
+#include <Windows.h>
+#include <stack>
+#include <queue>
 #include "GraphNode.h"
 
 class Graph
@@ -16,6 +20,10 @@ public:
 	void RemoveNode(GraphNode* a_pNode);
 	void DisplayNeighbors();
 	bool CheckNeighbors(GraphNode* A, GraphNode* B);
+	void Traverse(int StartNode);
+	void ResetVisited();
+	bool SearchDFS(GraphNode* a_pStart, GraphNode* a_pEnd);
+	bool SearchBFS(GraphNode* a_pStart, GraphNode* a_pEnd);
 
 private:
 	NodeList m_aNodes;

@@ -16,14 +16,31 @@ void Graph::GraphOther(unsigned int a_uiNodeCount)
 		AddNode(new GraphNode(i));
 	}
 
-	LinkNodes(m_aNodes[0], m_aNodes[1]);
-	LinkNodes(m_aNodes[0], m_aNodes[5]);
-	LinkNodes(m_aNodes[1], m_aNodes[2]);
-	LinkNodes(m_aNodes[2], m_aNodes[0]);
-	LinkNodes(m_aNodes[2], m_aNodes[3]);
-	LinkNodes(m_aNodes[3], m_aNodes[5]);
-	LinkNodes(m_aNodes[3], m_aNodes[4]);
-	LinkNodes(m_aNodes[5], m_aNodes[4]);
+	srand(time(NULL));
+
+	for (int i = 0; i < (a_uiNodeCount*3); i++)
+	{
+		int node1 = (rand() % a_uiNodeCount);
+		int node2 = (rand() % a_uiNodeCount);
+		while (node2 == node1)
+		{
+			node2 = (rand() % a_uiNodeCount);
+		}
+
+		if (m_aNodes[node1]->connectedEdges.size() == 0)
+		{
+			LinkNodes(m_aNodes[(node1)], m_aNodes[(node2)]);
+		}
+
+		for (int k = 0; k < m_aNodes[node1]->connectedEdges.size(); k++)
+		{
+			if (m_aNodes[node1]->connectedEdges[k].m_pEnd->m_iNodeNumber != m_aNodes[node2]->m_iNodeNumber)
+			{
+				LinkNodes(m_aNodes[(node1)], m_aNodes[(node2)]);
+				k += 10;
+			}
+		}
+	}
 }
 
 void Graph::LinkNodes(GraphNode* a_pNode, GraphNode*a_pOtherNode)
@@ -120,4 +137,108 @@ bool Graph::CheckNeighbors(GraphNode* A, GraphNode* B)
 	}
 		return false;
 	
+}
+
+void Graph::Traverse(int StartNode)
+{
+	GraphNode* CurrentNode = m_aNodes[StartNode];
+
+	int loop = 0;
+	int nodeChoice;
+
+	while (loop == 0)
+	{
+		system("CLS");
+		std::cout << "You are currently in node " << CurrentNode->m_iNodeNumber << std::endl;
+		std::cout << "It's current neighbors are: ";
+		for (int i = 0; i < CurrentNode->connectedEdges.size(); i++)
+		{
+			std::cout << CurrentNode->connectedEdges[i].m_pEnd->m_iNodeNumber;
+			if (i < (CurrentNode->connectedEdges.size()-1))
+			{
+				std::cout << ", ";
+			}
+		}
+
+		nodeChoice = 0;
+
+		std::cout << "\n Please Choose a Neighbor Node to go to." << std::endl;
+		TryAgain:
+		std::cin >> nodeChoice;
+		if (nodeChoice > CurrentNode->connectedEdges.size())
+		{
+			std::cout << "That's not an avaliable Node. Please Select an avaliable Node" << std::endl;
+			goto TryAgain;
+		}
+
+		if (GetAsyncKeyState(VK_ESCAPE))
+		{
+			loop++;
+		}
+
+		CurrentNode = m_aNodes[nodeChoice-1];
+	}
+}
+
+void Graph::ResetVisited()
+{
+	for (int i = 0; i < m_aNodes.size(); i++)
+	{
+		m_aNodes[i]->m_bVisited = false;
+	}
+}
+
+bool Graph::SearchDFS(GraphNode* a_pStart, GraphNode* a_pEnd)
+{
+	std::stack<GraphNode*> oNodeStack;
+	oNodeStack.push(a_pStart);
+
+	while (!oNodeStack.empty())
+	{
+		GraphNode* pCurrent = oNodeStack.top();
+		oNodeStack.pop();
+
+		if (pCurrent->m_bVisited == true)
+		{
+			continue;
+		}
+
+		pCurrent->m_bVisited = true;
+
+		if (pCurrent == a_pEnd)
+		{
+			return true;
+		}
+
+		for (int i = 0; i < pCurrent->connectedEdges.size(); i++)
+		{
+			oNodeStack.push(pCurrent->connectedEdges[i].m_pEnd);
+		}
+	}
+
+	return false;
+}
+
+bool Graph::SearchBFS(GraphNode* a_pStart, GraphNode* a_pEnd)
+{
+	std::queue<GraphNode*> oNodeStack;
+	oNodeStack.push(a_pStart);
+
+	while (!oNodeStack.empty())
+	{
+		GraphNode* pCurrent = oNodeStack.back();
+		oNodeStack.pop();
+
+		if (pCurrent->m_bVisited == true)
+		{
+			continue;
+		}
+
+		pCurrent->m_bVisited = true;
+
+		for (int i = 0; i < pCurrent->connectedEdges.size(); i++)
+		{
+			oNodeStack.push(pCurrent->connectedEdges[i].m_pEnd);
+		}
+	}
 }

@@ -47,10 +47,6 @@ int main()
 
 	cout << "------------------" << endl;
 
-	testGraph.GraphOther(6);
-
-	testGraph.DisplayNeighbors();
-
  	system("PAUSE");
 	return 0;
 }

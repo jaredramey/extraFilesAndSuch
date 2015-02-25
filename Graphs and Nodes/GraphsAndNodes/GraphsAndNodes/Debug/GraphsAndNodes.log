@@ -1,16 +1,26 @@
-﻿Build started 2/23/2015 5:10:40 PM.
+﻿Build started 2/24/2015 1:22:37 PM.
      1>Project "C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\GraphsAndNodes\GraphsAndNodes\GraphsAndNodes.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Graph.cpp Main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Graph.cpp GraphNode.cpp Main.cpp
          Main.cpp
          Graph.cpp
      1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(14): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(52): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(54): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(65): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(90): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(92): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(114): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(19): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(21): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(35): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(69): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(71): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(82): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(107): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(109): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(131): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(154): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(157): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(168): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\graphsandnodes\graphsandnodes\graph.cpp(185): warning C4018: '<' : signed/unsigned mismatch
+         Generating Code...
+         Compiling...
+         GraphNode.cpp
          Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\GraphsAndNodes\Debug\GraphsAndNodes.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\GraphsAndNodes\Debug\GraphsAndNodes.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\GraphsAndNodes\Debug\GraphsAndNodes.lib" /MACHINE:X86 Debug\Graph.obj
@@ -21,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.00
+Time Elapsed 00:00:02.03
