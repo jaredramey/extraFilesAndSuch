@@ -24,6 +24,8 @@ public:
 	void ResetVisited();
 	bool SearchDFS(GraphNode* a_pStart, GraphNode* a_pEnd);
 	bool SearchBFS(GraphNode* a_pStart, GraphNode* a_pEnd);
+	void CreateGraph();
+	void CreateVisualNode(int NodeID ,int a_texturePath, float a_x, float a_y);
 
 private:
 	NodeList m_aNodes;

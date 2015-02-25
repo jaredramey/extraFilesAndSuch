@@ -236,9 +236,36 @@ bool Graph::SearchBFS(GraphNode* a_pStart, GraphNode* a_pEnd)
 
 		pCurrent->m_bVisited = true;
 
+		if (pCurrent == a_pEnd)
+		{
+			return true;
+		}
+
 		for (int i = 0; i < pCurrent->connectedEdges.size(); i++)
 		{
 			oNodeStack.push(pCurrent->connectedEdges[i].m_pEnd);
 		}
 	}
+
+	return false;
+}
+
+void Graph::CreateGraph()
+{
+	for (int i = 0; i < 16; i++)
+	{
+		AddNode(new GraphNode(i));
+
+		for (int k = 0; k < 2; k++)
+		{
+			CreateVisualNode(i, );
+		}
+	}
+}
+
+void Graph::CreateVisualNode(int NodeID, int a_texturePath, float a_x, float a_y)
+{
+	m_aNodes[NodeID]->textureHandle = a_texturePath;
+	m_aNodes[NodeID]->x = a_x;
+	m_aNodes[NodeID]->y = a_y;
 }

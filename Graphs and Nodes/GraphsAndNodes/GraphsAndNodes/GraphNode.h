@@ -13,6 +13,9 @@ public:
 
 	int m_iNodeNumber;
 	bool m_bVisited;
+	float x;
+	float y;
+	int textureHandle;
 
 	struct Edge;
 
