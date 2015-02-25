@@ -90,11 +90,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AI.cpp" />
     <ClCompile Include="source\Graph.cpp" />
     <ClCompile Include="source\GraphNode.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AI.h" />
     <ClInclude Include="include\Graph.h" />
     <ClInclude Include="include\GraphNode.h" />
   </ItemGroup>

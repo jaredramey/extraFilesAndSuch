@@ -1,7 +1,10 @@
-﻿Build started 2/24/2015 5:31:14 PM.
+﻿Build started 2/25/2015 12:19:24 PM.
      1>Project "C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\AIE Template.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./ /I./include/ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\\" /Fd"obj\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt source\Graph.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./ /I./include/ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\\" /Fd"obj\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt AI.cpp source\Graph.cpp source\GraphNode.cpp source\main.cpp
+         AI.cpp
+         Generating Code...
+         Compiling...
          Graph.cpp
      1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(14): warning C4018: '<' : signed/unsigned mismatch
      1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(19): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
@@ -19,13 +22,26 @@
      1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(185): warning C4018: '<' : signed/unsigned mismatch
      1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(213): warning C4018: '<' : signed/unsigned mismatch
      1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(244): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(286): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(288): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(342): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(348): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(350): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(352): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+         Generating Code...
+         Compiling...
+         GraphNode.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         main.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"bin\AIE Template_d.exe" /INCREMENTAL /NOLOGO /LIBPATH:./libs AIE_1st_Year_Framework_d.lib kernel32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"bin\AIE Template_d.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"bin\AIE Template_d.lib" /MACHINE:X86 obj\Graph.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"bin\AIE Template_d.exe" /INCREMENTAL /NOLOGO /LIBPATH:./libs AIE_1st_Year_Framework_d.lib kernel32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"bin\AIE Template_d.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"bin\AIE Template_d.lib" /MACHINE:X86 obj\AI.obj
+         obj\Graph.obj
          obj\GraphNode.obj
          obj\main.obj
          AIE_1st_Year_Framework_d.lib(SOIL.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
      1>LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
-     1>Graph.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
+     1>AI.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
      1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
      1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
          Generating code
@@ -56,4 +72,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.95
+Time Elapsed 00:00:02.91

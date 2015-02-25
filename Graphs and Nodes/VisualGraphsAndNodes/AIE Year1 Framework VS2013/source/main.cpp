@@ -9,17 +9,16 @@ int main( int argc, char* argv[] )
     
     SetBackgroundColour(SColour(0, 0, 0, 255));
 
-    int myTextureHandle = CreateSprite("./images/crate_sideup.png", 64, 64, true);
-    float xPos = 100;
-    float yPos = 100;
+	Graph TestGraph = Graph();
+
+	TestGraph.CreateGraph();
+	TestGraph.DisplayNeighbors();
 
     //Game Loop
     do
     {
-        MoveSprite(myTextureHandle, xPos, yPos);
-        DrawSprite(myTextureHandle);
-
-        ClearScreen();
+		ClearScreen();
+		TestGraph.DrawGraph();
 
     } while(!FrameworkUpdate());
 

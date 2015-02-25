@@ -16,6 +16,7 @@ public:
 	float x;
 	float y;
 	int textureHandle;
+	int nodeWeight;
 
 	struct Edge;
 

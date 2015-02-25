@@ -252,16 +252,83 @@ bool Graph::SearchBFS(GraphNode* a_pStart, GraphNode* a_pEnd)
 
 void Graph::CreateGraph()
 {
-	float xPos, yPos;
+	float xPos = 50, yPos = 50;
+
+	srand(time(NULL));
 
 	for (int i = 0; i < 16; i++)
 	{
 		AddNode(new GraphNode(i));
+		m_aNodes[i]->nodeWeight = (rand() % 6);
 
-		for (int k = 0; k < 2; k++)
+		if (i > 0)
 		{
-			xPos += 
-			CreateVisualNode(i, CreateSprite(), );
+			xPos += 150;
+			if (i == 4 )
+			{
+				yPos += 150;
+				xPos = 50;
+			}
+
+			if (i == 8)
+			{
+				yPos += 150;
+				xPos = 50;
+			}
+
+			if (i == 12)
+			{
+				yPos += 150;
+				xPos = 50;
+			}
+		}
+
+		CreateVisualNode(i, CreateSprite("./images/crate_sideup.png", 64, 64, true), xPos, yPos);
+	}
+
+	for (int i = 0; i < m_aNodes.size(); i++)
+	{
+		for (int k = 0; k < m_aNodes.size(); k++)
+		{
+			if ((m_aNodes[k]->x <= (m_aNodes[i]->x + 200) && m_aNodes[k]->y <= (m_aNodes[i]->y + 150)) && (m_aNodes[k]->x >= (m_aNodes[i]->x - 200)))
+			{
+				if ((i < 3) && k != i)
+				{
+					LinkNodes(m_aNodes[i], m_aNodes[k]);
+				}
+			}
+
+			if ((m_aNodes[k]->x <= (m_aNodes[i]->x + 200) && m_aNodes[k]->y <= (m_aNodes[i]->y + 150)) && (m_aNodes[k]->x >= (m_aNodes[i]->x - 200) && m_aNodes[k]->y <= (m_aNodes[i]->y + 150)))
+			{
+				if ((i > 2 && i < 4) && k != i)
+				{
+					LinkNodes(m_aNodes[i], m_aNodes[k]);
+				}
+			}
+
+			if ((m_aNodes[k]->x <= (m_aNodes[i]->x + 200) && m_aNodes[k]->y <= (m_aNodes[i]->y + 150)) && (m_aNodes[k]->x >= (m_aNodes[i]->x - 200) && m_aNodes[k]->y <= (m_aNodes[i]->y + 150)))
+			{
+				if ((i > 3 && i < 8) && k != i)
+				{
+					LinkNodes(m_aNodes[i], m_aNodes[k]);
+				}
+			}
+
+			if ((m_aNodes[k]->x <= (m_aNodes[i]->x + 200) && m_aNodes[k]->y <= (m_aNodes[i]->y + 150)) && (m_aNodes[k]->x >= (m_aNodes[i]->x - 200) && m_aNodes[k]->y >= (m_aNodes[i]->y - 150)))
+			{
+				if ((i > 7 && i < 12) && k != i)
+				{
+					LinkNodes(m_aNodes[i], m_aNodes[k]);
+				}
+			}
+
+			if ((m_aNodes[k]->x <= (m_aNodes[i]->x + 200) && m_aNodes[k]->y <= (m_aNodes[i]->y + 150)) && (m_aNodes[k]->x >= (m_aNodes[i]->x - 200) && m_aNodes[k]->y >= (m_aNodes[i]->y - 150)))
+			{
+				if ((i > 11 && i < 16) && k != i)
+				{
+					LinkNodes(m_aNodes[i], m_aNodes[k]);
+				}
+			}
 		}
 	}
 }
@@ -271,4 +338,21 @@ void Graph::CreateVisualNode(int NodeID, int a_texturePath, float a_x, float a_y
 	m_aNodes[NodeID]->textureHandle = a_texturePath;
 	m_aNodes[NodeID]->x = a_x;
 	m_aNodes[NodeID]->y = a_y;
+}
+
+void Graph::DrawGraph()
+{
+	for (int i = 0; i < m_aNodes.size(); i++)
+	{
+		MoveSprite(m_aNodes[i]->textureHandle, m_aNodes[i]->x, m_aNodes[i]->y);
+		DrawSprite(m_aNodes[i]->textureHandle);
+	}
+
+	for (int i = 0; i < m_aNodes.size(); i++)
+	{
+		for (int k = 0; k < m_aNodes[i]->connectedEdges.size(); k++)
+		{
+			DrawLine(m_aNodes[i]->x, m_aNodes[i]->y, m_aNodes[i]->connectedEdges[k].m_pEnd->x, m_aNodes[i]->connectedEdges[k].m_pEnd->y, SColour(215, 46, 0, 255));
+		}
+	}
 }

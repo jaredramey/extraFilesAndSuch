@@ -27,6 +27,8 @@ public:
 	bool SearchBFS(GraphNode* a_pStart, GraphNode* a_pEnd);
 	void CreateGraph();
 	void CreateVisualNode(int NodeID ,int a_texturePath, float a_x, float a_y);
+	void DrawGraph();
+
 
 private:
 	NodeList m_aNodes;
