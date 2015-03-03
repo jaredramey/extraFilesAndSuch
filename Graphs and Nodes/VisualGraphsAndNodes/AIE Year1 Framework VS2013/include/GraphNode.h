@@ -25,6 +25,7 @@ public:
 		GraphNode* m_pStart;
 		GraphNode* m_pEnd;
 		float m_fCoast;
+		int gCost;
 	};
 
 	Edge myEdges;

@@ -54,7 +54,7 @@ void Graph::LinkNodes(GraphNode* a_pNode, GraphNode*a_pOtherNode)
 void Graph::AddNode(GraphNode* a_pNode)
 {
 	//Give the node an ID
-	a_pNode->m_iNodeNumber = m_aNodes.size() + 1;
+	a_pNode->m_iNodeNumber = m_aNodes.size();
 	//Place the Node in a Node list
 	m_aNodes.emplace_back(a_pNode);
 	//output the size of the Node list (for debugging purposes)
@@ -111,13 +111,17 @@ void Graph::DisplayNeighbors()
 			if (m_aNodes[i]->connectedEdges[k].m_pEnd != NULL)
 			{
 				std::cout << m_aNodes[i]->connectedEdges[k].m_pStart->m_iNodeNumber;
+				std::cout << "(" << m_aNodes[i]->nodeWeight << ")";
 				std::cout << " -> ";
-				std::cout << m_aNodes[i]->connectedEdges[k].m_pEnd->m_iNodeNumber << std::endl;
+				std::cout << m_aNodes[i]->connectedEdges[k].m_pEnd->m_iNodeNumber;
+				std::cout << "(" << m_aNodes[i]->connectedEdges[k].m_pEnd->nodeWeight << ")";
+				std::cout << " = " << m_aNodes[i]->connectedEdges[k].gCost << std::endl;
 			}
 
 			else if (m_aNodes[i]->connectedEdges[k].m_pEnd == NULL)
 			{
 				std::cout << m_aNodes[i]->connectedEdges[k].m_pStart->m_iNodeNumber;
+				std::cout << "(" << m_aNodes[i]->nodeWeight << ")";
 				std::cout << " -> ";
 				std::cout << "*-REMOVED-*" << std::endl;
 			}
@@ -259,7 +263,7 @@ void Graph::CreateGraph()
 	for (int i = 0; i < 16; i++)
 	{
 		AddNode(new GraphNode(i));
-		m_aNodes[i]->nodeWeight = (rand() % 6);
+		m_aNodes[i]->nodeWeight = (rand() % 4+1);
 
 		if (i > 0)
 		{
@@ -330,7 +334,14 @@ void Graph::CreateGraph()
 				}
 			}
 		}
+
+		for (int k = 0; k < m_aNodes[i]->connectedEdges.size(); k++)
+		{
+				m_aNodes[i]->connectedEdges[k].gCost = (m_aNodes[i]->nodeWeight + m_aNodes[i]->connectedEdges[k].m_pEnd->nodeWeight);
+		}
 	}
+
+	BuildPath(m_aNodes[0], m_aNodes[14]);
 }
 
 void Graph::CreateVisualNode(int NodeID, int a_texturePath, float a_x, float a_y)
@@ -355,4 +366,187 @@ void Graph::DrawGraph()
 			DrawLine(m_aNodes[i]->x, m_aNodes[i]->y, m_aNodes[i]->connectedEdges[k].m_pEnd->x, m_aNodes[i]->connectedEdges[k].m_pEnd->y, SColour(215, 46, 0, 255));
 		}
 	}
+}
+
+std::vector<GraphNode*> Graph::GetNeighbors(GraphNode* a_pNode)
+{
+	std::vector<GraphNode*> MyList;
+	
+	for (int i = 0; i < a_pNode->connectedEdges.size(); i++)
+	{
+		MyList.emplace_back(a_pNode->connectedEdges[i].m_pEnd);
+	}
+
+	return MyList;
+}
+
+
+std::vector<GraphNode*> Graph::BuildPath(GraphNode* a_pStart, GraphNode* a_pEnd)
+{
+	std::vector<GraphNode*> MyNodeList;
+	std::vector<GraphNode*> MyVecOfNodes;
+	GraphNode* CurrentNode = a_pStart;
+	MyNodeList.emplace_back(CurrentNode);
+
+	while (MyNodeList.back() != a_pEnd)
+	{
+		MyVecOfNodes = GetNeighbors(CurrentNode);
+		std::sort(MyVecOfNodes.begin(), MyVecOfNodes.end(), NodeCompare());
+
+			for (int i = 0; i < MyVecOfNodes.size(); i++)
+			{
+				if (i <= 0)
+				{
+					for (int k = 0; k < MyVecOfNodes.size(); k++)
+					{
+						if (MyVecOfNodes[k] == a_pEnd)
+						{
+							CurrentNode = MyVecOfNodes[k];
+							break;
+						}
+					}
+				}
+
+				if ((MyVecOfNodes[i]->m_iNodeNumber > MyNodeList.back()->m_iNodeNumber))
+				{
+					if (CurrentNode == a_pEnd)
+					{
+						break;
+					}
+					CurrentNode = MyVecOfNodes[i];
+					break;
+				}
+
+				if (i > 14)
+				{
+					std::cout << "Uh-oh, something broke!" << std::endl;
+					break;
+				}
+			}
+
+		MyNodeList.emplace_back(CurrentNode);
+	}
+	std::cout << "Path Built" << std::endl;
+
+	for (int i = 0; i < MyNodeList.size(); i++)
+	{
+		if (i < MyNodeList.size()-1)
+		{
+			std::cout << MyNodeList[i]->m_iNodeNumber;
+			std::cout << " -> ";
+			std::cout << MyNodeList[i + 1]->m_iNodeNumber << std::endl;
+		}
+
+		else
+		{
+			std::cout << "The end Node is " << MyNodeList[i]->m_iNodeNumber << std::endl;
+		}
+	}
+
+	return MyNodeList;
+}
+
+void Graph::ShortestPath(int a_pStart, int a_pEnd)
+{
+	GraphNode* CurrentNode;
+	int AILast;
+
+
+	if (AIPath.empty())
+	{
+		AIStart = 0;
+		if (a_pStart > a_pEnd)
+		{
+			AIPath = BuildPath(m_aNodes[a_pEnd], m_aNodes[a_pStart]);
+			std::reverse(AIPath.begin(), AIPath.end());
+		}
+
+		else
+		{
+			AIPath = BuildPath(m_aNodes[a_pStart], m_aNodes[a_pEnd]);
+		}
+		m_AI.CreateAI(AIPath[AIStart]->x, AIPath[AIStart]->y, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true));
+		CurrentNode = AIPath[1];
+		AILast = AIPath.size();
+	}
+
+	else
+	{
+		CurrentNode = AIPath[CurrentNodeOnPath];
+	}
+
+		MoveSprite(m_AI.textureHandler, m_AI.x, m_AI.y);
+
+		if (a_pStart < a_pEnd)
+		{
+			if (m_AI.x <= CurrentNode->x)
+			{
+				m_AI.x += 0.25f;
+			}
+
+			if (m_AI.y <= CurrentNode->y)
+			{
+				m_AI.y += 0.25f;
+			}
+
+			if (CurrentNode == m_aNodes[a_pEnd])
+			{
+				if (m_AI.x >= CurrentNode->x)
+				{
+					m_AI.x -= 0.25f;
+				}
+
+				if (m_AI.y >= CurrentNode->y)
+				{
+					m_AI.y -= 0.25f;
+				}
+			}
+
+			if (CurrentNode != m_aNodes[a_pEnd] && ((m_AI.x >= CurrentNode->x) && (m_AI.y >= CurrentNode->y)))
+			{
+				AIStart += 1;
+			}
+
+			CurrentNodeOnPath = AIStart;
+		}
+
+		if (a_pStart > a_pEnd)
+		{
+			if (m_AI.x >= CurrentNode->x)
+			{
+				m_AI.x -= 0.25f;
+			}
+
+			if (m_AI.y >= CurrentNode->y)
+			{
+				m_AI.y -= 0.25f;
+			}
+
+			if (CurrentNode == m_aNodes[a_pEnd])
+			{
+				if (m_AI.x <= CurrentNode->x)
+				{
+					m_AI.x += 0.25f;
+				}
+
+				if (m_AI.y <= CurrentNode->y)
+				{
+					m_AI.y += 0.25f;
+				}
+			}
+
+			if (CurrentNode != m_aNodes[a_pEnd] && ((m_AI.x <= CurrentNode->x) && (m_AI.y <= CurrentNode->y)))
+			{
+				AIStart += 1;
+			}
+
+			CurrentNodeOnPath = AIStart;
+		}
+}
+
+void Graph::ResetAI()
+{
+	AIPath.clear();
+	CurrentNodeOnPath = 0;
+	AIStart = 0;
 }

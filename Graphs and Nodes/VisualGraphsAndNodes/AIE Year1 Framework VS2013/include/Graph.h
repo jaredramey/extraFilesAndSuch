@@ -5,15 +5,27 @@
 #include <Windows.h>
 #include <stack>
 #include <queue>
+#include <list>
+#include <algorithm>
 #include "GraphNode.h"
 #include "AIE.h"
+#include "AI.h"
 
 class Graph
 {
-	typedef std::vector<GraphNode*> NodeList;
 public:
+	typedef std::vector<GraphNode*> NodeList;
+
 	Graph();
 	~Graph();
+
+	struct NodeCompare
+	{
+		inline bool operator() (const GraphNode* left, const GraphNode* right)
+		{
+			return (left->nodeWeight < right->nodeWeight);
+		}
+	};
 
 	void GraphOther(unsigned int a_uiNodeCount);
 	void LinkNodes(GraphNode* a_pNode, GraphNode*a_pOtherNode);
@@ -28,9 +40,18 @@ public:
 	void CreateGraph();
 	void CreateVisualNode(int NodeID ,int a_texturePath, float a_x, float a_y);
 	void DrawGraph();
+	std::vector<GraphNode*> GetNeighbors(GraphNode* a_pNode);
+	std::vector<GraphNode*> BuildPath(GraphNode* a_pStart, GraphNode* a_pEnd);
+	void ShortestPath(int a_pStart, int a_pEnd);
+	void ResetAI();
+	void CreateAI(float x, float y);
 
+	AI m_AI;
 
 private:
 	NodeList m_aNodes;
+	NodeList AIPath;
+	int CurrentNodeOnPath;
+	int AIStart;
 };
 
