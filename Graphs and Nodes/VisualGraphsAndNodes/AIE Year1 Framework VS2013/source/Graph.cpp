@@ -332,6 +332,9 @@ void Graph::CreateGraph()
 				m_aNodes[i]->connectedEdges[k].NT = eSurface;
 		}
 	}
+
+	m_AI.CreateAI(0, 0, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true));
+
 }
 
 void Graph::CreateVisualNode(int NodeID, int a_texturePath, float a_x, float a_y)
@@ -487,7 +490,7 @@ void Graph::ShortestPath(int a_pStart, int a_pEnd)
 			AIPath = BuildPath(m_aNodes[p_aNewStart], m_aNodes[a_pEnd]);
 		}
 
-		m_AI.CreateAI(AIPath[AIStart]->x, AIPath[AIStart]->y, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true));
+		
 		AILast = AIPath.size();
 	}
 
@@ -600,10 +603,10 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 
 	CurrentNode = a_pStart;
 	CurrentGoalNode = a_pEnd;
-	OpenList.emplace_back(CurrentNode);
 	
 	while (CurrentNode != CurrentGoalNode)
 	{
+		OpenList.emplace_back(CurrentNode);
 		for (int i = 0; i < OpenList.size(); i++)
 		{
 			//Loop through and set H and then F
@@ -638,21 +641,40 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 				OpenList[k]->m_fCost = CurrentNode->connectedEdges[k].fCost;
 			}
 
-			//Sort to find the lowest Fscore
+			//Sort, see if any of the Nodes is the EndGoal Node and if one is then set it as the current Node, if not then repeat
 			for (int k = 0; k < CurrentNode->connectedEdges.size(); k++)
 			{
-				std::sort(OpenList.begin(), OpenList.end(), AStarCompare());
+				if (CurrentNode->connectedEdges[k].m_pEnd == a_pEnd)
+				{
+					CurrentNode = CurrentNode->connectedEdges[k].m_pEnd;
+					break;
+				}
 			}
 
-			//Set the one with the lowest Fscore as the current Node
-			CurrentNode = OpenList[0];
-			//clear the OpenList of Nodes
-			OpenList.clear();
-			//Repeat until the last Node in the Closed list is the Goal Node
+			if (CurrentNode != a_pEnd)
+			{
+				std::sort(OpenList.begin(), OpenList.end(), AStarCompare());
+				for (int k = 0; k < OpenList.size(); k++)
+				{
+					//Set the one with the lowest Fscore as the current Node
+					if ((OpenList[k]->m_iNodeNumber > CurrentNode->m_iNodeNumber) && (OpenList[k]->x <= CurrentGoalNode->x && OpenList[k]->y <= CurrentGoalNode->y))
+					{
+						CurrentNode = OpenList[k];
+						break;
+					}
+				}
+				//clear the OpenList of Nodes
+				OpenList.clear();
+				//Repeat until the last Node in the Closed list is the Goal Node
+			}
+
+			else
+			{
+				break;
+			}
 		}
 	}
 }
-
 
 void Graph::AStarPathTest(int a_start, int a_end)
 {

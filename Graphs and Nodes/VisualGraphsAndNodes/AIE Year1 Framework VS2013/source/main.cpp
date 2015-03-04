@@ -12,13 +12,14 @@ int main( int argc, char* argv[] )
 	Graph TestGraph = Graph();
 	TestGraph.CreateGraph();
 	TestGraph.DisplayNeighbors();
+	TestGraph.AStarPathTest(0, 7);
 
     //Game Loop
     do
     {
 		ClearScreen();
 		TestGraph.DrawGraph();
-		TestGraph.AStarPathTest(0, 7);
+
 
 
     } while(!FrameworkUpdate());
