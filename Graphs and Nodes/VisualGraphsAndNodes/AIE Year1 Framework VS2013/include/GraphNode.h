@@ -17,6 +17,8 @@ public:
 	float y;
 	int textureHandle;
 	int nodeWeight;
+	float m_fCost;
+	float p_GScore;
 
 	struct Edge;
 
@@ -24,8 +26,8 @@ public:
 	struct Edge{
 		GraphNode* m_pStart;
 		GraphNode* m_pEnd;
-		float m_fCoast;
 		int gCost;
+		float hScore;
 	};
 
 	Edge myEdges;

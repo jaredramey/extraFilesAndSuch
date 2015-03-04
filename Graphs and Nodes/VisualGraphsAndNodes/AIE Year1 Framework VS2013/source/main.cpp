@@ -10,39 +10,28 @@ int main( int argc, char* argv[] )
     SetBackgroundColour(SColour(0, 0, 0, 255));
 
 	Graph TestGraph = Graph();
-	Graph OtherGraph = Graph();
-
 	TestGraph.CreateGraph();
-	OtherGraph.CreateGraph();
+	TestGraph.DisplayNeighbors();
+	TestGraph.ShortestPath(0, 1);
 
     //Game Loop
     do
     {
 		ClearScreen();
 		TestGraph.DrawGraph();
-		OtherGraph.DrawGraph();
-
-		TestGraph.ShortestPath(15, 0);
-		TestGraph.m_AI.DrawAI();
 
 		if (IsKeyDown('A'))
 		{
-			TestGraph.m_AI.DrawAI();
+			TestGraph.ShortestPath(15, 0);
 		}
 
 		if (IsKeyDown('S'))
 		{
-			OtherGraph.ShortestPath(0, 15);
-			OtherGraph.m_AI.DrawAI();
+			TestGraph.ShortestPath(0, 15);
 		}
 
-		if (IsKeyDown('R'))
-		{
-			TestGraph.ResetAI();
-			OtherGraph.ResetAI();
-		}
 
-		//DrawString("Note: Make sure to press 'R' to reset AI", 50.0f, 580.0f, SColour(255, 255, 255, 255));
+		TestGraph.m_AI.DrawAI();
 
     } while(!FrameworkUpdate());
 

@@ -49,6 +49,7 @@ void Graph::LinkNodes(GraphNode* a_pNode, GraphNode*a_pOtherNode)
 	a_pNode->myEdges.m_pStart = a_pNode;
 	a_pNode->myEdges.m_pEnd = a_pOtherNode;
 	a_pNode->connectedEdges.emplace_back(a_pNode->myEdges);
+		
 }
 
 void Graph::AddNode(GraphNode* a_pNode)
@@ -333,15 +334,15 @@ void Graph::CreateGraph()
 					LinkNodes(m_aNodes[i], m_aNodes[k]);
 				}
 			}
+			
 		}
 
 		for (int k = 0; k < m_aNodes[i]->connectedEdges.size(); k++)
 		{
 				m_aNodes[i]->connectedEdges[k].gCost = (m_aNodes[i]->nodeWeight + m_aNodes[i]->connectedEdges[k].m_pEnd->nodeWeight);
+				m_aNodes[i]->p_GScore = m_aNodes[i]->connectedEdges[k].gCost;
 		}
 	}
-
-	BuildPath(m_aNodes[0], m_aNodes[14]);
 }
 
 void Graph::CreateVisualNode(int NodeID, int a_texturePath, float a_x, float a_y)
@@ -359,11 +360,36 @@ void Graph::DrawGraph()
 		DrawSprite(m_aNodes[i]->textureHandle);
 	}
 
+	std::string gCostToDisplay;
+
 	for (int i = 0; i < m_aNodes.size(); i++)
 	{
 		for (int k = 0; k < m_aNodes[i]->connectedEdges.size(); k++)
 		{
+			gCostToDisplay = std::to_string(m_aNodes[i]->connectedEdges[k].gCost);
+			char const *pchar = gCostToDisplay.c_str();
+			if (m_aNodes[i]->connectedEdges[k].m_pEnd->x > m_aNodes[i]->x && m_aNodes[i]->connectedEdges[k].m_pEnd->y == m_aNodes[i]->y)
+			{
+				DrawString(pchar, ((m_aNodes[i]->connectedEdges[k].m_pEnd->x-100)), ((m_aNodes[i]->connectedEdges[k].m_pEnd->y)), SColour(255, 255, 255, 255));
+			}
+
+			if (m_aNodes[i]->connectedEdges[k].m_pEnd->y > m_aNodes[i]->y && m_aNodes[i]->connectedEdges[k].m_pEnd->x == m_aNodes[i]->x)
+			{
+				DrawString(pchar, ((m_aNodes[i]->connectedEdges[k].m_pEnd->x)), ((m_aNodes[i]->connectedEdges[k].m_pEnd->y-75)), SColour(255, 255, 255, 255));
+			}
+
+			if (m_aNodes[i]->connectedEdges[k].m_pEnd->y > m_aNodes[i]->y && m_aNodes[i]->connectedEdges[k].m_pEnd->x > m_aNodes[i]->x)
+			{
+				DrawString(pchar, ((m_aNodes[i]->connectedEdges[k].m_pEnd->x - 100)), ((m_aNodes[i]->connectedEdges[k].m_pEnd->y - 75)), SColour(255, 255, 255, 255));
+			}
+
+			if (m_aNodes[i]->connectedEdges[k].m_pEnd->y < m_aNodes[i]->y && m_aNodes[i]->connectedEdges[k].m_pEnd->x < m_aNodes[i]->x)
+			{
+				DrawString(pchar, ((m_aNodes[i]->connectedEdges[k].m_pEnd->x + 100)), ((m_aNodes[i]->connectedEdges[k].m_pEnd->y + 75)), SColour(255, 255, 255, 255));
+			}
+			//DrawString(pchar, ((m_aNodes[i]->connectedEdges[k].m_pEnd->x)), ((m_aNodes[i]->connectedEdges[k].m_pEnd->y)), SColour(255, 255, 255, 255));
 			DrawLine(m_aNodes[i]->x, m_aNodes[i]->y, m_aNodes[i]->connectedEdges[k].m_pEnd->x, m_aNodes[i]->connectedEdges[k].m_pEnd->y, SColour(215, 46, 0, 255));
+			
 		}
 	}
 }
@@ -450,29 +476,42 @@ void Graph::ShortestPath(int a_pStart, int a_pEnd)
 {
 	GraphNode* CurrentNode;
 	int AILast;
+	int p_aNewStart = a_pStart;
 
+	Reset:
 
 	if (AIPath.empty())
 	{
+		CurrentAINode = m_aNodes[a_pStart];
 		AIStart = 0;
-		if (a_pStart > a_pEnd)
+		GoalNode = m_aNodes[a_pEnd];
+		CurrentNode = CurrentAINode;
+
+		if (p_aNewStart > a_pEnd)
 		{
-			AIPath = BuildPath(m_aNodes[a_pEnd], m_aNodes[a_pStart]);
+			AIPath = BuildPath(m_aNodes[a_pEnd], m_aNodes[p_aNewStart]);
 			std::reverse(AIPath.begin(), AIPath.end());
 		}
 
 		else
 		{
-			AIPath = BuildPath(m_aNodes[a_pStart], m_aNodes[a_pEnd]);
+			AIPath = BuildPath(m_aNodes[p_aNewStart], m_aNodes[a_pEnd]);
 		}
+
 		m_AI.CreateAI(AIPath[AIStart]->x, AIPath[AIStart]->y, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true));
-		CurrentNode = AIPath[1];
 		AILast = AIPath.size();
 	}
 
 	else
 	{
 		CurrentNode = AIPath[CurrentNodeOnPath];
+	}
+
+	if (m_aNodes[a_pEnd] != GoalNode)
+	{
+		CurrentAINode = CurrentNode;
+		ResetAI();
+		goto Reset;
 	}
 
 		MoveSprite(m_AI.textureHandler, m_AI.x, m_AI.y);
@@ -547,6 +586,60 @@ void Graph::ShortestPath(int a_pStart, int a_pEnd)
 void Graph::ResetAI()
 {
 	AIPath.clear();
-	CurrentNodeOnPath = 0;
+	//CurrentNodeOnPath = 0;
 	AIStart = 0;
+}
+
+float Graph::GetHueristic(const GraphNode* a_pNode)
+{
+	return(std::sqrt(((CurrentAINode->x - GoalNode->x) * (CurrentAINode->x - GoalNode->x)) + ((CurrentAINode->y - GoalNode->y) * (CurrentAINode->y - GoalNode->y))));
+}
+
+bool Graph::ANodeCompare(const GraphNode* left, const GraphNode* right)
+{
+	float leftF = left->m_fCost + GetHueristic(left);
+	float RightF = right->m_fCost + GetHueristic(right);
+	return(leftF < RightF);
+}
+
+void Graph::AStarPath(GraphNode* a_pEnd)
+{
+	GraphNode* CurrentNode;
+	int AILast;
+	int p_aNewStart = CurrentAINode->m_iNodeNumber;
+
+Reset:
+
+	if (AIPath.empty())
+	{
+		AIStart = 0;
+		GoalNode = a_pEnd;
+		CurrentNode = CurrentAINode;
+
+		if (p_aNewStart > a_pEnd->m_iNodeNumber)
+		{
+			AIPath = BuildPath(a_pEnd, m_aNodes[p_aNewStart]);
+			std::reverse(AIPath.begin(), AIPath.end());
+		}
+
+		else
+		{
+			AIPath = BuildPath(m_aNodes[p_aNewStart], a_pEnd);
+		}
+
+		m_AI.CreateAI(AIPath[AIStart]->x, AIPath[AIStart]->y, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true));
+		AILast = AIPath.size();
+	}
+
+	else
+	{
+		CurrentNode = AIPath[CurrentNodeOnPath];
+	}
+
+	if (a_pEnd != GoalNode)
+	{
+		CurrentAINode = CurrentNode;
+		ResetAI();
+		goto Reset;
+	}
 }

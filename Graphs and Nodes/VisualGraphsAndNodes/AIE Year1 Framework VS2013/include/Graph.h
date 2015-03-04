@@ -27,6 +27,13 @@ public:
 		}
 	};
 
+	//struct AStar
+	//{
+	//	inline bool operator() (const GraphNode* left, const GraphNode* right)
+	//	{
+	//	}
+	//};
+
 	void GraphOther(unsigned int a_uiNodeCount);
 	void LinkNodes(GraphNode* a_pNode, GraphNode*a_pOtherNode);
 	void AddNode(GraphNode* a_pNode);
@@ -45,13 +52,18 @@ public:
 	void ShortestPath(int a_pStart, int a_pEnd);
 	void ResetAI();
 	void CreateAI(float x, float y);
+	float GetHueristic(const GraphNode* a_pNode);
+	bool ANodeCompare(const GraphNode* left, const GraphNode* right);
+	void AStarPath(GraphNode* a_pEnd);
 
 	AI m_AI;
 
 private:
 	NodeList m_aNodes;
 	NodeList AIPath;
-	int CurrentNodeOnPath;
+	GraphNode* CurrentAINode;
+	GraphNode* GoalNode;
+	int CurrentNodeOnPath = 0;
 	int AIStart;
 };
 

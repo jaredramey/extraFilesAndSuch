@@ -21,7 +21,6 @@ void AI::CreateAI(float a_x, float a_y, int a_w, int a_h, int texturePath)
 
 void AI::DrawAI()
 {
-	//MoveSprite(textureHandler, x ,y);
 	DrawSprite(textureHandler);
 }
 
