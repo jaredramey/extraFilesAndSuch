@@ -12,26 +12,14 @@ int main( int argc, char* argv[] )
 	Graph TestGraph = Graph();
 	TestGraph.CreateGraph();
 	TestGraph.DisplayNeighbors();
-	TestGraph.ShortestPath(0, 1);
 
     //Game Loop
     do
     {
 		ClearScreen();
 		TestGraph.DrawGraph();
+		TestGraph.AStarPathTest(0, 7);
 
-		if (IsKeyDown('A'))
-		{
-			TestGraph.ShortestPath(15, 0);
-		}
-
-		if (IsKeyDown('S'))
-		{
-			TestGraph.ShortestPath(0, 15);
-		}
-
-
-		TestGraph.m_AI.DrawAI();
 
     } while(!FrameworkUpdate());
 

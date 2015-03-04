@@ -89,18 +89,6 @@ void Graph::RemoveNode(GraphNode* a_pNode)
 			m_aNodes.erase(m_aNodes.begin() + (i - 1));
 		}
 	}
-	//Loop through the Node list again to fit ID's
-	/*for (int k = 0; k < m_aNodes.size(); k++)
-	{
-		//If the Node ID is greater then the Deleted Nodes value then fir the ID
-		if (m_aNodes[k]->m_iNodeNumber > a_pNode->m_iNodeNumber)
-		{
-			m_aNodes[k]->m_iNodeNumber -= 1;
-		}
-	}*/
-	
-	//Output the new size of the Node list (for debugging purposes)
-	//std::cout << m_aNodes.size() << std::endl;
 }
 
 void Graph::DisplayNeighbors()
@@ -341,6 +329,7 @@ void Graph::CreateGraph()
 		{
 				m_aNodes[i]->connectedEdges[k].gCost = (m_aNodes[i]->nodeWeight + m_aNodes[i]->connectedEdges[k].m_pEnd->nodeWeight);
 				m_aNodes[i]->p_GScore = m_aNodes[i]->connectedEdges[k].gCost;
+				m_aNodes[i]->connectedEdges[k].NT = eSurface;
 		}
 	}
 }
@@ -590,56 +579,82 @@ void Graph::ResetAI()
 	AIStart = 0;
 }
 
-float Graph::GetHueristic(const GraphNode* a_pNode)
+float Graph::GetHueristic(const GraphNode* a_pCurrent, const GraphNode* a_pEnd)
 {
-	return(std::sqrt(((CurrentAINode->x - GoalNode->x) * (CurrentAINode->x - GoalNode->x)) + ((CurrentAINode->y - GoalNode->y) * (CurrentAINode->y - GoalNode->y))));
+	return(std::sqrt(((a_pCurrent->x - a_pEnd->x) * (a_pCurrent->x - a_pEnd->x)) + ((a_pCurrent->y - a_pEnd->y) * (a_pCurrent->y - a_pEnd->y))));
 }
 
 bool Graph::ANodeCompare(const GraphNode* left, const GraphNode* right)
 {
-	float leftF = left->m_fCost + GetHueristic(left);
-	float RightF = right->m_fCost + GetHueristic(right);
+	float leftF = left->m_fCost;
+	float RightF = right->m_fCost;
 	return(leftF < RightF);
 }
 
-void Graph::AStarPath(GraphNode* a_pEnd)
+void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 {
+	NodeList OpenList;
+	NodeList ClosedList;
 	GraphNode* CurrentNode;
-	int AILast;
-	int p_aNewStart = CurrentAINode->m_iNodeNumber;
+	GraphNode* CurrentGoalNode;
 
-Reset:
-
-	if (AIPath.empty())
+	CurrentNode = a_pStart;
+	CurrentGoalNode = a_pEnd;
+	OpenList.emplace_back(CurrentNode);
+	
+	while (CurrentNode != CurrentGoalNode)
 	{
-		AIStart = 0;
-		GoalNode = a_pEnd;
-		CurrentNode = CurrentAINode;
-
-		if (p_aNewStart > a_pEnd->m_iNodeNumber)
+		for (int i = 0; i < OpenList.size(); i++)
 		{
-			AIPath = BuildPath(a_pEnd, m_aNodes[p_aNewStart]);
-			std::reverse(AIPath.begin(), AIPath.end());
+			//Loop through and set H and then F
+			for (int k = 0; k < CurrentNode->connectedEdges.size(); k++)
+			{
+				CurrentNode->connectedEdges[k].hScore = GetHueristic(CurrentNode, CurrentGoalNode);
+				CurrentNode->connectedEdges[k].fCost = (CurrentNode->connectedEdges[k].gCost + CurrentNode->connectedEdges[k].hScore);
+			}
+
+			//Set the Open list to all connected edges
+			for (int k = 0; k < CurrentNode->connectedEdges.size(); k++)
+			{
+				OpenList.emplace_back(CurrentNode->connectedEdges[k].m_pEnd);
+			}
+			//Loop through and set parents and children
+			for (int k = 0; k < OpenList.size(); k++)
+			{
+				//Set the current Node as the Parent node
+				OpenList[k]->Parent = CurrentNode;
+				//Set the Current Node as the Parent Node
+				CurrentNode->Children.emplace_back(OpenList[k]);
+			}
+
+			//Remove the Current Node from the Open List and move it onto the Closed list
+			OpenList.erase(OpenList.begin());
+			ClosedList.emplace_back(CurrentNode);
+
+			//Loop through and set FScore to the OpenList Nodes so it's accessable
+			for (int k = 0; k < CurrentNode->connectedEdges.size(); k++)
+			{
+				//for (int j = 0; j < TempList.size(); j++)
+				OpenList[k]->m_fCost = CurrentNode->connectedEdges[k].fCost;
+			}
+
+			//Sort to find the lowest Fscore
+			for (int k = 0; k < CurrentNode->connectedEdges.size(); k++)
+			{
+				std::sort(OpenList.begin(), OpenList.end(), AStarCompare());
+			}
+
+			//Set the one with the lowest Fscore as the current Node
+			CurrentNode = OpenList[0];
+			//clear the OpenList of Nodes
+			OpenList.clear();
+			//Repeat until the last Node in the Closed list is the Goal Node
 		}
-
-		else
-		{
-			AIPath = BuildPath(m_aNodes[p_aNewStart], a_pEnd);
-		}
-
-		m_AI.CreateAI(AIPath[AIStart]->x, AIPath[AIStart]->y, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true));
-		AILast = AIPath.size();
 	}
+}
 
-	else
-	{
-		CurrentNode = AIPath[CurrentNodeOnPath];
-	}
 
-	if (a_pEnd != GoalNode)
-	{
-		CurrentAINode = CurrentNode;
-		ResetAI();
-		goto Reset;
-	}
+void Graph::AStarPathTest(int a_start, int a_end)
+{
+	AStarPath(m_aNodes[a_start], m_aNodes[a_end]);
 }

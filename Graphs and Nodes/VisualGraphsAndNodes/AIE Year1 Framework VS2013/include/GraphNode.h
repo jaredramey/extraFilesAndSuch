@@ -5,6 +5,12 @@
 #include <string>
 #include <vector>
 
+enum NodeType
+{
+	eSurface,
+	eWall
+};
+
 class GraphNode
 {
 public:
@@ -28,10 +34,14 @@ public:
 		GraphNode* m_pEnd;
 		int gCost;
 		float hScore;
+		float fCost;
+		NodeType NT;
 	};
 
 	Edge myEdges;
 	EdgeList connectedEdges;
+	GraphNode* Parent;
+	std::vector<GraphNode*> Children;
 
 	void ConnectNodes(GraphNode& other);
 };
