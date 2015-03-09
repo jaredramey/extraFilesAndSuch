@@ -25,6 +25,8 @@ public:
 	int nodeWeight;
 	float m_fCost;
 	float p_GScore;
+	NodeType NT;
+	bool isTraversable;
 
 	struct Edge;
 
@@ -35,15 +37,12 @@ public:
 		int gCost;
 		float hScore;
 		float fCost;
-		NodeType NT;
 	};
 
 	Edge myEdges;
 	EdgeList connectedEdges;
 	GraphNode* Parent;
 	std::vector<GraphNode*> Children;
-
-	void ConnectNodes(GraphNode& other);
 };
 
 #endif //_GRAPH_H_

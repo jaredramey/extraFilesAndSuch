@@ -56,10 +56,12 @@ public:
 	void ResetAI();
 	void CreateAI(float x, float y);
 	float GetHueristic(const GraphNode* a_pStart, const GraphNode* a_pEnd);
-	bool ANodeCompare(const GraphNode* left, const GraphNode* right);
 	void AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd);
 	//Function to test AStarPAth
 	void AStarPathTest(int a_start, int a_end);
+	void AIAPath(float deltaTime, float velocity);
+	void ChangeNodeType(int a_pNode);
+	void PathSmooth();
 
 	AI m_AI;
 
@@ -68,7 +70,10 @@ private:
 	NodeList AIPath;
 	GraphNode* CurrentAINode;
 	GraphNode* GoalNode;
+	NodeList OpenList;
+	NodeList ClosedList;
 	int CurrentNodeOnPath = 0;
 	int AIStart;
+	int AIAPathNumber = 0;
 };
 

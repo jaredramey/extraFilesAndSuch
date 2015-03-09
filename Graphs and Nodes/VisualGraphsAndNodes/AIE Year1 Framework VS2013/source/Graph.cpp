@@ -276,7 +276,7 @@ void Graph::CreateGraph()
 			}
 		}
 
-		CreateVisualNode(i, CreateSprite("./images/crate_sideup.png", 64, 64, true), xPos, yPos);
+		CreateVisualNode(i, CreateSprite("./images/invaders/invaders_7_01.png", 64, 64, true), xPos, yPos);
 	}
 
 	for (int i = 0; i < m_aNodes.size(); i++)
@@ -329,7 +329,8 @@ void Graph::CreateGraph()
 		{
 				m_aNodes[i]->connectedEdges[k].gCost = (m_aNodes[i]->nodeWeight + m_aNodes[i]->connectedEdges[k].m_pEnd->nodeWeight);
 				m_aNodes[i]->p_GScore = m_aNodes[i]->connectedEdges[k].gCost;
-				m_aNodes[i]->connectedEdges[k].NT = eSurface;
+				m_aNodes[i]->NT = eSurface;
+				m_aNodes[i]->isTraversable = true;
 		}
 	}
 
@@ -587,17 +588,8 @@ float Graph::GetHueristic(const GraphNode* a_pCurrent, const GraphNode* a_pEnd)
 	return(std::sqrt(((a_pCurrent->x - a_pEnd->x) * (a_pCurrent->x - a_pEnd->x)) + ((a_pCurrent->y - a_pEnd->y) * (a_pCurrent->y - a_pEnd->y))));
 }
 
-bool Graph::ANodeCompare(const GraphNode* left, const GraphNode* right)
-{
-	float leftF = left->m_fCost;
-	float RightF = right->m_fCost;
-	return(leftF < RightF);
-}
-
 void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 {
-	NodeList OpenList;
-	NodeList ClosedList;
 	GraphNode* CurrentNode;
 	GraphNode* CurrentGoalNode;
 
@@ -657,10 +649,13 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 				for (int k = 0; k < OpenList.size(); k++)
 				{
 					//Set the one with the lowest Fscore as the current Node
-					if ((OpenList[k]->m_iNodeNumber > CurrentNode->m_iNodeNumber) && (OpenList[k]->x <= CurrentGoalNode->x && OpenList[k]->y <= CurrentGoalNode->y))
+					if ((OpenList[k]->m_iNodeNumber > CurrentNode->m_iNodeNumber)/* && (OpenList[k]->x <= CurrentGoalNode->x && OpenList[k]->y <= CurrentGoalNode->y)*/)
 					{
-						CurrentNode = OpenList[k];
-						break;
+						if (OpenList[k]->isTraversable == true)
+						{
+							CurrentNode = OpenList[k];
+							break;
+						}
 					}
 				}
 				//clear the OpenList of Nodes
@@ -674,9 +669,95 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 			}
 		}
 	}
+
+	if (CurrentNode == CurrentGoalNode)
+	{
+		ClosedList.emplace_back(CurrentNode);
+	}
+
+	PathSmooth();
 }
 
 void Graph::AStarPathTest(int a_start, int a_end)
 {
 	AStarPath(m_aNodes[a_start], m_aNodes[a_end]);
+}
+
+void Graph::AIAPath(float deltaTime, float velocity)
+{
+	GraphNode* CurrentNode;
+
+	if (AIAPathNumber != ClosedList.size())
+	{
+		CurrentNode = ClosedList[AIAPathNumber];
+	}
+	else
+	{
+		CurrentNode = NULL;
+	}
+
+	if (CurrentNode != NULL)
+	{
+		if (m_AI.x != CurrentNode->x)
+		{
+			if (CurrentNode->x > m_AI.x)
+			{
+				m_AI.x += (deltaTime * velocity);
+			}
+
+			else if (CurrentNode->x < m_AI.x)
+			{
+				m_AI.x -= (deltaTime * velocity);
+			}
+		}
+
+		if (m_AI.y != CurrentNode->y)
+		{
+			if (CurrentNode->y > m_AI.y)
+			{
+				m_AI.y += (deltaTime * velocity);
+			}
+
+			else if (CurrentNode->y < m_AI.y)
+			{
+				m_AI.y -= (deltaTime * velocity);
+			}
+		}
+
+		if ((m_AI.x >= CurrentNode->x && m_AI.y >= CurrentNode->y) && AIAPathNumber < ClosedList.size())
+		{
+			AIAPathNumber++;
+		}
+	}
+
+	MoveSprite(m_AI.textureHandler, m_AI.x, m_AI.y);
+}
+
+void Graph::ChangeNodeType(int a_pNode)
+{
+	m_aNodes[a_pNode]->NT = eWall;
+	m_aNodes[a_pNode]->isTraversable = false;
+	m_aNodes[a_pNode]->textureHandle = CreateSprite("./images/crate_sideup.png", 64, 64, true);
+}
+
+void Graph::PathSmooth()
+{
+	GraphNode* CurrentNode;
+	GraphNode* GoalNode = ClosedList[ClosedList.size()-1];
+
+	for (int i = 0; i < ClosedList.size(); i++)
+	{
+		ClosedList[i]->m_fCost = (ClosedList[i]->p_GScore + GetHueristic(ClosedList[i], GoalNode));
+	}
+
+	for (int i = 0; i < ClosedList.size(); i++)
+	{
+		if (i+2 < ClosedList.size())
+		{
+			if ((ClosedList[i]->m_fCost + ClosedList[i + 2]->m_fCost) < (ClosedList[i]->m_fCost + ClosedList[i + 1]->m_fCost))
+			{
+				ClosedList.erase(ClosedList.begin() + (i + 1));
+			}
+		}
+	}
 }

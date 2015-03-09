@@ -1,49 +1,8 @@
-﻿Build started 3/4/2015 12:51:22 PM.
+﻿Build started 3/9/2015 3:43:26 PM.
      1>Project "C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\AIE Template.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./ /I./include/ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\\" /Fd"obj\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt source\Graph.cpp
-         Graph.cpp
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(14): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(19): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(21): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(35): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(70): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(72): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(83): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(96): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(98): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(124): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(147): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(150): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(161): warning C4018: '>' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(178): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(206): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(237): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(250): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(282): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(284): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(328): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(331): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(349): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(357): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(359): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(365): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(370): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(375): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(380): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(383): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(393): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(414): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(418): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(449): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(451): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(610): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(613): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(620): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(625): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(638): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(645): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(657): warning C4018: '<' : signed/unsigned mismatch
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./ /I./include/ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\\" /Fd"obj\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt source\main.cpp
+         main.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"bin\AIE Template_d.exe" /INCREMENTAL /NOLOGO /LIBPATH:./libs AIE_1st_Year_Framework_d.lib kernel32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"bin\AIE Template_d.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"bin\AIE Template_d.lib" /MACHINE:X86 obj\AI.obj
          obj\Graph.obj
@@ -82,4 +41,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.51
+Time Elapsed 00:00:01.79
