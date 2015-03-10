@@ -1,4 +1,4 @@
-﻿Build started 3/9/2015 3:43:26 PM.
+﻿Build started 3/9/2015 5:48:40 PM.
      1>Project "C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\AIE Template.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./ /I./include/ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\\" /Fd"obj\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt source\main.cpp

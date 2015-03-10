@@ -15,7 +15,9 @@ int main( int argc, char* argv[] )
 	TestGraph.ChangeNodeType(2);
 	TestGraph.ChangeNodeType(6);
 	TestGraph.ChangeNodeType(10);
-	TestGraph.AStarPathTest(0, 15);
+	TestGraph.AStarPathTest(0, 14);
+	TestGraph.PathSmooth();
+	TestGraph.PathSmooth();
 
 
     //Game Loop

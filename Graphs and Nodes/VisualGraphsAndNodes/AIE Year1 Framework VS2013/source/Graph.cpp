@@ -333,7 +333,7 @@ void Graph::CreateGraph()
 				m_aNodes[i]->isTraversable = true;
 		}
 	}
-
+	ResetVisited();
 	m_AI.CreateAI(0, 0, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true));
 
 }
@@ -599,6 +599,7 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 	while (CurrentNode != CurrentGoalNode)
 	{
 		OpenList.emplace_back(CurrentNode);
+		CurrentNode->m_bVisited = true;
 		for (int i = 0; i < OpenList.size(); i++)
 		{
 			//Loop through and set H and then F
@@ -649,7 +650,7 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 				for (int k = 0; k < OpenList.size(); k++)
 				{
 					//Set the one with the lowest Fscore as the current Node
-					if ((OpenList[k]->m_iNodeNumber > CurrentNode->m_iNodeNumber)/* && (OpenList[k]->x <= CurrentGoalNode->x && OpenList[k]->y <= CurrentGoalNode->y)*/)
+					if ((OpenList[k]->m_bVisited == false)/* && (OpenList[k]->x <= CurrentGoalNode->x && OpenList[k]->y <= CurrentGoalNode->y)*/)
 					{
 						if (OpenList[k]->isTraversable == true)
 						{
@@ -674,8 +675,6 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 	{
 		ClosedList.emplace_back(CurrentNode);
 	}
-
-	PathSmooth();
 }
 
 void Graph::AStarPathTest(int a_start, int a_end)
@@ -715,12 +714,12 @@ void Graph::AIAPath(float deltaTime, float velocity)
 		{
 			if (CurrentNode->y > m_AI.y)
 			{
-				m_AI.y += (deltaTime * velocity);
+				m_AI.y += (deltaTime * velocity)*2;
 			}
 
 			else if (CurrentNode->y < m_AI.y)
 			{
-				m_AI.y -= (deltaTime * velocity);
+				m_AI.y -= (deltaTime * velocity)*2;
 			}
 		}
 
@@ -752,7 +751,7 @@ void Graph::PathSmooth()
 
 	for (int i = 0; i < ClosedList.size(); i++)
 	{
-		if (i+2 < ClosedList.size())
+		if (i+2 <= ClosedList.size()-1)
 		{
 			if ((ClosedList[i]->m_fCost + ClosedList[i + 2]->m_fCost) < (ClosedList[i]->m_fCost + ClosedList[i + 1]->m_fCost))
 			{
