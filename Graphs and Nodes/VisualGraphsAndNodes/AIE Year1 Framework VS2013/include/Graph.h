@@ -62,6 +62,7 @@ public:
 	void AIAPath(float deltaTime, float velocity);
 	void ChangeNodeType(int a_pNode);
 	void PathSmooth();
+	void CheckMouseClick();
 
 	AI m_AI;
 
@@ -72,6 +73,8 @@ private:
 	GraphNode* GoalNode;
 	NodeList OpenList;
 	NodeList ClosedList;
+	GraphNode* StartNode = NULL;
+	GraphNode* EndNode = NULL;
 	int CurrentNodeOnPath = 0;
 	int AIStart;
 	int AIAPathNumber = 0;

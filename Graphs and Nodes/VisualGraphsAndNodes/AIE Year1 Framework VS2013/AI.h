@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "AIE.h"
 
 class AI
@@ -10,9 +11,12 @@ public:
 	float x, y;
 	int width, height;
 	int textureHandler;
+	
+	
 
-	void CreateAI(float a_x, float a_y, int a_w, int a_h, int texturePath);
+	void CreateAI(int a_w, int a_h, int texturePath);
 	void DrawAI();
 	void UpdateAI(float a_x, float a_y);
+	virtual void UpdateAgent(float a_x, float a_y);
 };
 

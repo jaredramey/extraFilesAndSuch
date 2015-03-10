@@ -334,7 +334,7 @@ void Graph::CreateGraph()
 		}
 	}
 	ResetVisited();
-	m_AI.CreateAI(0, 0, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true));
+	m_AI.CreateAI(96, 48, CreateSprite("./images/cannon.png", 96, 48, true));
 
 }
 
@@ -585,7 +585,14 @@ void Graph::ResetAI()
 
 float Graph::GetHueristic(const GraphNode* a_pCurrent, const GraphNode* a_pEnd)
 {
-	return(std::sqrt(((a_pCurrent->x - a_pEnd->x) * (a_pCurrent->x - a_pEnd->x)) + ((a_pCurrent->y - a_pEnd->y) * (a_pCurrent->y - a_pEnd->y))));
+	if (a_pCurrent != NULL && a_pEnd != NULL)
+	{
+		return(std::sqrt(((a_pCurrent->x - a_pEnd->x) * (a_pCurrent->x - a_pEnd->x)) + ((a_pCurrent->y - a_pEnd->y) * (a_pCurrent->y - a_pEnd->y))));
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
@@ -605,7 +612,7 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 			//Loop through and set H and then F
 			for (int k = 0; k < CurrentNode->connectedEdges.size(); k++)
 			{
-				CurrentNode->connectedEdges[k].hScore = GetHueristic(CurrentNode, CurrentGoalNode);
+				CurrentNode->connectedEdges[k].hScore = GetHueristic(CurrentNode->connectedEdges[k].m_pEnd, CurrentGoalNode);
 				CurrentNode->connectedEdges[k].fCost = (CurrentNode->connectedEdges[k].gCost + CurrentNode->connectedEdges[k].hScore);
 			}
 
@@ -640,6 +647,7 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 				if (CurrentNode->connectedEdges[k].m_pEnd == a_pEnd)
 				{
 					CurrentNode = CurrentNode->connectedEdges[k].m_pEnd;
+					CurrentNode->m_bVisited = true;
 					break;
 				}
 			}
@@ -675,6 +683,14 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 	{
 		ClosedList.emplace_back(CurrentNode);
 	}
+
+	//PathSmooth();
+	//PathSmooth();
+
+	if (ClosedList.size() > 1)
+	{
+		m_AI.UpdateAI(ClosedList[0]->x, ClosedList[0]->y);
+	}
 }
 
 void Graph::AStarPathTest(int a_start, int a_end)
@@ -684,59 +700,74 @@ void Graph::AStarPathTest(int a_start, int a_end)
 
 void Graph::AIAPath(float deltaTime, float velocity)
 {
-	GraphNode* CurrentNode;
+	if (ClosedList.size() > 0)
+	{
+		GraphNode* CurrentNode;
+		int LastPos = ClosedList.size() - 1;
 
-	if (AIAPathNumber != ClosedList.size())
-	{
-		CurrentNode = ClosedList[AIAPathNumber];
-	}
-	else
-	{
-		CurrentNode = NULL;
-	}
-
-	if (CurrentNode != NULL)
-	{
-		if (m_AI.x != CurrentNode->x)
+		if (AIAPathNumber < ClosedList.size())
 		{
-			if (CurrentNode->x > m_AI.x)
+			CurrentNode = ClosedList[AIAPathNumber];
+		}
+		else
+		{
+			CurrentNode = ClosedList[LastPos];
+		}
+
+		if (CurrentNode != NULL)
+		{
+			if (m_AI.x != CurrentNode->x)
 			{
-				m_AI.x += (deltaTime * velocity);
+				if (CurrentNode->x > m_AI.x)
+				{
+					m_AI.x += (deltaTime * velocity);
+				}
+
+				else if (CurrentNode->x < m_AI.x)
+				{
+					m_AI.x -= (deltaTime * velocity);
+				}
 			}
 
-			else if (CurrentNode->x < m_AI.x)
+			if (m_AI.y != CurrentNode->y)
 			{
-				m_AI.x -= (deltaTime * velocity);
+				if (CurrentNode->y > m_AI.y)
+				{
+					m_AI.y += (deltaTime * velocity) * 2;
+				}
+
+				else if (CurrentNode->y < m_AI.y)
+				{
+					m_AI.y -= (deltaTime * velocity) * 2;
+				}
+			}
+
+			if (((m_AI.x >= (CurrentNode->x + 50) || m_AI.x >= (CurrentNode->x - 50)) && (m_AI.y >= (CurrentNode->y + 50) || m_AI.y >= (CurrentNode->y - 50))))
+			{
+				AIAPathNumber++;
+				goto end;
 			}
 		}
 
-		if (m_AI.y != CurrentNode->y)
-		{
-			if (CurrentNode->y > m_AI.y)
-			{
-				m_AI.y += (deltaTime * velocity)*2;
-			}
-
-			else if (CurrentNode->y < m_AI.y)
-			{
-				m_AI.y -= (deltaTime * velocity)*2;
-			}
-		}
-
-		if ((m_AI.x >= CurrentNode->x && m_AI.y >= CurrentNode->y) && AIAPathNumber < ClosedList.size())
-		{
-			AIAPathNumber++;
-		}
+		end:
+		MoveSprite(m_AI.textureHandler, m_AI.x, m_AI.y);
 	}
-
-	MoveSprite(m_AI.textureHandler, m_AI.x, m_AI.y);
 }
 
 void Graph::ChangeNodeType(int a_pNode)
 {
-	m_aNodes[a_pNode]->NT = eWall;
-	m_aNodes[a_pNode]->isTraversable = false;
-	m_aNodes[a_pNode]->textureHandle = CreateSprite("./images/crate_sideup.png", 64, 64, true);
+	if (m_aNodes[a_pNode]->isTraversable == true)
+	{
+		m_aNodes[a_pNode]->NT = eWall;
+		m_aNodes[a_pNode]->isTraversable = false;
+		m_aNodes[a_pNode]->textureHandle = CreateSprite("./images/crate_sideup.png", 64, 64, true);
+	}
+	else
+	{
+		m_aNodes[a_pNode]->NT = eSurface;
+		m_aNodes[a_pNode]->isTraversable = true;
+		m_aNodes[a_pNode]->textureHandle = CreateSprite("./images/invaders/invaders_7_01.png", 64, 64, true);
+	}
 }
 
 void Graph::PathSmooth()
@@ -760,3 +791,121 @@ void Graph::PathSmooth()
 		}
 	}
 }
+
+void Graph::CheckMouseClick()
+{
+	double mXPos, mYPos;
+
+	if (GetMouseButtonDown(0) && IsKeyDown('C'))
+	{
+		GetMouseLocation(mXPos, mYPos);
+		for (int i = 0; i < m_aNodes.size(); i++)
+		{
+			if ((mXPos <= m_aNodes[i]->x + 50 && mYPos <= m_aNodes[i]->y + 50) && (mXPos >= m_aNodes[i]->x - 50 && mYPos >= m_aNodes[i]->y - 50))
+			{
+				if (i < 4)
+				{
+					ChangeNodeType(m_aNodes[i + 12]->m_iNodeNumber);
+					break;
+				}
+				else if (i < 8)
+				{
+					ChangeNodeType(m_aNodes[i + 4]->m_iNodeNumber);
+					break;
+				}
+				else if (i < 12)
+				{
+					ChangeNodeType(m_aNodes[i - 4]->m_iNodeNumber);
+					break;
+				}
+				else
+				{
+					ChangeNodeType(m_aNodes[i - 12]->m_iNodeNumber);
+					break;
+				}
+			}
+		}
+	}
+
+	else if (GetMouseButtonDown(0) && IsKeyDown('S'))
+	{
+		GetMouseLocation(mXPos, mYPos);
+		for (int i = 0; i < m_aNodes.size(); i++)
+		{
+			if ((mXPos <= m_aNodes[i]->x + 50 && mYPos <= m_aNodes[i]->y + 50) && (mXPos >= m_aNodes[i]->x - 50 && mYPos >= m_aNodes[i]->y - 50))
+			{
+				if (i < 4)
+				{
+					StartNode = m_aNodes[i + 12];
+					MoveSprite(m_AI.textureHandler, StartNode->x, StartNode->y);
+					std::cout << "Start Selected" << std::endl;
+					break;
+				}
+				else if (i < 8)
+				{
+					StartNode = m_aNodes[i + 4];
+					MoveSprite(m_AI.textureHandler, StartNode->x, StartNode->y);
+					break;
+				}
+				else if (i < 12)
+				{
+					StartNode = m_aNodes[i - 4];
+					MoveSprite(m_AI.textureHandler, StartNode->x, StartNode->y);
+					break;
+				}
+				else
+				{
+					StartNode = m_aNodes[i - 12];
+					MoveSprite(m_AI.textureHandler, StartNode->x, StartNode->y);
+					break;
+				}
+			}
+		}
+	}
+
+	else if (GetMouseButtonDown(0) && IsKeyDown('E'))
+	{
+		GetMouseLocation(mXPos, mYPos);
+		for (int i = 0; i < m_aNodes.size(); i++)
+		{
+			if ((mXPos <= m_aNodes[i]->x + 50 && mYPos <= m_aNodes[i]->y + 50) && (mXPos >= m_aNodes[i]->x - 50 && mYPos >= m_aNodes[i]->y - 50))
+			{
+				if (i < 4)
+				{
+					EndNode = m_aNodes[i + 12];
+					break;
+				}
+				else if (i < 8)
+				{
+					EndNode = m_aNodes[i + 4];
+					break;
+				}
+				else if (i < 12)
+				{
+					EndNode = m_aNodes[i - 4];
+					break;
+				}
+				else
+				{
+					EndNode = m_aNodes[i - 12];
+					break;
+				}
+			}
+		}
+		if (ClosedList.size()>0)
+		{
+			ClosedList.clear();
+		}
+	}
+
+
+	if (StartNode != NULL && EndNode != NULL)
+	{
+		AStarPath(StartNode, EndNode);
+		StartNode = EndNode;
+		EndNode = NULL;
+		AIAPathNumber = 0;
+	}
+}
+
+// || mPos.x >= m_aNodes[i]->x - 50     || mPos.y >= m_aNodes[i]->y - 50
