@@ -2,6 +2,7 @@
 #include "AIE.h"
 #include "Graph.h"
 #include "GraphNode.h"
+#include "Agent.h"
 
 int main( int argc, char* argv[] )
 {	

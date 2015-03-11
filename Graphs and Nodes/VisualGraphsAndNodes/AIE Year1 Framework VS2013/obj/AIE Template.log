@@ -1,48 +1,141 @@
-﻿Build started 3/10/2015 2:20:12 PM.
+﻿Build started 3/10/2015 5:52:43 PM.
      1>Project "C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\AIE Template.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./ /I./include/ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\\" /Fd"obj\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt AI.cpp source\Graph.cpp source\main.cpp
-         AI.cpp
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./ /I./include/ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\\" /Fd"obj\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt AI.cpp source\Graph.cpp
          Graph.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"bin\AIE Template_d.exe" /INCREMENTAL /NOLOGO /LIBPATH:./libs AIE_1st_Year_Framework_d.lib kernel32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"bin\AIE Template_d.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"bin\AIE Template_d.lib" /MACHINE:X86 obj\AI.obj
-         obj\Graph.obj
-         obj\GraphNode.obj
-         obj\main.obj
-         AIE_1st_Year_Framework_d.lib(SOIL.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
-     1>LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
-     1>AI.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
-     1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-         Generating code
-         Finished generating code
-     1>AIE_1st_Year_Framework_d.lib(SOIL.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(SOIL.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc110.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(stb_image_aug.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(stb_image_aug.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc110.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(image_helper.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(image_helper.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc110.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(image_DXT.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(image_DXT.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc110.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(tinystr.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(tinystr.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(tinyxml.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(tinyxml.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(tinyxmlerror.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(tinyxmlerror.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(tinyxmlHelper.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(tinyxmlHelper.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(tinyxmlparser.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(tinyxmlparser.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(AIE.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(AIE.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(AIE_Framework.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(AIE_Framework.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(BasicSprite.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(BasicSprite.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(Font.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(Font.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(FontManager.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(FontManager.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(Gizmos.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(Gizmos.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(SpriteManager.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(SpriteManager.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(strHandler.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(strHandler.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(Texture.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(Texture.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(TextureManager.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(TextureManager.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(Utilities.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(Utilities.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc120.pdb'; linking object as if no debug info
-     1>AIE_1st_Year_Framework_d.lib(glew.obj) : warning LNK4099: PDB 'vc100.pdb' was not found with 'AIE_1st_Year_Framework_d.lib(glew.obj)' or at 'C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\vc100.pdb'; linking object as if no debug info
-         AIE Template.vcxproj -> C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\bin\AIE Template_d.exe
-     1>Done Building Project "C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\AIE Template.vcxproj" (Build target(s)).
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(14): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(19): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(21): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(35): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(70): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(72): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(83): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(96): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(98): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(124): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(147): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(150): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(161): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(178): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(206): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(237): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(250): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(282): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(284): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(328): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(331): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(350): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(358): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(360): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(366): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(371): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(376): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(381): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(384): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(394): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(415): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(419): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(450): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(452): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(510): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(510): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(510): error C2661: 'MoveSprite' : no overloaded function takes 1 arguments
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(514): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(516): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(519): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(521): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(526): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(528): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(531): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(533): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(537): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(537): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(547): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(549): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(552): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(554): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(559): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(561): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(564): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(566): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(570): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(570): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(610): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(613): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(620): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(625): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(638): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(645): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(658): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(708): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(719): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(721): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(723): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(726): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(728): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(732): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(734): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(736): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(739): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(741): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(745): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(745): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(753): error C2039: 'x' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(753): error C2039: 'y' : is not a member of 'AI'
+                 c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.h(6) : see declaration of 'AI'
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(753): error C2661: 'MoveSprite' : no overloaded function takes 1 arguments
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(778): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(783): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(785): warning C4018: '<=' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(802): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(833): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\source\graph.cpp(869): warning C4018: '<' : signed/unsigned mismatch
+         AI.cpp
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.cpp(27): error C2065: 'x' : undeclared identifier
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.cpp(28): error C2065: 'y' : undeclared identifier
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.cpp(33): error C2065: 'x' : undeclared identifier
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\graphs and nodes\visualgraphsandnodes\aie year1 framework vs2013\ai.cpp(34): error C2065: 'y' : undeclared identifier
+         Generating Code...
+     1>cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
+     1>Done Building Project "C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\Graphs and Nodes\VisualGraphsAndNodes\AIE Year1 Framework VS2013\AIE Template.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:01.67
+Time Elapsed 00:00:00.84

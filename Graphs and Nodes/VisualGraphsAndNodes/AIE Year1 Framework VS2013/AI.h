@@ -8,10 +8,10 @@ public:
 	AI();
 	~AI();
 
-	float x, y;
+	float AI_X, AI_Y;
 	int width, height;
 	int textureHandler;
-	
+	//std::vector<float> transform;
 	
 
 	void CreateAI(int a_w, int a_h, int texturePath);

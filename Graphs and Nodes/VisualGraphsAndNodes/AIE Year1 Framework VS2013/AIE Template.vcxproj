@@ -90,15 +90,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Agent.cpp" />
     <ClCompile Include="AI.cpp" />
+    <ClCompile Include="Seek.cpp" />
     <ClCompile Include="source\Graph.cpp" />
     <ClCompile Include="source\GraphNode.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="SteeringBehavior.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Agent.h" />
     <ClInclude Include="AI.h" />
     <ClInclude Include="include\Graph.h" />
     <ClInclude Include="include\GraphNode.h" />
+    <ClInclude Include="Seek.h" />
+    <ClInclude Include="SteeringBehavior.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
