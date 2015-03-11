@@ -92,6 +92,8 @@
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="AI.cpp" />
+    <ClCompile Include="Flee.cpp" />
+    <ClCompile Include="Global.cpp" />
     <ClCompile Include="Seek.cpp" />
     <ClCompile Include="source\Graph.cpp" />
     <ClCompile Include="source\GraphNode.cpp" />
@@ -101,8 +103,11 @@
   <ItemGroup>
     <ClInclude Include="Agent.h" />
     <ClInclude Include="AI.h" />
+    <ClInclude Include="Flee.h" />
+    <ClInclude Include="Global.h" />
     <ClInclude Include="include\Graph.h" />
     <ClInclude Include="include\GraphNode.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="Seek.h" />
     <ClInclude Include="SteeringBehavior.h" />
   </ItemGroup>

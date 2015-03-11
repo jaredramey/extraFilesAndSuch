@@ -64,7 +64,7 @@ public:
 	void PathSmooth();
 	void CheckMouseClick();
 
-	AI m_AI;
+	AI* m_AI;
 
 private:
 	NodeList m_aNodes;

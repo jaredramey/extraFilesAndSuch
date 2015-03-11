@@ -1,6 +1,10 @@
+#ifndef _AI_h_
+#define _AI_h_
 #pragma once
 #include <vector>
 #include "AIE.h"
+#include "Point.h"
+#include "SteeringBehavior.h"
 
 class AI
 {
@@ -8,15 +12,16 @@ public:
 	AI();
 	~AI();
 
-	float AI_X, AI_Y;
+	float x = 0, y = 0;
 	int width, height;
 	int textureHandler;
-	//std::vector<float> transform;
+	Point Transfrom;
 	
 
 	void CreateAI(int a_w, int a_h, int texturePath);
 	void DrawAI();
 	void UpdateAI(float a_x, float a_y);
-	virtual void UpdateAgent(float a_x, float a_y);
+	virtual void UpdateAgent(SteeringBehavior* a_behavior, Agent* Target, Point DeltaTime) = 0;
 };
+#endif
 

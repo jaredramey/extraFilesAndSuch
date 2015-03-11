@@ -1,5 +1,8 @@
+#ifndef _SteeringBehavior_h_
+#define _SteeringBehavior_h_
 #pragma once
 #include <vector>
+#include "Point.h"
 
 class Agent;
 
@@ -9,8 +12,9 @@ public:
 	SteeringBehavior();
 	~SteeringBehavior();
 
-	Agent* owner = nullptr;
-
-	//virtual std::vector<float> GetForce() = 0;
+	Agent* owner;
+	
+	virtual Point GetForce() = 0;
 };
 
+#endif

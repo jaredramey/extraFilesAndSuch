@@ -1,19 +1,26 @@
 #include "Seek.h"
 #include "Agent.h"
 
-
-Seek::Seek()
+Seek::Seek() : SteeringBehavior()
 {
+}
+
+Seek::Seek(Agent* in_target)
+{
+	sTarget = in_target;
 }
 
 Seek::~Seek()
 {
 }
 
-//std::vector<float> Seek::GetForce()
-//{
-//	std::vector<float> force = { (std::sqrt(Target->Pos[0] + Target->Velocity[0]) - owner->Pos[0]), (std::sqrt(Target->Pos[1] + Target->Velocity[1]) - owner->Pos[1]) };
-//	force[0] *= owner->maxVelocity;
-//	force[0] *= owner->maxVelocity;
-//	return force;
-//}
+Point Seek::GetForce()
+{
+	Point force = sTarget->Pos - owner->Pos;
+	float magnitude = std::sqrt((force.x * force.x) + (force.y * force.y));
+	force.x = force.x / magnitude;
+	force.y = force.y / magnitude;
+	force.x = force.x * owner->maxVelocity;
+	force.y = force.y * owner->maxVelocity;
+	return force - owner->Velocity;
+}

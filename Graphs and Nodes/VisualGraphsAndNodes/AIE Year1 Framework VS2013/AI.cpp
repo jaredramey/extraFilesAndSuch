@@ -27,9 +27,3 @@ void AI::UpdateAI(float a_x, float a_y)
 	x = a_x;
 	y = a_y;
 }
-
-void AI::UpdateAgent(float a_x, float a_y)
-{
-	x = a_x;
-	y = a_y;
-}

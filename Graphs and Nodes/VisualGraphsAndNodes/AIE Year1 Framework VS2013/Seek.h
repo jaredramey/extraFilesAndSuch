@@ -1,3 +1,5 @@
+#ifndef _Seek_h
+#define _Seek_h_
 #pragma once
 #include "SteeringBehavior.h"
 
@@ -5,10 +7,13 @@ class Seek : public SteeringBehavior
 {
 public:
 	Seek();
+	Seek(Agent* in_target);
 	~Seek();
 
-	Agent* Target;
+	Agent* sTarget;
 
-	//std::vector<float> GetForce() = 0;
+	Point GetForce();
 };
+
+#endif _Seek_h_
 

@@ -334,7 +334,7 @@ void Graph::CreateGraph()
 		}
 	}
 	ResetVisited();
-	m_AI.CreateAI(96, 48, CreateSprite("./images/cannon.png", 96, 48, true));
+	m_AI->CreateAI(96, 48, CreateSprite("./images/cannon.png", 96, 48, true));
 
 }
 
@@ -507,34 +507,34 @@ void Graph::ShortestPath(int a_pStart, int a_pEnd)
 		goto Reset;
 	}
 
-		MoveSprite(m_AI.textureHandler, m_AI.x, m_AI.y);
+	MoveSprite(m_AI->textureHandler, m_AI->x, m_AI->y);
 
 		if (a_pStart < a_pEnd)
 		{
-			if (m_AI.x <= CurrentNode->x)
+			if (m_AI->x <= CurrentNode->x)
 			{
-				m_AI.x += 0.25f;
+				m_AI->x += 0.25f;
 			}
 
-			if (m_AI.y <= CurrentNode->y)
+			if (m_AI->y <= CurrentNode->y)
 			{
-				m_AI.y += 0.25f;
+				m_AI->y += 0.25f;
 			}
 
 			if (CurrentNode == m_aNodes[a_pEnd])
 			{
-				if (m_AI.x >= CurrentNode->x)
+				if (m_AI->x >= CurrentNode->x)
 				{
-					m_AI.x -= 0.25f;
+					m_AI->x -= 0.25f;
 				}
 
-				if (m_AI.y >= CurrentNode->y)
+				if (m_AI->y >= CurrentNode->y)
 				{
-					m_AI.y -= 0.25f;
+					m_AI->y -= 0.25f;
 				}
 			}
 
-			if (CurrentNode != m_aNodes[a_pEnd] && ((m_AI.x >= CurrentNode->x) && (m_AI.y >= CurrentNode->y)))
+			if (CurrentNode != m_aNodes[a_pEnd] && ((m_AI->x >= CurrentNode->x) && (m_AI->y >= CurrentNode->y)))
 			{
 				AIStart += 1;
 			}
@@ -544,30 +544,30 @@ void Graph::ShortestPath(int a_pStart, int a_pEnd)
 
 		if (a_pStart > a_pEnd)
 		{
-			if (m_AI.x >= CurrentNode->x)
+			if (m_AI->x >= CurrentNode->x)
 			{
-				m_AI.x -= 0.25f;
+				m_AI->x -= 0.25f;
 			}
 
-			if (m_AI.y >= CurrentNode->y)
+			if (m_AI->y >= CurrentNode->y)
 			{
-				m_AI.y -= 0.25f;
+				m_AI->y -= 0.25f;
 			}
 
 			if (CurrentNode == m_aNodes[a_pEnd])
 			{
-				if (m_AI.x <= CurrentNode->x)
+				if (m_AI->x <= CurrentNode->x)
 				{
-					m_AI.x += 0.25f;
+					m_AI->x += 0.25f;
 				}
 
-				if (m_AI.y <= CurrentNode->y)
+				if (m_AI->y <= CurrentNode->y)
 				{
-					m_AI.y += 0.25f;
+					m_AI->y += 0.25f;
 				}
 			}
 
-			if (CurrentNode != m_aNodes[a_pEnd] && ((m_AI.x <= CurrentNode->x) && (m_AI.y <= CurrentNode->y)))
+			if (CurrentNode != m_aNodes[a_pEnd] && ((m_AI->x <= CurrentNode->x) && (m_AI->y <= CurrentNode->y)))
 			{
 				AIStart += 1;
 			}
@@ -689,7 +689,7 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 
 	if (ClosedList.size() > 1)
 	{
-		m_AI.UpdateAI(ClosedList[0]->x, ClosedList[0]->y);
+		m_AI->UpdateAI(ClosedList[0]->x, ClosedList[0]->y);
 	}
 }
 
@@ -716,33 +716,33 @@ void Graph::AIAPath(float deltaTime, float velocity)
 
 		if (CurrentNode != NULL)
 		{
-			if (m_AI.x != CurrentNode->x)
+			if (m_AI->x != CurrentNode->x)
 			{
-				if (CurrentNode->x > m_AI.x)
+				if (CurrentNode->x > m_AI->x)
 				{
-					m_AI.x += (deltaTime * velocity);
+					m_AI->x += (deltaTime * velocity);
 				}
 
-				else if (CurrentNode->x < m_AI.x)
+				else if (CurrentNode->x < m_AI->x)
 				{
-					m_AI.x -= (deltaTime * velocity);
+					m_AI->x -= (deltaTime * velocity);
 				}
 			}
 
-			if (m_AI.y != CurrentNode->y)
+			if (m_AI->y != CurrentNode->y)
 			{
-				if (CurrentNode->y > m_AI.y)
+				if (CurrentNode->y > m_AI->y)
 				{
-					m_AI.y += (deltaTime * velocity) * 2;
+					m_AI->y += (deltaTime * velocity) * 2;
 				}
 
-				else if (CurrentNode->y < m_AI.y)
+				else if (CurrentNode->y < m_AI->y)
 				{
-					m_AI.y -= (deltaTime * velocity) * 2;
+					m_AI->y -= (deltaTime * velocity) * 2;
 				}
 			}
 
-			if (((m_AI.x >= (CurrentNode->x + 50) || m_AI.x >= (CurrentNode->x - 50)) && (m_AI.y >= (CurrentNode->y + 50) || m_AI.y >= (CurrentNode->y - 50))))
+			if (((m_AI->x >= (CurrentNode->x + 50) || m_AI->x >= (CurrentNode->x - 50)) && (m_AI->y >= (CurrentNode->y + 50) || m_AI->y >= (CurrentNode->y - 50))))
 			{
 				AIAPathNumber++;
 				goto end;
@@ -750,7 +750,7 @@ void Graph::AIAPath(float deltaTime, float velocity)
 		}
 
 		end:
-		MoveSprite(m_AI.textureHandler, m_AI.x, m_AI.y);
+		MoveSprite(m_AI->textureHandler, m_AI->x, m_AI->y);
 	}
 }
 
@@ -837,26 +837,26 @@ void Graph::CheckMouseClick()
 				if (i < 4)
 				{
 					StartNode = m_aNodes[i + 12];
-					MoveSprite(m_AI.textureHandler, StartNode->x, StartNode->y);
+					MoveSprite(m_AI->textureHandler, StartNode->x, StartNode->y);
 					std::cout << "Start Selected" << std::endl;
 					break;
 				}
 				else if (i < 8)
 				{
 					StartNode = m_aNodes[i + 4];
-					MoveSprite(m_AI.textureHandler, StartNode->x, StartNode->y);
+					MoveSprite(m_AI->textureHandler, StartNode->x, StartNode->y);
 					break;
 				}
 				else if (i < 12)
 				{
 					StartNode = m_aNodes[i - 4];
-					MoveSprite(m_AI.textureHandler, StartNode->x, StartNode->y);
+					MoveSprite(m_AI->textureHandler, StartNode->x, StartNode->y);
 					break;
 				}
 				else
 				{
 					StartNode = m_aNodes[i - 12];
-					MoveSprite(m_AI.textureHandler, StartNode->x, StartNode->y);
+					MoveSprite(m_AI->textureHandler, StartNode->x, StartNode->y);
 					break;
 				}
 			}
