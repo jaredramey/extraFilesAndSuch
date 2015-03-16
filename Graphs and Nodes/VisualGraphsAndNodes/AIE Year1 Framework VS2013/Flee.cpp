@@ -25,5 +25,16 @@ Point Flee::GetForce()
 	force.y = force.y / magnitude;
 	force.x = force.x * owner->maxVelocity;
 	force.y = force.y * owner->maxVelocity;
-	return force - owner->Velocity;
+	//if (force.x > owner->maxVelocity || force.y > owner->maxVelocity)
+	//{
+	//	if (force.x > owner->maxVelocity)
+	//	{
+	//		force.x = owner->maxVelocity;
+	//	}
+	//	if (force.y > owner->maxVelocity)
+	//	{
+	//		force.y = owner->maxVelocity;
+	//	}
+	//}
+	return force + owner->Velocity;
 }

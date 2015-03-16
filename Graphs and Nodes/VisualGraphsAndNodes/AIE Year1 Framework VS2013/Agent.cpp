@@ -26,27 +26,39 @@ void Agent::UpdateAgent(SteeringBehavior* a_behavior, Agent* Target, Point Delta
 	behavior = a_behavior;
 	behavior->owner = this;
 	Velocity += (behavior->GetForce() * DeltaTime);
+
+	if (Velocity.x > maxVelocity || Velocity.y > maxVelocity)
+	{
+		if (Velocity.x > maxVelocity*1.5f)
+		{
+			Velocity.x = maxVelocity*1.5f;
+		}
+		if (Velocity.y > maxVelocity)
+		{
+			Velocity.y = maxVelocity;
+		}
+	}
 	
-	//bounce screen, Need to change to Loop
+	//screen loop
 	if (Pos.x + (width / 2) > 800)
 	{
-		Velocity.x *= -1;
-		Pos.x = 800 - width;
+		//Velocity.x *= -1;
+		Pos.x = 0 + width;
 	}
 	else if (Pos.x - (width / 2) < 0)
 	{
-		Velocity.x *= -1;
-		Pos.x = 0 + width;
+		//Velocity.x *= -1;
+		Pos.x = 800 - width;
 	}
 	if (Pos.y + (height / 2) > 600)
 	{
-		Velocity.y *= -1;
-		Pos.x = 600 - height;
+		//Velocity.y *= -1;
+		Pos.x = 0 + height;
 	}
 	else if (Pos.y - (height / 2) < 0)
 	{
-		Velocity.y *= -1;
-		Pos.y = 0 + height;
+		//Velocity.y *= -1;
+		Pos.y = 600 - height;
 	}
 
 	Pos += Velocity;

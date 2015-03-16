@@ -99,6 +99,7 @@
     <ClCompile Include="source\GraphNode.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="SteeringBehavior.cpp" />
+    <ClCompile Include="Wander.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
@@ -110,6 +111,7 @@
     <ClInclude Include="Point.h" />
     <ClInclude Include="Seek.h" />
     <ClInclude Include="SteeringBehavior.h" />
+    <ClInclude Include="Wander.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
