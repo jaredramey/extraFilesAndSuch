@@ -20,7 +20,7 @@ int main( int argc, char* argv[] )
 	Graph TestGraph = Graph();
 	Agent* TestSeek = new Agent(100, 100, 96, 48, CreateSprite("./images/crate_sideup.png", 96, 48, true), 1.0f);
 	Agent* TestDummy = new Agent(200, 200, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true), 0.5f);
-	Agent* TestWander = new Agent(400, 300, 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 2.5f);
+	Agent* TestWander = new Agent(400, 300, 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.25f);
 	Agent* TestWander2 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 1.5f);
 	Agent* TestWander3 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 1.5f);
 	Agent* TestWander4 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 1.5f);
@@ -28,11 +28,24 @@ int main( int argc, char* argv[] )
 
 	Point DeltaTime;
 
-	std::list<SteeringBehavior*> TestList;
-	TestList.emplace_back(new Seek(TestWander));
-	TestList.emplace_back(new Wander());
+	std::vector<SteeringBehavior*> TestList;
+	TestList.push_back(new Seek(TestWander));
+	TestList.push_back(new Wander());
+	TestList[0]->weight = 1;
+	TestList[1]->weight = 3;
 
-	TestDummy->SetBehaviors(TestList);
+	std::vector<SteeringBehavior*> OtherList;
+	OtherList.push_back(new Wander());
+	OtherList.push_back(new Flee(TestWander2));
+	OtherList.push_back(new Flee(TestWander3));
+	OtherList.push_back(new Flee(TestWander4));
+	OtherList.push_back(new Flee(TestWander5));
+
+	TestWander->SetBehaviors(OtherList);
+	TestWander2->SetBehaviors(TestList);
+	TestWander3->SetBehaviors(TestList);
+	TestWander4->SetBehaviors(TestList);
+	TestWander5->SetBehaviors(TestList);
 
     //Game Loop
     do

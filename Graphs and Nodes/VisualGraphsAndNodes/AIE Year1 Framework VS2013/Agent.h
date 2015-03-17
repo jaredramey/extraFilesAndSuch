@@ -2,6 +2,8 @@
 #define _Agent_h_
 #pragma once
 #include <list>
+#include <vector>
+#include <algorithm>
 #include "AI.h"
 #include "SteeringBehavior.h"
 #include "Seek.h"
@@ -34,11 +36,11 @@ public:
 	Point Pos;
 	float maxVelocity;
 	float Magnitude;
-	std::list<SteeringBehavior*> BehaviorList;
+	std::vector<SteeringBehavior*> BehaviorList;
 	SteeringBehavior* behavior;
 	Seek* TheTarget;
 
-	void SetBehaviors(std::list<SteeringBehavior*> in_Behaviors);
+	void SetBehaviors(std::vector<SteeringBehavior*> in_Behaviors);
 	void UpdateAgent(SteeringBehavior* a_behavior, Agent* Target, Point DeltaTime);
 	void ControlOveride();
 
