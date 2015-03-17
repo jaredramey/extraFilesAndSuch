@@ -91,6 +91,7 @@ Point Wander::GetForce()
 	force.x = force.x * owner->maxVelocity;
 	force.y = force.y * owner->maxVelocity;
 
+	//Can't figure out why it always steers towards the top right so hacky slashy it chooses a random way now
 	int NegiX = rand() % 2 + 1;
 	int NegiY = rand() % 2 + 1;
 	if (NegiX == 1)

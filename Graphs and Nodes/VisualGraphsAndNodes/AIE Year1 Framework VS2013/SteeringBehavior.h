@@ -13,6 +13,7 @@ public:
 	~SteeringBehavior();
 
 	Agent* owner;
+	float weight;
 	
 	virtual Point GetForce() = 0;
 };

@@ -21,6 +21,12 @@ Agent::~Agent()
 {
 }
 
+void Agent::SetBehaviors(std::list<SteeringBehavior*> in_Behaviors)
+{
+	BehaviorList = in_Behaviors;
+	BehaviorList.sort(WeightCompare());
+}
+
 void Agent::UpdateAgent(SteeringBehavior* a_behavior, Agent* Target, Point DeltaTime)
 {
 	behavior = a_behavior;
@@ -40,22 +46,22 @@ void Agent::UpdateAgent(SteeringBehavior* a_behavior, Agent* Target, Point Delta
 	}
 	
 	//screen loop
-	if (Pos.x + (width / 2) > 800)
+	if (Pos.x + (width / 2) >= 800)
 	{
 		//Velocity.x *= -1;
 		Pos.x = 0 + width;
 	}
-	else if (Pos.x - (width / 2) < 0)
+	else if (Pos.x - (width / 2) <= 0)
 	{
 		//Velocity.x *= -1;
 		Pos.x = 800 - width;
 	}
-	if (Pos.y + (height / 2) > 600)
+	if (Pos.y + (height / 2) >= 600)
 	{
 		//Velocity.y *= -1;
 		Pos.x = 0 + height;
 	}
-	else if (Pos.y - (height / 2) < 0)
+	else if (Pos.y - (height / 2) <= 0)
 	{
 		//Velocity.y *= -1;
 		Pos.y = 600 - height;
