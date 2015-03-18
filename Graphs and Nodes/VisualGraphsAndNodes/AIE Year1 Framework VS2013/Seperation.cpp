@@ -6,9 +6,9 @@ Seperation::Seperation()
 {
 }
 
-Seperation::Seperation(Agent* in_Target)
+Seperation::Seperation(std::vector<Agent*> in_List)
 {
-	Target = in_Target;
+	Agents = in_List;
 }
 
 Seperation::~Seperation()
@@ -19,8 +19,15 @@ Point Seperation::GetForce()
 {
 	Point force;
 
-	force.x = Target->Pos.x - owner->Pos.x;
-	force.y = Target->Pos.y - owner->Pos.y;
+	owner->CheckNeighbors(Agents);
+	NeighborList = owner->NeighborList;
+
+	//Average out force
+	for (int i = 0; i < NeighborList.size(); i++)
+	{
+		force.x += NeighborList[i]->Pos.x - owner->Pos.x;
+		force.y += NeighborList[i]->Pos.y - owner->Pos.y;
+	}
 
 	if (force.x != 0 && force.y != 0)
 	{

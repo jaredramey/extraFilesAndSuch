@@ -6,9 +6,9 @@ Cohesion::Cohesion()
 {
 }
 
-Cohesion::Cohesion(Agent* in_Target)
+Cohesion::Cohesion(std::vector<Agent*> in_List)
 {
-	Target = in_Target;
+	Agents = in_List;
 }
 
 
@@ -19,29 +19,28 @@ Cohesion::~Cohesion()
 Point Cohesion::GetForce()
 {
 	Point force;
+	owner->CheckNeighbors(Agents);
+	NeighborList = owner->NeighborList;
 
-	if (Target->Pos.x > 0 && Target->Pos.y > 0)
+	//Average out force
+	for (int i = 0; i < NeighborList.size(); i++)
 	{
-		force.x += Target->Pos.x;
-		force.y += Target->Pos.y;
+		force.x += NeighborList[i]->Pos.x - owner->Pos.x;
+		force.y += NeighborList[i]->Pos.y - owner->Pos.y;
+	}
+	
+	if (force.x != 0 && force.y != 0)
+	{
+		force.x = force.x /= owner->neighborCount;
+		force.y = force.y /= owner->neighborCount;
 
-		force.x = force.x / owner->neighborCount;
-		force.y = force.y / owner->neighborCount;
-
-		force.x = force.x - owner->Pos.x;
-		force.y = force.y - owner->Pos.y;
-
-		float magnitude = std::sqrt((force.x * force.x) + (force.y * force.y));
+		float magnitude = sqrt((force.x * force.x) + (force.y * force.y));
 
 		force.x = force.x / magnitude;
 		force.y = force.y / magnitude;
 	}
 
-	else
-	{
-		force.x = 0;
-		force.y = 0;
-	}
+	NeighborList.clear();
 
 	return force;
 }

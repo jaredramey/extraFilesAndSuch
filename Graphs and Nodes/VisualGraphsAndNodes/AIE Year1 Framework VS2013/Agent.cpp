@@ -33,10 +33,13 @@ void Agent::UpdateAgent(SteeringBehavior* a_behavior, Agent* Target, Point Delta
 	/*behavior = a_behavior;
 	behavior->owner = this;
 	Velocity += (behavior->GetForce() * DeltaTime);*/
+	Point weight;
 	for (int i = 0; i < BehaviorList.size(); i++)
 	{
 		BehaviorList[i]->owner = this;
-		Velocity += BehaviorList[i]->GetForce() * DeltaTime;
+		weight.x = BehaviorList[i]->weight;
+		weight.y = BehaviorList[i]->weight;
+		Velocity += (BehaviorList[i]->GetForce() * DeltaTime);
 	}
 
 	if (Velocity.x > maxVelocity || Velocity.y > maxVelocity)
@@ -117,6 +120,7 @@ void Agent::CheckNeighbors(std::vector<Agent*> in_Agents)
 		if ((in_Agents[i]->Pos.x < (Pos.x + 200.0f) && in_Agents[i]->Pos.x >(Pos.x - 200.0f)) && (in_Agents[i]->Pos.y < (Pos.y + 200.0f) && in_Agents[i]->Pos.y >(Pos.y - 200.0f)))
 		{
 			numOfNeighbors++;
+			NeighborList.push_back(in_Agents[i]);
 		}
 	}
 

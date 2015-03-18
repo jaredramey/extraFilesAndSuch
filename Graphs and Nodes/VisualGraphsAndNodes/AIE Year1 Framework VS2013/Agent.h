@@ -40,6 +40,7 @@ public:
 	Point Velocity;
 	Point Pos;
 	std::vector<SteeringBehavior*> BehaviorList;
+	std::vector<Agent*> NeighborList;
 	SteeringBehavior* behavior;
 	Seek* TheTarget;
 

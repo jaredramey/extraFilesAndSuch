@@ -7,10 +7,12 @@ class Seperation : public SteeringBehavior
 {
 public:
 	Seperation();
-	Seperation(Agent* in_Target);
+	Seperation(std::vector<Agent*> in_List);
 	~Seperation();
 	
 	Agent* Target;
+	std::vector<Agent*> Agents;
+	std::vector<Agent*> NeighborList;
 	Point GetForce();
 };
 #endif

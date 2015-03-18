@@ -7,10 +7,12 @@ class Cohesion : public SteeringBehavior
 {
 public:
 	Cohesion();
-	Cohesion(Agent* in_Target);
+	Cohesion(std::vector<Agent*> in_List);
 	~Cohesion();
 
 	Agent* Target;
+	std::vector<Agent*> Agents;
+	std::vector<Agent*> NeighborList;
 	Point GetForce();
 };
 #endif
