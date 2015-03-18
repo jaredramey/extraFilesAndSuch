@@ -9,6 +9,7 @@
 #include "Wander.h"
 #include "Seperation.h"
 #include "Cohesion.h"
+#include "Allingment.h"
 
 int main( int argc, char* argv[] )
 {	
@@ -48,6 +49,7 @@ int main( int argc, char* argv[] )
 
 	std::vector<SteeringBehavior*> OtherList;
 	OtherList.push_back(new Cohesion(myAgents));
+	//OtherList.push_back(new Allingment(myAgents));
 	//OtherList.push_back(new Seperation(myAgents));
 
 	for (int i = 0; i < myAgents.size(); i++)
