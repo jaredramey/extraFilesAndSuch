@@ -45,6 +45,15 @@
     <ClCompile Include="Wander.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Seperation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Allingment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cohesion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Graph.h">
@@ -75,6 +84,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Wander.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Seperation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Allingment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cohesion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

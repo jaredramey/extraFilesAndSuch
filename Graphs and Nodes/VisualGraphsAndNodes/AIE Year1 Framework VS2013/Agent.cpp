@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Agent.h"
 
 
@@ -105,4 +106,19 @@ void Agent::ControlOveride()
 	{
 		Pos.x++;
 	}
+}
+
+void Agent::CheckNeighbors(std::vector<Agent*> in_Agents)
+{
+	int numOfNeighbors = 0;
+
+	for (int i = 0; i < in_Agents.size(); i++)
+	{
+		if ((in_Agents[i]->Pos.x < (Pos.x + 200.0f) && in_Agents[i]->Pos.x >(Pos.x - 200.0f)) && (in_Agents[i]->Pos.y < (Pos.y + 200.0f) && in_Agents[i]->Pos.y >(Pos.y - 200.0f)))
+		{
+			numOfNeighbors++;
+		}
+	}
+
+	neighborCount = numOfNeighbors;
 }

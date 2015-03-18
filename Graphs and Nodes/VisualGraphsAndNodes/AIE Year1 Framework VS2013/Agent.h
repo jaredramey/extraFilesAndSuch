@@ -32,10 +32,13 @@ public:
 	Agent(float a_x, float a_y, float a_width, float a_heigt, float a_textureHandler, float a_maxVelocity);
 	~Agent();
 
-	Point Velocity;
-	Point Pos;
 	float maxVelocity;
 	float Magnitude;
+	float neighborRadius;
+	int neighborCount;
+
+	Point Velocity;
+	Point Pos;
 	std::vector<SteeringBehavior*> BehaviorList;
 	SteeringBehavior* behavior;
 	Seek* TheTarget;
@@ -43,6 +46,7 @@ public:
 	void SetBehaviors(std::vector<SteeringBehavior*> in_Behaviors);
 	void UpdateAgent(SteeringBehavior* a_behavior, Agent* Target, Point DeltaTime);
 	void ControlOveride();
+	void CheckNeighbors(std::vector<Agent*> in_Agents);
 
 };
 #endif

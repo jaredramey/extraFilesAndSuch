@@ -7,6 +7,8 @@
 #include "Seek.h"
 #include "Flee.h"
 #include "Wander.h"
+#include "Seperation.h"
+#include "Cohesion.h"
 
 int main( int argc, char* argv[] )
 {	
@@ -17,35 +19,33 @@ int main( int argc, char* argv[] )
 	//For randomize sake
 	srand(time(NULL));
 
-	Graph TestGraph = Graph();
-	Agent* TestSeek = new Agent(100, 100, 96, 48, CreateSprite("./images/crate_sideup.png", 96, 48, true), 1.0f);
-	Agent* TestDummy = new Agent(200, 200, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true), 0.5f);
-	Agent* TestWander = new Agent(400, 300, 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.25f);
-	Agent* TestWander2 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 1.5f);
-	Agent* TestWander3 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 1.5f);
-	Agent* TestWander4 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 1.5f);
-	Agent* TestWander5 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 1.5f);
+	Agent* TestWander = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.5f);
+	Agent* TestWander2 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.5f);
+	Agent* TestWander3 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.5f);
+	Agent* TestWander4 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.5f);
+	Agent* TestWander5 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.5f);
 
 	Point DeltaTime;
 
+	std::vector<Agent*> myAgents;
+	myAgents.push_back(TestWander);
+	myAgents.push_back(TestWander2);
+	myAgents.push_back(TestWander3);
+	myAgents.push_back(TestWander4);
+	myAgents.push_back(TestWander5);
+
 	std::vector<SteeringBehavior*> TestList;
-	TestList.push_back(new Seek(TestWander));
 	TestList.push_back(new Wander());
 	TestList[0]->weight = 1;
-	TestList[1]->weight = 3;
 
 	std::vector<SteeringBehavior*> OtherList;
-	OtherList.push_back(new Wander());
-	OtherList.push_back(new Flee(TestWander2));
-	OtherList.push_back(new Flee(TestWander3));
-	OtherList.push_back(new Flee(TestWander4));
-	OtherList.push_back(new Flee(TestWander5));
+	OtherList.push_back(new Cohesion(myAgents[0]));
 
-	TestWander->SetBehaviors(OtherList);
-	TestWander2->SetBehaviors(TestList);
-	TestWander3->SetBehaviors(TestList);
-	TestWander4->SetBehaviors(TestList);
-	TestWander5->SetBehaviors(TestList);
+	myAgents[0]->SetBehaviors(TestList);
+	myAgents[1]->SetBehaviors(OtherList);
+	myAgents[2]->SetBehaviors(OtherList);
+	myAgents[3]->SetBehaviors(OtherList);
+	myAgents[4]->SetBehaviors(OtherList);
 
     //Game Loop
     do
@@ -54,31 +54,17 @@ int main( int argc, char* argv[] )
 		DeltaTime.x = GetDeltaTime();
 		DeltaTime.y = GetDeltaTime();
 
-		//TestSeek->UpdateAgent(new Seek(TestWander), TestDummy, DeltaTime);
-		//TestDummy->UpdateAgent(new Flee(TestSeek), TestSeek, DeltaTime);
-		TestWander->UpdateAgent(new Wander(), TestSeek, DeltaTime);
-		TestWander2->UpdateAgent(new Wander(), TestSeek, DeltaTime);
-		TestWander3->UpdateAgent(new Wander(), TestSeek, DeltaTime);
-		TestWander4->UpdateAgent(new Wander(), TestSeek, DeltaTime);
-		TestWander5->UpdateAgent(new Wander(), TestSeek, DeltaTime);
+		for (int i = 0; i < myAgents.size(); i++)
+		{
+			myAgents[i]->CheckNeighbors(myAgents);
+			myAgents[i]->UpdateAgent(new Seperation(myAgents[i]), myAgents[i], DeltaTime);
+		}
 
-
-		//MoveSprite(TestSeek->textureHandler, TestSeek->Pos.x, TestSeek->Pos.y);
-		//DrawSprite(TestSeek->textureHandler);
-
-		/*MoveSprite(TestDummy->textureHandler, TestDummy->Pos.x, TestDummy->Pos.y);
-		DrawSprite(TestDummy->textureHandler);*/
-
-		MoveSprite(TestWander->textureHandler, TestWander->Pos.x, TestWander->Pos.y);
-		DrawSprite(TestWander->textureHandler);
-		MoveSprite(TestWander2->textureHandler, TestWander2->Pos.x, TestWander2->Pos.y);
-		DrawSprite(TestWander2->textureHandler);
-		MoveSprite(TestWander3->textureHandler, TestWander3->Pos.x, TestWander3->Pos.y);
-		DrawSprite(TestWander3->textureHandler);
-		MoveSprite(TestWander4->textureHandler, TestWander4->Pos.x, TestWander4->Pos.y);
-		DrawSprite(TestWander4->textureHandler);
-		MoveSprite(TestWander5->textureHandler, TestWander5->Pos.x, TestWander5->Pos.y);
-		DrawSprite(TestWander5->textureHandler);
+		for (int i = 0; i < myAgents.size(); i++)
+		{
+			MoveSprite(myAgents[i]->textureHandler, myAgents[i]->Pos.x, myAgents[i]->Pos.y);
+			DrawSprite(myAgents[i]->textureHandler);
+		}
 
 		DrawLine(TestWander->Pos.x, TestWander->Pos.y, (TestWander->Pos.x + (TestWander->Velocity.x * 100)), (TestWander->Pos.y + (TestWander->Velocity.y * 100)), SColour(255, 0, 0, 255));
 		DrawLine(TestWander2->Pos.x, TestWander2->Pos.y, (TestWander2->Pos.x + (TestWander2->Velocity.x * 100)), (TestWander2->Pos.y + (TestWander2->Velocity.y * 100)), SColour(255, 0, 0, 255));
