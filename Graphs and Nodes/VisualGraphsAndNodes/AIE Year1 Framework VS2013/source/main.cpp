@@ -33,6 +33,12 @@ int main( int argc, char* argv[] )
 	Agent* TestWander7 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.25f);
 	Agent* TestWander8 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.25f);
 	Agent* TestWander9 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.25f);
+	Agent* TestWander10 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.25f);
+	Agent* TestWander11 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.25f);
+	Agent* TestWander12 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.25f);
+	Agent* TestWander13 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.25f);
+	Agent* TestWander14 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.25f);
+	Agent* TestWander15 = new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.25f);
 	//Ect Agents for everything else
 
 	//create a point for Delta time so I can easily use it later
@@ -49,6 +55,12 @@ int main( int argc, char* argv[] )
 	myAgents.push_back(TestWander7);
 	myAgents.push_back(TestWander8);
 	myAgents.push_back(TestWander9);
+	myAgents.push_back(TestWander10);
+	myAgents.push_back(TestWander11);
+	myAgents.push_back(TestWander12);
+	myAgents.push_back(TestWander13);
+	myAgents.push_back(TestWander14);
+	myAgents.push_back(TestWander15);
 
 	//behavior list to test out anything that's not flocking
 	std::vector<SteeringBehavior*> TestList;
@@ -88,7 +100,6 @@ int main( int argc, char* argv[] )
 	Graph TestGraph = Graph();
 	TestGraph.CreateGraph();
 	TestGraph.AStarPathTest(0, 9);
-	TestGraph.PathSmooth();
 
 	//create the agent that will be moving on the graph
 	Agent* GraphAI = new Agent(TestGraph.ClosedList[0]->x, TestGraph.ClosedList[0]->y, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true), 0.25f);
@@ -141,9 +152,9 @@ int main( int argc, char* argv[] )
 		//---------------------------------------------------------------------------|| For Graphs and Path Finding ||----------------------------------------------------------------------------------------------------------\\
 		//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//
 
-		TestGraph.CheckMouseClick();
+		/*TestGraph.CheckMouseClick();
 		TestGraph.DrawGraph();
-		GraphAI->MoveOnGraphPath(0.25f);
+		GraphAI->MoveOnGraphPath(0.25f);*/
 
 		//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//=\\
 		//---------------------------------------------------------------------------|| For Graphs and Path Finding ||----------------------------------------------------------------------------------------------------------\\
