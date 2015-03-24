@@ -19,6 +19,7 @@ Point Seperation::GetForce()
 {
 	Point force;
 
+	//Check the neighbors of the current Agent
 	owner->CheckNeighbors(Agents);
 	NeighborList = owner->NeighborList;
 
@@ -29,6 +30,7 @@ Point Seperation::GetForce()
 		force.y += NeighborList[i]->Pos.y - owner->Pos.y;
 	}
 
+	//If there are neighbors then normalize force to move away from them
 	if (force.x != 0 && force.y != 0)
 	{
 		force.x *= -1;

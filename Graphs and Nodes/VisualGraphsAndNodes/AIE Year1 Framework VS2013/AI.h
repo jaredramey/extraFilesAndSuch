@@ -13,7 +13,7 @@ public:
 	~AI();
 
 	float x = 0, y = 0;
-	int width, height;
+	int width = 0, height = 0;
 	int textureHandler;
 	Point Transfrom;
 	

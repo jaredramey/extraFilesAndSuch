@@ -9,6 +9,7 @@ Graph::~Graph()
 {
 }
 
+//create a random linked graph
 void Graph::GraphOther(unsigned int a_uiNodeCount)
 {
 	for (int i = 0; i < a_uiNodeCount; i++)
@@ -243,6 +244,7 @@ bool Graph::SearchBFS(GraphNode* a_pStart, GraphNode* a_pEnd)
 	return false;
 }
 
+//create a 4x4 graph
 void Graph::CreateGraph()
 {
 	float xPos = 50, yPos = 50;
@@ -251,9 +253,12 @@ void Graph::CreateGraph()
 
 	for (int i = 0; i < 16; i++)
 	{
+		//create all the nodes
 		AddNode(new GraphNode(i));
+		//give each node a random weight
 		m_aNodes[i]->nodeWeight = (rand() % 4+1);
 
+		//Set the Nodes in 4 lines of 4
 		if (i > 0)
 		{
 			xPos += 150;
@@ -276,9 +281,11 @@ void Graph::CreateGraph()
 			}
 		}
 
+		//create the node (visually)
 		CreateVisualNode(i, CreateSprite("./images/invaders/invaders_7_01.png", 64, 64, true), xPos, yPos);
 	}
 
+	//Link the nodes
 	for (int i = 0; i < m_aNodes.size(); i++)
 	{
 		for (int k = 0; k < m_aNodes.size(); k++)
@@ -325,6 +332,7 @@ void Graph::CreateGraph()
 			
 		}
 
+		//set the rest of the node variables (default values
 		for (int k = 0; k < m_aNodes[i]->connectedEdges.size(); k++)
 		{
 				m_aNodes[i]->connectedEdges[k].gCost = (m_aNodes[i]->nodeWeight + m_aNodes[i]->connectedEdges[k].m_pEnd->nodeWeight);
@@ -333,8 +341,8 @@ void Graph::CreateGraph()
 				m_aNodes[i]->isTraversable = true;
 		}
 	}
+	//reset if they've been visited or not for later use of the variable
 	ResetVisited();
-	m_AI->CreateAI(96, 48, CreateSprite("./images/cannon.png", 96, 48, true));
 
 }
 
@@ -347,18 +355,21 @@ void Graph::CreateVisualNode(int NodeID, int a_texturePath, float a_x, float a_y
 
 void Graph::DrawGraph()
 {
+	//Move and draw the graph nodes in the right place
 	for (int i = 0; i < m_aNodes.size(); i++)
 	{
 		MoveSprite(m_aNodes[i]->textureHandle, m_aNodes[i]->x, m_aNodes[i]->y);
 		DrawSprite(m_aNodes[i]->textureHandle);
 	}
 
+	//getting ready to use this to show the weight of each node connection
 	std::string gCostToDisplay;
 
 	for (int i = 0; i < m_aNodes.size(); i++)
 	{
 		for (int k = 0; k < m_aNodes[i]->connectedEdges.size(); k++)
 		{
+			//display the weight of the connection on the middle of the line
 			gCostToDisplay = std::to_string(m_aNodes[i]->connectedEdges[k].gCost);
 			char const *pchar = gCostToDisplay.c_str();
 			if (m_aNodes[i]->connectedEdges[k].m_pEnd->x > m_aNodes[i]->x && m_aNodes[i]->connectedEdges[k].m_pEnd->y == m_aNodes[i]->y)
@@ -380,7 +391,6 @@ void Graph::DrawGraph()
 			{
 				DrawString(pchar, ((m_aNodes[i]->connectedEdges[k].m_pEnd->x + 100)), ((m_aNodes[i]->connectedEdges[k].m_pEnd->y + 75)), SColour(255, 255, 255, 255));
 			}
-			//DrawString(pchar, ((m_aNodes[i]->connectedEdges[k].m_pEnd->x)), ((m_aNodes[i]->connectedEdges[k].m_pEnd->y)), SColour(255, 255, 255, 255));
 			DrawLine(m_aNodes[i]->x, m_aNodes[i]->y, m_aNodes[i]->connectedEdges[k].m_pEnd->x, m_aNodes[i]->connectedEdges[k].m_pEnd->y, SColour(215, 46, 0, 255));
 			
 		}
@@ -389,13 +399,16 @@ void Graph::DrawGraph()
 
 std::vector<GraphNode*> Graph::GetNeighbors(GraphNode* a_pNode)
 {
+	//create an empty list
 	std::vector<GraphNode*> MyList;
 	
+	//place all connected nodes into the list
 	for (int i = 0; i < a_pNode->connectedEdges.size(); i++)
 	{
 		MyList.emplace_back(a_pNode->connectedEdges[i].m_pEnd);
 	}
 
+	//return the list
 	return MyList;
 }
 
@@ -507,79 +520,78 @@ void Graph::ShortestPath(int a_pStart, int a_pEnd)
 		goto Reset;
 	}
 
-	MoveSprite(m_AI->textureHandler, m_AI->x, m_AI->y);
+	//MoveSprite(m_AI->textureHandler, m_AI->x, m_AI->y);
 
-		if (a_pStart < a_pEnd)
-		{
-			if (m_AI->x <= CurrentNode->x)
-			{
-				m_AI->x += 0.25f;
-			}
+	//	if (a_pStart < a_pEnd)
+	//	{
+	//		if (m_AI->x <= CurrentNode->x)
+	//		{
+	//			m_AI->x += 0.25f;
+	//		}
 
-			if (m_AI->y <= CurrentNode->y)
-			{
-				m_AI->y += 0.25f;
-			}
+	//		if (m_AI->y <= CurrentNode->y)
+	//		{
+	//			m_AI->y += 0.25f;
+	//		}
 
-			if (CurrentNode == m_aNodes[a_pEnd])
-			{
-				if (m_AI->x >= CurrentNode->x)
-				{
-					m_AI->x -= 0.25f;
-				}
+	//		if (CurrentNode == m_aNodes[a_pEnd])
+	//		{
+	//			if (m_AI->x >= CurrentNode->x)
+	//			{
+	//				m_AI->x -= 0.25f;
+	//			}
 
-				if (m_AI->y >= CurrentNode->y)
-				{
-					m_AI->y -= 0.25f;
-				}
-			}
+	//			if (m_AI->y >= CurrentNode->y)
+	//			{
+	//				m_AI->y -= 0.25f;
+	//			}
+	//		}
 
-			if (CurrentNode != m_aNodes[a_pEnd] && ((m_AI->x >= CurrentNode->x) && (m_AI->y >= CurrentNode->y)))
-			{
-				AIStart += 1;
-			}
+	//		if (CurrentNode != m_aNodes[a_pEnd] && ((m_AI->x >= CurrentNode->x) && (m_AI->y >= CurrentNode->y)))
+	//		{
+	//			AIStart += 1;
+	//		}
+
+	//		CurrentNodeOnPath = AIStart;
+	//	}
+
+	//	if (a_pStart > a_pEnd)
+	//	{
+	//		if (m_AI->x >= CurrentNode->x)
+	//		{
+	//			m_AI->x -= 0.25f;
+	//		}
+
+	//		if (m_AI->y >= CurrentNode->y)
+	//		{
+	//			m_AI->y -= 0.25f;
+	//		}
+
+	//		if (CurrentNode == m_aNodes[a_pEnd])
+	//		{
+	//			if (m_AI->x <= CurrentNode->x)
+	//			{
+	//				m_AI->x += 0.25f;
+	//			}
+
+	//			if (m_AI->y <= CurrentNode->y)
+	//			{
+	//				m_AI->y += 0.25f;
+	//			}
+	//		}
+
+	//		if (CurrentNode != m_aNodes[a_pEnd] && ((m_AI->x <= CurrentNode->x) && (m_AI->y <= CurrentNode->y)))
+	//		{
+	//			AIStart += 1;
+	//		}
 
 			CurrentNodeOnPath = AIStart;
-		}
-
-		if (a_pStart > a_pEnd)
-		{
-			if (m_AI->x >= CurrentNode->x)
-			{
-				m_AI->x -= 0.25f;
-			}
-
-			if (m_AI->y >= CurrentNode->y)
-			{
-				m_AI->y -= 0.25f;
-			}
-
-			if (CurrentNode == m_aNodes[a_pEnd])
-			{
-				if (m_AI->x <= CurrentNode->x)
-				{
-					m_AI->x += 0.25f;
-				}
-
-				if (m_AI->y <= CurrentNode->y)
-				{
-					m_AI->y += 0.25f;
-				}
-			}
-
-			if (CurrentNode != m_aNodes[a_pEnd] && ((m_AI->x <= CurrentNode->x) && (m_AI->y <= CurrentNode->y)))
-			{
-				AIStart += 1;
-			}
-
-			CurrentNodeOnPath = AIStart;
-		}
+		//}
 }
 
 void Graph::ResetAI()
 {
 	AIPath.clear();
-	//CurrentNodeOnPath = 0;
 	AIStart = 0;
 }
 
@@ -683,14 +695,6 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 	{
 		ClosedList.emplace_back(CurrentNode);
 	}
-
-	//PathSmooth();
-	//PathSmooth();
-
-	if (ClosedList.size() > 1)
-	{
-		m_AI->UpdateAI(ClosedList[0]->x, ClosedList[0]->y);
-	}
 }
 
 void Graph::AStarPathTest(int a_start, int a_end)
@@ -700,11 +704,14 @@ void Graph::AStarPathTest(int a_start, int a_end)
 
 void Graph::AIAPath(float deltaTime, float velocity)
 {
+	//if the path is not empty then start following the path
 	if (ClosedList.size() > 0)
 	{
+		//create a reference to the current node the AI is trying to travel to
 		GraphNode* CurrentNode;
 		int LastPos = ClosedList.size() - 1;
 
+		//safeguard to make sure the AI stops moving as soon as it's reached the goal node
 		if (AIAPathNumber < ClosedList.size())
 		{
 			CurrentNode = ClosedList[AIAPathNumber];
@@ -714,54 +721,20 @@ void Graph::AIAPath(float deltaTime, float velocity)
 			CurrentNode = ClosedList[LastPos];
 		}
 
-		if (CurrentNode != NULL)
-		{
-			if (m_AI->x != CurrentNode->x)
-			{
-				if (CurrentNode->x > m_AI->x)
-				{
-					m_AI->x += (deltaTime * velocity);
-				}
-
-				else if (CurrentNode->x < m_AI->x)
-				{
-					m_AI->x -= (deltaTime * velocity);
-				}
-			}
-
-			if (m_AI->y != CurrentNode->y)
-			{
-				if (CurrentNode->y > m_AI->y)
-				{
-					m_AI->y += (deltaTime * velocity) * 2;
-				}
-
-				else if (CurrentNode->y < m_AI->y)
-				{
-					m_AI->y -= (deltaTime * velocity) * 2;
-				}
-			}
-
-			if (((m_AI->x >= (CurrentNode->x + 50) || m_AI->x >= (CurrentNode->x - 50)) && (m_AI->y >= (CurrentNode->y + 50) || m_AI->y >= (CurrentNode->y - 50))))
-			{
-				AIAPathNumber++;
-				goto end;
-			}
-		}
-
-		end:
-		MoveSprite(m_AI->textureHandler, m_AI->x, m_AI->y);
+		//Move the AI towards the current node
 	}
 }
 
 void Graph::ChangeNodeType(int a_pNode)
 {
+	//if the node isn't already traversable
 	if (m_aNodes[a_pNode]->isTraversable == true)
 	{
 		m_aNodes[a_pNode]->NT = eWall;
 		m_aNodes[a_pNode]->isTraversable = false;
 		m_aNodes[a_pNode]->textureHandle = CreateSprite("./images/crate_sideup.png", 64, 64, true);
 	}
+	//if the node is currently traversable
 	else
 	{
 		m_aNodes[a_pNode]->NT = eSurface;
@@ -772,20 +745,24 @@ void Graph::ChangeNodeType(int a_pNode)
 
 void Graph::PathSmooth()
 {
+	//create some refrences
 	GraphNode* CurrentNode;
 	GraphNode* GoalNode = ClosedList[ClosedList.size()-1];
 
+	//calculate the cost between two nodes
 	for (int i = 0; i < ClosedList.size(); i++)
 	{
 		ClosedList[i]->m_fCost = (ClosedList[i]->p_GScore + GetHueristic(ClosedList[i], GoalNode));
 	}
 
+	//loop through the newly calculated costs and if there ends up being a less costly move then change that move (Maybe traversable node check could be improved here?)
 	for (int i = 0; i < ClosedList.size(); i++)
 	{
 		if (i+2 <= ClosedList.size()-1)
 		{
 			if ((ClosedList[i]->m_fCost + ClosedList[i + 2]->m_fCost) < (ClosedList[i]->m_fCost + ClosedList[i + 1]->m_fCost))
 			{
+				//if the new cost is cheaper then erase the node in the middle
 				ClosedList.erase(ClosedList.begin() + (i + 1));
 			}
 		}
@@ -794,8 +771,10 @@ void Graph::PathSmooth()
 
 void Graph::CheckMouseClick()
 {
+	//variables to store where the mouse position is at the time of the click
 	double mXPos, mYPos;
 
+	//check to see if the user is trying to change the node type from traversable to not traversable
 	if (GetMouseButtonDown(0) && IsKeyDown('C'))
 	{
 		GetMouseLocation(mXPos, mYPos);
@@ -827,42 +806,17 @@ void Graph::CheckMouseClick()
 		}
 	}
 
+	//check to see if the user is trying to set a start point
 	else if (GetMouseButtonDown(0) && IsKeyDown('S'))
 	{
 		GetMouseLocation(mXPos, mYPos);
 		for (int i = 0; i < m_aNodes.size(); i++)
 		{
-			if ((mXPos <= m_aNodes[i]->x + 50 && mYPos <= m_aNodes[i]->y + 50) && (mXPos >= m_aNodes[i]->x - 50 && mYPos >= m_aNodes[i]->y - 50))
-			{
-				if (i < 4)
-				{
-					StartNode = m_aNodes[i + 12];
-					MoveSprite(m_AI->textureHandler, StartNode->x, StartNode->y);
-					std::cout << "Start Selected" << std::endl;
-					break;
-				}
-				else if (i < 8)
-				{
-					StartNode = m_aNodes[i + 4];
-					MoveSprite(m_AI->textureHandler, StartNode->x, StartNode->y);
-					break;
-				}
-				else if (i < 12)
-				{
-					StartNode = m_aNodes[i - 4];
-					MoveSprite(m_AI->textureHandler, StartNode->x, StartNode->y);
-					break;
-				}
-				else
-				{
-					StartNode = m_aNodes[i - 12];
-					MoveSprite(m_AI->textureHandler, StartNode->x, StartNode->y);
-					break;
-				}
-			}
+			
 		}
 	}
 
+	//check to see if the user is trying to set an end point
 	else if (GetMouseButtonDown(0) && IsKeyDown('E'))
 	{
 		GetMouseLocation(mXPos, mYPos);
@@ -907,5 +861,3 @@ void Graph::CheckMouseClick()
 		AIAPathNumber = 0;
 	}
 }
-
-// || mPos.x >= m_aNodes[i]->x - 50     || mPos.y >= m_aNodes[i]->y - 50

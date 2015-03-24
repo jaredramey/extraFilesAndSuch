@@ -29,6 +29,7 @@ Point Cohesion::GetForce()
 		force.y += NeighborList[i]->Pos.y - owner->Pos.y;
 	}
 	
+	//If there are neighbors then normalize force to move closer to them
 	if (force.x != 0 && force.y != 0)
 	{
 		force.x = force.x /= owner->neighborCount;

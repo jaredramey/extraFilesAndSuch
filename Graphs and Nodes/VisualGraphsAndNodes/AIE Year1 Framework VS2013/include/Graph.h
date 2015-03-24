@@ -9,12 +9,12 @@
 #include <algorithm>
 #include "GraphNode.h"
 #include "AIE.h"
-#include "AI.h"
 
 class Graph
 {
 public:
 	typedef std::vector<GraphNode*> NodeList;
+	NodeList ClosedList;
 
 	Graph();
 	~Graph();
@@ -64,15 +64,12 @@ public:
 	void PathSmooth();
 	void CheckMouseClick();
 
-	AI* m_AI;
-
 private:
 	NodeList m_aNodes;
 	NodeList AIPath;
 	GraphNode* CurrentAINode;
 	GraphNode* GoalNode;
 	NodeList OpenList;
-	NodeList ClosedList;
 	GraphNode* StartNode = NULL;
 	GraphNode* EndNode = NULL;
 	int CurrentNodeOnPath = 0;
