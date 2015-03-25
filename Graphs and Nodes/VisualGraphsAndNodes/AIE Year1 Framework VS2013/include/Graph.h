@@ -15,6 +15,7 @@ class Graph
 public:
 	typedef std::vector<GraphNode*> NodeList;
 	NodeList ClosedList;
+	NodeList m_aNodes;
 
 	Graph();
 	~Graph();
@@ -65,7 +66,6 @@ public:
 	void CheckMouseClick();
 
 private:
-	NodeList m_aNodes;
 	NodeList AIPath;
 	GraphNode* CurrentAINode;
 	GraphNode* GoalNode;

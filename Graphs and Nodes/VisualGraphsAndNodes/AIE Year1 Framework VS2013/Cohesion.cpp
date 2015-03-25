@@ -19,7 +19,7 @@ Cohesion::~Cohesion()
 Point Cohesion::GetForce()
 {
 	Point force;
-	owner->CheckNeighbors(Agents);
+	//owner->CheckNeighbors(Agents);
 	NeighborList = owner->NeighborList;
 
 	//Average out force
@@ -29,14 +29,17 @@ Point Cohesion::GetForce()
 		force.y += NeighborList[i]->Pos.y - owner->Pos.y;
 	}
 	
-	//If there are neighbors then normalize force to move closer to them
-	if (force.x != 0 && force.y != 0)
+	if (owner->neighborCount != 0)
 	{
 		force.x = force.x /= owner->neighborCount;
 		force.y = force.y /= owner->neighborCount;
+	}
 
-		float magnitude = sqrt((force.x * force.x) + (force.y * force.y));
+	float magnitude = sqrt((force.x * force.x) + (force.y * force.y));
 
+	//If there are neighbors then normalize force to move closer to them
+	if (magnitude != 0)
+	{
 		force.x = force.x / magnitude;
 		force.y = force.y / magnitude;
 	}

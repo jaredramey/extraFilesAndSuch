@@ -155,16 +155,16 @@ void Agent::MoveOnGraphPath(float speed)
 	GraphNode* CurrentNode;
 	int LastNode = closedList.size()-1;
 	
-	if (NodeNumber < closedList.size()-1)
+	if (NodeNumber <= closedList.size()-1)
 	{
 		CurrentNode = closedList[NodeNumber];
 	}
 	else
 	{
-		CurrentNode = closedList[NodeNumber];
+		CurrentNode = closedList[LastNode];
 	}
 
-	if (Pos.x != CurrentNode->x && Pos.y != CurrentNode->y)
+	if (Pos.x != CurrentNode->x || Pos.y != CurrentNode->y)
 	{
 		if (Pos.x <= CurrentNode->x)
 		{
@@ -192,4 +192,43 @@ void Agent::MoveOnGraphPath(float speed)
 
 	MoveSprite(textureHandler, Pos.x, Pos.y);
 	DrawSprite(textureHandler);
+}
+
+void Agent::AvoidGraphNode(std::vector<GraphNode*> GraphNodes)
+{
+	for (int i = 0; i < GraphNodes.size(); i++)
+	{
+		if ((Pos.x <= (GraphNodes[i]->x + (width / 2)) /**/ && /**/ Pos.x >= (GraphNodes[i]->x - (width / 2))) /**/ && /**/ (Pos.y <= (GraphNodes[i]->y + (height / 2)) /**/ && /**/ Pos.y >= (GraphNodes[i]->y - (height / 2))))
+		{
+			if (Pos.x <= (GraphNodes[i]->x + (width / 2)) /**/ && /**/ Pos.x >= (GraphNodes[i]->x - (width / 2)))
+			{
+				Velocity.x *= -1;
+			}
+
+			if (Pos.y <= (GraphNodes[i]->y + (height / 2)) /**/ && /**/ Pos.y >= (GraphNodes[i]->y - (height / 2)))
+			{
+				Velocity.y *= -1;
+			}
+		}
+	}
+			//if (Pos.x + (width / 2) >= 800)
+			//{
+			//	Velocity.x *= -1;
+			//	Pos.x = 800 - width;
+			//}
+			//else if (Pos.x - (width / 2) <= 0)
+			//{
+			//	Velocity.x *= -1;
+			//	Pos.x = 0 + width;
+			//}
+			//if (Pos.y + (height / 2) >= 600)
+			//{
+			//	Velocity.y *= -1;
+			//	Pos.y = 600 - height;
+			//}
+			//else if (Pos.y - (height / 2) <= 0)
+			//{
+			//	Velocity.y *= -1;
+			//	Pos.y = 0 + height;
+			//}
 }

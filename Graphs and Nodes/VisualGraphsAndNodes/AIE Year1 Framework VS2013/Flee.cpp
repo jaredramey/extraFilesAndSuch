@@ -21,8 +21,13 @@ Point Flee::GetForce()
 {
 	Point force = fTarget->Pos + owner->Pos;
 	float magnitude = std::sqrt((force.x * force.x) + (force.y * force.y));
-	force.x = force.x / magnitude;
-	force.y = force.y / magnitude;
+
+	if (magnitude != 0)
+	{
+		force.x = force.x / magnitude;
+		force.y = force.y / magnitude;
+	}
+
 	force.x = force.x * owner->maxVelocity;
 	force.y = force.y * owner->maxVelocity;
 	//if (force.x > owner->maxVelocity || force.y > owner->maxVelocity)

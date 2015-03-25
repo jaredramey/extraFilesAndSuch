@@ -48,6 +48,7 @@ public:
 	void UpdateAgent(SteeringBehavior* a_behavior, Agent* Target, Point DeltaTime);
 	void ControlOveride();
 	void CheckNeighbors(std::vector<Agent*> in_Agents);
+	void AvoidGraphNode(std::vector<GraphNode*> GraphNodes);
 
 	//New stuff needed to use graphs
 	int NodeNumber = 0;

@@ -370,7 +370,7 @@ void Graph::DrawGraph()
 		for (int k = 0; k < m_aNodes[i]->connectedEdges.size(); k++)
 		{
 			//display the weight of the connection on the middle of the line
-			gCostToDisplay = std::to_string(m_aNodes[i]->connectedEdges[k].gCost);
+			/*gCostToDisplay = std::to_string(m_aNodes[i]->connectedEdges[k].gCost);
 			char const *pchar = gCostToDisplay.c_str();
 			if (m_aNodes[i]->connectedEdges[k].m_pEnd->x > m_aNodes[i]->x && m_aNodes[i]->connectedEdges[k].m_pEnd->y == m_aNodes[i]->y)
 			{
@@ -390,8 +390,8 @@ void Graph::DrawGraph()
 			if (m_aNodes[i]->connectedEdges[k].m_pEnd->y < m_aNodes[i]->y && m_aNodes[i]->connectedEdges[k].m_pEnd->x < m_aNodes[i]->x)
 			{
 				DrawString(pchar, ((m_aNodes[i]->connectedEdges[k].m_pEnd->x + 100)), ((m_aNodes[i]->connectedEdges[k].m_pEnd->y + 75)), SColour(255, 255, 255, 255));
-			}
-			DrawLine(m_aNodes[i]->x, m_aNodes[i]->y, m_aNodes[i]->connectedEdges[k].m_pEnd->x, m_aNodes[i]->connectedEdges[k].m_pEnd->y, SColour(215, 46, 0, 255));
+			}*/
+			//DrawLine(m_aNodes[i]->x, m_aNodes[i]->y, m_aNodes[i]->connectedEdges[k].m_pEnd->x, m_aNodes[i]->connectedEdges[k].m_pEnd->y, SColour(215, 46, 0, 255));
 			
 		}
 	}

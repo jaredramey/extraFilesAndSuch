@@ -21,7 +21,7 @@ Point Allingment::GetForce()
 	Point force;
 
 	//check the neighbors
-	owner->CheckNeighbors(Agents);
+	//owner->CheckNeighbors(Agents);
 	NeighborList = owner->NeighborList;
 
 	//get the velocity of all the other neighbors
@@ -39,15 +39,18 @@ Point Allingment::GetForce()
 		return force;
 	}
 
-	//devide by the number of neighbors
-	force.x /= owner->neighborCount;
-	force.y /= owner->neighborCount;
-
-	//if force isn't equal to 0 then normalize
-	if (force.x != 0 && force.y != 0)
+	if (owner->neighborCount != 0)
 	{
-		float magnitude = sqrt((force.x * force.x) + (force.y * force.y));
+		//devide by the number of neighbors
+		force.x /= owner->neighborCount;
+		force.y /= owner->neighborCount;
+	}
 
+	float magnitude = sqrt((force.x * force.x) + (force.y * force.y));
+
+	//if magnitude isn't equal to 0 then normalize
+	if (magnitude != 0)
+	{
 		force.x = force.x / magnitude;
 		force.y = force.y / magnitude;
 	}
