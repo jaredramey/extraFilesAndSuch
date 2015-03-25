@@ -520,73 +520,7 @@ void Graph::ShortestPath(int a_pStart, int a_pEnd)
 		goto Reset;
 	}
 
-	//MoveSprite(m_AI->textureHandler, m_AI->x, m_AI->y);
-
-	//	if (a_pStart < a_pEnd)
-	//	{
-	//		if (m_AI->x <= CurrentNode->x)
-	//		{
-	//			m_AI->x += 0.25f;
-	//		}
-
-	//		if (m_AI->y <= CurrentNode->y)
-	//		{
-	//			m_AI->y += 0.25f;
-	//		}
-
-	//		if (CurrentNode == m_aNodes[a_pEnd])
-	//		{
-	//			if (m_AI->x >= CurrentNode->x)
-	//			{
-	//				m_AI->x -= 0.25f;
-	//			}
-
-	//			if (m_AI->y >= CurrentNode->y)
-	//			{
-	//				m_AI->y -= 0.25f;
-	//			}
-	//		}
-
-	//		if (CurrentNode != m_aNodes[a_pEnd] && ((m_AI->x >= CurrentNode->x) && (m_AI->y >= CurrentNode->y)))
-	//		{
-	//			AIStart += 1;
-	//		}
-
-	//		CurrentNodeOnPath = AIStart;
-	//	}
-
-	//	if (a_pStart > a_pEnd)
-	//	{
-	//		if (m_AI->x >= CurrentNode->x)
-	//		{
-	//			m_AI->x -= 0.25f;
-	//		}
-
-	//		if (m_AI->y >= CurrentNode->y)
-	//		{
-	//			m_AI->y -= 0.25f;
-	//		}
-
-	//		if (CurrentNode == m_aNodes[a_pEnd])
-	//		{
-	//			if (m_AI->x <= CurrentNode->x)
-	//			{
-	//				m_AI->x += 0.25f;
-	//			}
-
-	//			if (m_AI->y <= CurrentNode->y)
-	//			{
-	//				m_AI->y += 0.25f;
-	//			}
-	//		}
-
-	//		if (CurrentNode != m_aNodes[a_pEnd] && ((m_AI->x <= CurrentNode->x) && (m_AI->y <= CurrentNode->y)))
-	//		{
-	//			AIStart += 1;
-	//		}
-
-			CurrentNodeOnPath = AIStart;
-		//}
+	CurrentNodeOnPath = AIStart;
 }
 
 void Graph::ResetAI()
@@ -670,7 +604,7 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 				for (int k = 0; k < OpenList.size(); k++)
 				{
 					//Set the one with the lowest Fscore as the current Node
-					if ((OpenList[k]->m_bVisited == false)/* && (OpenList[k]->x <= CurrentGoalNode->x && OpenList[k]->y <= CurrentGoalNode->y)*/)
+					if (OpenList[k]->m_bVisited == false)
 					{
 						if (OpenList[k]->isTraversable == true)
 						{
@@ -688,6 +622,13 @@ void Graph::AStarPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 			{
 				break;
 			}
+		}
+
+		//A* path finding likes to break sometimes so this is just a safety measure so that it doesn't infinite loop for no reason
+		if (ClosedList.size() >= 16)
+		{
+			ClosedList.clear();
+			break;
 		}
 	}
 
@@ -775,89 +716,136 @@ void Graph::CheckMouseClick()
 	double mXPos, mYPos;
 
 	//check to see if the user is trying to change the node type from traversable to not traversable
-	if (GetMouseButtonDown(0) && IsKeyDown('C'))
+	if (GetMouseButtonDown(MOUSE_BUTTON_3))
 	{
-		GetMouseLocation(mXPos, mYPos);
-		for (int i = 0; i < m_aNodes.size(); i++)
+		if (click == false)
 		{
-			if ((mXPos <= m_aNodes[i]->x + 50 && mYPos <= m_aNodes[i]->y + 50) && (mXPos >= m_aNodes[i]->x - 50 && mYPos >= m_aNodes[i]->y - 50))
+			click = true;
+			GetMouseLocation(mXPos, mYPos);
+			for (int i = 0; i < m_aNodes.size(); i++)
 			{
-				if (i < 4)
+				if ((mXPos <= m_aNodes[i]->x + 50 && mYPos <= m_aNodes[i]->y + 50) && (mXPos >= m_aNodes[i]->x - 50 && mYPos >= m_aNodes[i]->y - 50))
 				{
-					ChangeNodeType(m_aNodes[i + 12]->m_iNodeNumber);
-					break;
-				}
-				else if (i < 8)
-				{
-					ChangeNodeType(m_aNodes[i + 4]->m_iNodeNumber);
-					break;
-				}
-				else if (i < 12)
-				{
-					ChangeNodeType(m_aNodes[i - 4]->m_iNodeNumber);
-					break;
-				}
-				else
-				{
-					ChangeNodeType(m_aNodes[i - 12]->m_iNodeNumber);
-					break;
+					if (i < 4)
+					{
+						ChangeNodeType(m_aNodes[i + 12]->m_iNodeNumber);
+						break;
+					}
+					else if (i < 8)
+					{
+						ChangeNodeType(m_aNodes[i + 4]->m_iNodeNumber);
+						break;
+					}
+					else if (i < 12)
+					{
+						ChangeNodeType(m_aNodes[i - 4]->m_iNodeNumber);
+						break;
+					}
+					else
+					{
+						ChangeNodeType(m_aNodes[i - 12]->m_iNodeNumber);
+						break;
+					}
 				}
 			}
 		}
 	}
 
 	//check to see if the user is trying to set a start point
-	else if (GetMouseButtonDown(0) && IsKeyDown('S'))
+	else if (GetMouseButtonDown(MOUSE_BUTTON_1))
 	{
-		GetMouseLocation(mXPos, mYPos);
-		for (int i = 0; i < m_aNodes.size(); i++)
+		if (click == false)
 		{
-			
+			click = true;
+			GetMouseLocation(mXPos, mYPos);
+			for (int i = 0; i < m_aNodes.size(); i++)
+			{
+				if ((mXPos <= m_aNodes[i]->x + 50 && mYPos <= m_aNodes[i]->y + 50) && (mXPos >= m_aNodes[i]->x - 50 && mYPos >= m_aNodes[i]->y - 50))
+				{
+					if (i < 4)
+					{
+						StartNode = m_aNodes[i + 12];
+						StartPicked = true;
+						break;
+					}
+					else if (i < 8)
+					{
+						StartNode = m_aNodes[i + 4];
+						StartPicked = true;
+						break;
+					}
+					else if (i < 12)
+					{
+						StartNode = m_aNodes[i - 4];
+						StartPicked = true;
+						break;
+					}
+					else
+					{
+						StartNode = m_aNodes[i - 12];
+						StartPicked = true;
+						break;
+					}
+				}
+			}
 		}
 	}
 
 	//check to see if the user is trying to set an end point
-	else if (GetMouseButtonDown(0) && IsKeyDown('E'))
+	else if (GetMouseButtonDown(MOUSE_BUTTON_2))
 	{
-		GetMouseLocation(mXPos, mYPos);
-		for (int i = 0; i < m_aNodes.size(); i++)
+		if (click == false)
 		{
-			if ((mXPos <= m_aNodes[i]->x + 50 && mYPos <= m_aNodes[i]->y + 50) && (mXPos >= m_aNodes[i]->x - 50 && mYPos >= m_aNodes[i]->y - 50))
+			click = true;
+			GetMouseLocation(mXPos, mYPos);
+			for (int i = 0; i < m_aNodes.size(); i++)
 			{
-				if (i < 4)
+				if ((mXPos <= m_aNodes[i]->x + 50 && mYPos <= m_aNodes[i]->y + 50) && (mXPos >= m_aNodes[i]->x - 50 && mYPos >= m_aNodes[i]->y - 50))
 				{
-					EndNode = m_aNodes[i + 12];
-					break;
-				}
-				else if (i < 8)
-				{
-					EndNode = m_aNodes[i + 4];
-					break;
-				}
-				else if (i < 12)
-				{
-					EndNode = m_aNodes[i - 4];
-					break;
-				}
-				else
-				{
-					EndNode = m_aNodes[i - 12];
-					break;
+					if (i < 4)
+					{
+						EndNode = m_aNodes[i + 12];
+						EndPicked = true;
+						break;
+					}
+					else if (i < 8)
+					{
+						EndNode = m_aNodes[i + 4];
+						EndPicked = true;
+						break;
+					}
+					else if (i < 12)
+					{
+						EndNode = m_aNodes[i - 4];
+						EndPicked = true;
+						break;
+					}
+					else
+					{
+						EndNode = m_aNodes[i - 12];
+						EndPicked = true;
+						break;
+					}
 				}
 			}
-		}
-		if (ClosedList.size()>0)
-		{
-			ClosedList.clear();
+			if (ClosedList.size() > 0)
+			{
+				ClosedList.clear();
+			}
 		}
 	}
 
 
-	if (StartNode != NULL && EndNode != NULL)
+	else
+	{
+		click = false;
+	}
+
+	if ((StartPicked == true) && (EndPicked == true))
 	{
 		AStarPath(StartNode, EndNode);
 		StartNode = EndNode;
-		EndNode = NULL;
+		EndPicked = false;
 		AIAPathNumber = 0;
 	}
 }

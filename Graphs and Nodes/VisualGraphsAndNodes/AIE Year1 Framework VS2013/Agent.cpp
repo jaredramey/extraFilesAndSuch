@@ -147,51 +147,61 @@ void Agent::CheckNeighbors(std::vector<Agent*> in_Agents)
 
 void Agent::GetPath(std::vector<GraphNode*> in_closedList)
 {
-	closedList = in_closedList;
+	if (in_closedList.size() != 0)
+	{
+		closedList = in_closedList;
+	}
 }
 
 void Agent::MoveOnGraphPath(float speed)
 {
 	GraphNode* CurrentNode;
-	int LastNode = closedList.size()-1;
-	
-	if (NodeNumber <= closedList.size()-1)
+	if (closedList.size() != 0)
 	{
-		CurrentNode = closedList[NodeNumber];
-	}
-	else
-	{
-		CurrentNode = closedList[LastNode];
-	}
+		int LastNode = closedList.size() - 1;
 
-	if (Pos.x != CurrentNode->x || Pos.y != CurrentNode->y)
-	{
-		if (Pos.x <= CurrentNode->x)
+		if (NodeNumber <= closedList.size() - 1)
 		{
-			Pos.x += speed;
+			CurrentNode = closedList[NodeNumber];
 		}
 		else
 		{
-			Pos.x -= speed;
+			CurrentNode = closedList[LastNode];
+			for (int i = closedList.size() - 2; i > 0; i--)
+			{
+				closedList.erase(closedList.begin()+i);
+			}
 		}
 
-		if (Pos.y <= CurrentNode->y)
+		if (Pos.x != CurrentNode->x || Pos.y != CurrentNode->y)
 		{
-			Pos.y += speed;
+			if (Pos.x <= CurrentNode->x)
+			{
+				Pos.x += speed;
+			}
+			else
+			{
+				Pos.x -= speed;
+			}
+
+			if (Pos.y <= CurrentNode->y)
+			{
+				Pos.y += speed;
+			}
+			else
+			{
+				Pos.y -= speed;
+			}
 		}
-		else
+
+		if (Pos.x == CurrentNode->x && Pos.y == CurrentNode->y) //(Pos.x <= (CurrentNode->x + 100.0f) && Pos.x >= (CurrentNode->x - 100.0f)) && (Pos.y <= (CurrentNode->y + 100.0f) && Pos.y >= (CurrentNode->y - 100.0f))
 		{
-			Pos.y -= speed;
+			NodeNumber++;
 		}
-	}
 
-	if (Pos.x == CurrentNode->x && Pos.y == CurrentNode->y) //(Pos.x <= (CurrentNode->x + 100.0f) && Pos.x >= (CurrentNode->x - 100.0f)) && (Pos.y <= (CurrentNode->y + 100.0f) && Pos.y >= (CurrentNode->y - 100.0f))
-	{
-		NodeNumber++;
+		MoveSprite(textureHandler, Pos.x, Pos.y);
+		DrawSprite(textureHandler);
 	}
-
-	MoveSprite(textureHandler, Pos.x, Pos.y);
-	DrawSprite(textureHandler);
 }
 
 void Agent::AvoidGraphNode(std::vector<GraphNode*> GraphNodes)
@@ -211,24 +221,4 @@ void Agent::AvoidGraphNode(std::vector<GraphNode*> GraphNodes)
 			}
 		}
 	}
-			//if (Pos.x + (width / 2) >= 800)
-			//{
-			//	Velocity.x *= -1;
-			//	Pos.x = 800 - width;
-			//}
-			//else if (Pos.x - (width / 2) <= 0)
-			//{
-			//	Velocity.x *= -1;
-			//	Pos.x = 0 + width;
-			//}
-			//if (Pos.y + (height / 2) >= 600)
-			//{
-			//	Velocity.y *= -1;
-			//	Pos.y = 600 - height;
-			//}
-			//else if (Pos.y - (height / 2) <= 0)
-			//{
-			//	Velocity.y *= -1;
-			//	Pos.y = 0 + height;
-			//}
 }

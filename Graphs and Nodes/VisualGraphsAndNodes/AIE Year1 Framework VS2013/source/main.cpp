@@ -15,7 +15,7 @@ enum AIMODE
 {
 	eBehavior,
 	eGraphA,
-	GraphB
+	eGraphB
 };
 
 //Put my stuff into functions to be called upon in the loop
@@ -33,6 +33,7 @@ std::vector<Agent*> myAgents;
 std::vector<SteeringBehavior*> OtherList;
 bool click = false;
 bool click2 = false;
+bool ProgramRun = true;
 int BGraphNodeNum = 0;
 
 Graph TestGraph = Graph();
@@ -49,27 +50,6 @@ int main( int argc, char* argv[] )
 	//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//=\\
 	//-----------------------------------------------------------------------------|| For AI and Behaviors ||---------------------------------------------------------------------------------------------------------------\\
 	//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//
-
-	//create vector of agents to make flocking easier to manage
-	/*for (int i = 0; i < 6; i++)
-	{
-		myAgents.emplace_back(new Agent((rand() % 600 + 100), (rand() % 500 + 100), 96, 48, CreateSprite("./images/invaders/invaders_2_00.png", 96, 48, true), 0.25f));
-	}*/
-	/*myAgents.push_back(TestWander);
-	myAgents.push_back(TestWander2);
-	myAgents.push_back(TestWander3);
-	myAgents.push_back(TestWander4);
-	myAgents.push_back(TestWander5);
-	myAgents.push_back(TestWander6);
-	myAgents.push_back(TestWander7);
-	myAgents.push_back(TestWander8);
-	myAgents.push_back(TestWander9);
-	myAgents.push_back(TestWander10);
-	myAgents.push_back(TestWander11);
-	myAgents.push_back(TestWander12);
-	myAgents.push_back(TestWander13);
-	myAgents.push_back(TestWander14);
-	myAgents.push_back(TestWander15);*/
 
 	//behavior list to test out anything that's not flocking
 	std::vector<SteeringBehavior*> TestList;
@@ -106,11 +86,9 @@ int main( int argc, char* argv[] )
 	//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//
 
 	TestGraph.CreateGraph();
-	TestGraph.AStarPathTest(0, 9);
 
 	//create the agent that will be moving on the graph
-	Agent* GraphAI = new Agent(TestGraph.ClosedList[0]->x, TestGraph.ClosedList[0]->y, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true), 0.25f);
-	GraphAI->GetPath(TestGraph.ClosedList);
+	Agent* GraphAI = new Agent(100.0f, 100.0f, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true), 0.25f);
 
 	//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//=\\
 	//---------------------------------------------------------------------------|| For Graphs and Path Finding ||----------------------------------------------------------------------------------------------------------\\
@@ -134,9 +112,14 @@ int main( int argc, char* argv[] )
 			mode = eGraphA;
 		}
 
-		if (GetAsyncKeyState('R'))
+		if (GetAsyncKeyState(VK_UP))
 		{
-			click = false;
+			mode = eGraphB;
+		}
+		
+		if (GetAsyncKeyState(VK_ESCAPE))
+		{
+			ProgramRun = false;
 		}
 
 		switch (mode)
@@ -152,12 +135,17 @@ int main( int argc, char* argv[] )
 
 		case eGraphA:
 			ResetBehaviorAgents(myAgents);
-			DrawString("Graph Path Finding", 300, 600, SColour(255, 255, 255, 255));
+			DrawString("Graph Path Finding (A*)", 300, 600, SColour(255, 255, 255, 255));
 			GraphNodeAI(TestGraph, GraphAI);
 			break;
+		case eGraphB:
+			DrawString("Graph Path Finding", 300, 600, SColour(255, 255, 255, 255));
+			break;
+		default:
+			
+			break;
 		}
-
-    } while(!FrameworkUpdate());
+	} while (!FrameworkUpdate() && ProgramRun == true);
 
     Shutdown();
 
@@ -239,14 +227,13 @@ void ResetBehaviorAgents(std::vector<Agent*> in_myAgents)
 
 void GraphNodeAI(Graph in_TestGraph, Agent* in_Agent)
 {
-
-	in_TestGraph.CheckMouseClick();
-	in_TestGraph.DrawGraph();
+	TestGraph.DrawGraph();
+	TestGraph.CheckMouseClick();
+	in_Agent->GetPath(TestGraph.ClosedList);
 	in_Agent->MoveOnGraphPath(0.25f);
 
 }
 
-//CreateVisualNode(i, CreateSprite("./images/invaders/invaders_7_01.png", 64, 64, true), xPos, yPos);
 void NewNodeAtClick()
 {
 	double mXPos, mYPos;
@@ -276,7 +263,7 @@ void NewNodeAtClick()
 
 void ResetGraphAI(Graph in_TestGraph, Agent* in_Agent)
 {
-	in_Agent->Pos.x = in_TestGraph.ClosedList[0]->x;
-	in_Agent->Pos.y = in_TestGraph.ClosedList[0]->y;
+	in_Agent->Pos.x = 100.0f;
+	in_Agent->Pos.y = 100.0f;
 	in_Agent->NodeNumber = 0;
 }

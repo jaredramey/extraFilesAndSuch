@@ -17,6 +17,11 @@ public:
 	NodeList ClosedList;
 	NodeList m_aNodes;
 
+	GraphNode* StartNode;
+	bool StartPicked = false;
+	GraphNode* EndNode;
+	bool EndPicked = false;
+
 	Graph();
 	~Graph();
 
@@ -70,10 +75,9 @@ private:
 	GraphNode* CurrentAINode;
 	GraphNode* GoalNode;
 	NodeList OpenList;
-	GraphNode* StartNode = NULL;
-	GraphNode* EndNode = NULL;
 	int CurrentNodeOnPath = 0;
 	int AIStart;
 	int AIAPathNumber = 0;
+	bool click = false;
 };
 
