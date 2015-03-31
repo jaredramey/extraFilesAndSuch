@@ -13,9 +13,9 @@ PathFinding Used:
 				 I used three AI behaviours to create Flocking AI. These three AI behaviours each have a
 				 modifiable value (between 0.0-1.0) that measures how strong that specific behaviour should
 				 be in the end calculation. The best values so far for decent looking flocking so far is as follows:
-				 Alignment:  0.03
-				 Cohesion:   0.6
-				 Separation: 0.45
+				 Alignment:  0.03f
+				 Cohesion:   0.6f
+				 Separation: 0.45f
 				 
 				 There are other Behaviours that can used in conjunction in the same fashion.
 				 All Behaviours:

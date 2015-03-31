@@ -413,7 +413,7 @@ std::vector<GraphNode*> Graph::GetNeighbors(GraphNode* a_pNode)
 }
 
 
-std::vector<GraphNode*> Graph::BuildPath(GraphNode* a_pStart, GraphNode* a_pEnd)
+std::vector<GraphNode*> Graph::BuildPath(GraphNode* a_pStart, GraphNode* a_pEnd) /*Dijkstras*/
 {
 	std::vector<GraphNode*> MyNodeList;
 	std::vector<GraphNode*> MyVecOfNodes;
