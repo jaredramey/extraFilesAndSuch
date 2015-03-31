@@ -8,7 +8,7 @@ PathFinding Used:
 		|-> A*
 		|-> Dijkstra
 
-||====================================================================================================================||
+||================================================================================================================================================================||
 			Explanation:
 				 I used three AI behaviours to create Flocking AI. These three AI behaviours each have a
 				 modifiable value (between 0.0-1.0) that measures how strong that specific behaviour should
@@ -70,3 +70,14 @@ PathFinding Used:
 					|| MyGraph.DCheckMouseClick();                                                               ||
 					|| MyAgent->GetPath(MyGraph.ClosedList);                                                     ||
 					|| MyAgent->MoveOnGraphPath(Speed);                                                          ||
+
+
+||================================================================================================================================================================||
+
+
+Possible Improvments to be made:
+	- Be able to switch between behaviors on the fly
+	- improve Dijkstras so it can switch it's path on the fly like A* can
+	- Try out different behaviors together
+	- Make the code a bit more readable(?) [Don't know how my code readability is yet]
+	- (personal) Figure out style of coding
