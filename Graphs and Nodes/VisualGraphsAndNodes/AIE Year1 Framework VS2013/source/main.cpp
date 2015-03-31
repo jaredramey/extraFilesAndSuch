@@ -11,6 +11,7 @@
 #include "Cohesion.h"
 #include "Allingment.h"
 
+//Enum to switch between three methods to match up with specs
 enum AIMODE
 {
 	eBehavior,
@@ -18,17 +19,19 @@ enum AIMODE
 	eGraphB
 };
 
-//Put my stuff into functions to be called upon in the loop
+//Put my stuff into functions to be called upon in main loop
 void AgentBehaviors(std::vector<Agent*> in_myAgents);
 void NewAgentAtClick();
 void ResetBehaviorAgents(std::vector<Agent*> in_myAgents);
-void GraphNodeAI(Graph in_TestGraph, Agent* in_Agent);
+void GraphNodeAI(Agent* in_Agent);
 void ResetGraphAI(Graph in_TestGraph, Agent* in_Agent);
 void NewNodeAtClick();
+void Dijkstras(Agent* in_Agent);
 
 //create a point for Delta time so I can easily use it later
 Point DeltaTime;
 
+//Had to move all this stuff to Global Space so I could alter values in later functions
 std::vector<Agent*> myAgents;
 std::vector<SteeringBehavior*> OtherList;
 bool click = false;
@@ -36,11 +39,17 @@ bool click2 = false;
 bool ProgramRun = true;
 int BGraphNodeNum = 0;
 
+//create all the graphs
 Graph TestGraph = Graph();
+Graph DGraph = Graph();
 Graph BehaviorGraph = Graph();
+
+//create the agent that will be moving on the graph
+Agent* GraphAI;
 
 int main( int argc, char* argv[] )
 {	
+	//Initialize the AIE framework
     Initialise(800, 600, false, "AI_Test");
     SetBackgroundColour(SColour(0, 0, 0, 255));
 
@@ -85,23 +94,28 @@ int main( int argc, char* argv[] )
 	//---------------------------------------------------------------------------|| For Graphs and Path Finding ||----------------------------------------------------------------------------------------------------------\\
 	//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//
 
+	GraphAI = new Agent(100.0f, 100.0f, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true), 0.25f);
+
+	//create graph for A*
 	TestGraph.CreateGraph();
 
-	//create the agent that will be moving on the graph
-	Agent* GraphAI = new Agent(100.0f, 100.0f, 96, 48, CreateSprite("./images/cannon.png", 96, 48, true), 0.25f);
+	//Create graph for Dijkstras
+	DGraph.CreateGraph();
 
 	//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//=\\
 	//---------------------------------------------------------------------------|| For Graphs and Path Finding ||----------------------------------------------------------------------------------------------------------\\
 	//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//
 
-	//Enum for switiching between AI Modes
+	//Enum for switiching between AI Modes (start on Flocking AI)
 	AIMODE mode = eBehavior;
 
     //Game Loop
     do
     {
+		//clear the screen
 		ClearScreen();
 		
+		//Take in which AI state the user wants to see
 		if (GetAsyncKeyState(VK_LEFT))
 		{
 			mode = eBehavior;
@@ -124,22 +138,39 @@ int main( int argc, char* argv[] )
 
 		switch (mode)
 		{
+			//For seeing the Flocking AI
 		case eBehavior:
+			//Reset the Graph AI
 			ResetGraphAI(TestGraph, GraphAI);
+			//Tell the user what they're seeing
 			DrawString("Flocking AI", 300, 600, SColour(255, 255, 255, 255));
+			//Check for mouse input on new Agent or a New Node
 			NewAgentAtClick();
 			NewNodeAtClick();
+			//Update all the agents in the list
 			AgentBehaviors(myAgents);
+			//Draw all the Nodes
 			BehaviorGraph.DrawGraph();
 			break;
 
+			//For seeing the A* path finding
 		case eGraphA:
+			//Reset the Flocking AI
 			ResetBehaviorAgents(myAgents);
+			//Tell the user where the user is
 			DrawString("Graph Path Finding (A*)", 300, 600, SColour(255, 255, 255, 255));
-			GraphNodeAI(TestGraph, GraphAI);
+			//Update Function
+			GraphNodeAI(GraphAI);
 			break;
+
+			//For seeing Dijkstras Path finding
 		case eGraphB:
-			DrawString("Graph Path Finding", 300, 600, SColour(255, 255, 255, 255));
+			//Reset Flocking Agents
+			ResetBehaviorAgents(myAgents);
+			//Tell the user where they are
+			DrawString("Graph Path Finding (Dijkstras)", 250, 600, SColour(255, 255, 255, 255));
+			//Update Function
+			Dijkstras(GraphAI);
 			break;
 		default:
 			
@@ -162,7 +193,7 @@ void AgentBehaviors(std::vector<Agent*> in_myAgents)
 	DeltaTime.x = GetDeltaTime();
 	DeltaTime.y = GetDeltaTime();
 
-	//More update stuff
+	//Update the agents
 	for (int i = 0; i < in_myAgents.size(); i++)
 	{
 		in_myAgents[i]->NeighborList.clear();
@@ -170,7 +201,7 @@ void AgentBehaviors(std::vector<Agent*> in_myAgents)
 		DrawSprite(in_myAgents[i]->textureHandler);
 	}
 
-	//Update the agents
+	//More update stuff
 	for (int i = 0; i < in_myAgents.size(); i++)
 	{
 		in_myAgents[i]->CheckNeighbors(in_myAgents);
@@ -190,28 +221,35 @@ void NewAgentAtClick()
 	double mXPos, mYPos;
 	float aXPos, aYPos;
 
+	//Check for mouse state down (click)
 	if (GetMouseButtonDown(MOUSE_BUTTON_1))
 	{
+		//A bool condition so it only registers the click once
 		if (click != true)
 		{
 			click = true;
+			//Get the mouse pos then change it to match up with how the screen is layed out
 			GetMouseLocation(mXPos, mYPos);
 			mXPos = 0 + mXPos;
 			mYPos = 600 - mYPos;
+			//Change it to a float so I can make a new agent with the quardnets
 			aXPos = (float)(mXPos);
 			aYPos = (float)(mYPos);
+			//New agent!
 			myAgents.emplace_back(new Agent(aXPos, aYPos, 96, 48, CreateSprite("./images/invaders/invaders_5_00.png", 96, 48, true, SColour(0, 0, 255, 255)), 0.25f));
 			myAgents[myAgents.size() - 1]->SetBehaviors(OtherList);
 		}
 	}
 	else
 	{
+		//If the mouse isn't clicked then set to bool to false
 		click = false;
 	}
 }
 
 void ResetBehaviorAgents(std::vector<Agent*> in_myAgents)
 {
+	//Reset function for the agents
 	myAgents.clear();
 	if (BehaviorGraph.m_aNodes.size() > 0)
 	{
@@ -225,13 +263,29 @@ void ResetBehaviorAgents(std::vector<Agent*> in_myAgents)
 //---------------------------------------------------------------------------|| For Graphs and Path Finding ||----------------------------------------------------------------------------------------------------------\\
 //==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//==//
 
-void GraphNodeAI(Graph in_TestGraph, Agent* in_Agent)
+void GraphNodeAI(Agent* in_Agent)
 {
+	//Draw the Graph
 	TestGraph.DrawGraph();
+	//Check mouse click
 	TestGraph.CheckMouseClick();
+	//Get the path if there is one to be had
 	in_Agent->GetPath(TestGraph.ClosedList);
+	//Move on the path (if there is one)
 	in_Agent->MoveOnGraphPath(0.25f);
 
+}
+
+void Dijkstras(Agent* in_Agent)
+{
+	//Draw the Graph
+	DGraph.DrawGraph();
+	//Check mouse click
+	DGraph.DCheckMouseClick();
+	//Get the path if there is one to be had
+	in_Agent->GetPath(DGraph.ClosedList);
+	//Move on the path (if there is one)
+	in_Agent->MoveOnGraphPath(0.25f);
 }
 
 void NewNodeAtClick()
@@ -239,6 +293,7 @@ void NewNodeAtClick()
 	double mXPos, mYPos;
 	float aXPos, aYPos;
 
+	//Same thing as adding a new agent but to add a node
 	if (GetMouseButtonDown(MOUSE_BUTTON_2))
 	{
 		if (click2 != true)
@@ -263,7 +318,9 @@ void NewNodeAtClick()
 
 void ResetGraphAI(Graph in_TestGraph, Agent* in_Agent)
 {
-	in_Agent->Pos.x = 100.0f;
-	in_Agent->Pos.y = 100.0f;
-	in_Agent->NodeNumber = 0;
+	//Reset the AI that traverses graphs
+	GraphAI->closedList.clear();
+	GraphAI->Pos.x = 100.0f;
+	GraphAI->Pos.y = 100.0f;
+	GraphAI->NodeNumber = 0;
 }

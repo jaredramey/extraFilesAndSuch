@@ -69,6 +69,7 @@ public:
 	void ChangeNodeType(int a_pNode);
 	void PathSmooth();
 	void CheckMouseClick();
+	void DCheckMouseClick();
 
 private:
 	NodeList AIPath;

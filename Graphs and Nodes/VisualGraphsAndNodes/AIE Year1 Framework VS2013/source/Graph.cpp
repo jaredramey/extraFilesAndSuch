@@ -458,22 +458,6 @@ std::vector<GraphNode*> Graph::BuildPath(GraphNode* a_pStart, GraphNode* a_pEnd)
 
 		MyNodeList.emplace_back(CurrentNode);
 	}
-	std::cout << "Path Built" << std::endl;
-
-	for (int i = 0; i < MyNodeList.size(); i++)
-	{
-		if (i < MyNodeList.size()-1)
-		{
-			std::cout << MyNodeList[i]->m_iNodeNumber;
-			std::cout << " -> ";
-			std::cout << MyNodeList[i + 1]->m_iNodeNumber << std::endl;
-		}
-
-		else
-		{
-			std::cout << "The end Node is " << MyNodeList[i]->m_iNodeNumber << std::endl;
-		}
-	}
 
 	return MyNodeList;
 }
@@ -710,6 +694,7 @@ void Graph::PathSmooth()
 	}
 }
 
+//Need to update this with the better way to get mouse pos
 void Graph::CheckMouseClick()
 {
 	//variables to store where the mouse position is at the time of the click
@@ -844,6 +829,146 @@ void Graph::CheckMouseClick()
 	if ((StartPicked == true) && (EndPicked == true))
 	{
 		AStarPath(StartNode, EndNode);
+		StartNode = EndNode;
+		EndPicked = false;
+		AIAPathNumber = 0;
+	}
+}
+
+void Graph::DCheckMouseClick()
+{
+	//variables to store where the mouse position is at the time of the click
+	double mXPos, mYPos;
+
+	//check to see if the user is trying to change the node type from traversable to not traversable
+	if (GetMouseButtonDown(MOUSE_BUTTON_3))
+	{
+		if (click == false)
+		{
+			click = true;
+			GetMouseLocation(mXPos, mYPos);
+			for (int i = 0; i < m_aNodes.size(); i++)
+			{
+				if ((mXPos <= m_aNodes[i]->x + 50 && mYPos <= m_aNodes[i]->y + 50) && (mXPos >= m_aNodes[i]->x - 50 && mYPos >= m_aNodes[i]->y - 50))
+				{
+					if (i < 4)
+					{
+						ChangeNodeType(m_aNodes[i + 12]->m_iNodeNumber);
+						break;
+					}
+					else if (i < 8)
+					{
+						ChangeNodeType(m_aNodes[i + 4]->m_iNodeNumber);
+						break;
+					}
+					else if (i < 12)
+					{
+						ChangeNodeType(m_aNodes[i - 4]->m_iNodeNumber);
+						break;
+					}
+					else
+					{
+						ChangeNodeType(m_aNodes[i - 12]->m_iNodeNumber);
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	//check to see if the user is trying to set a start point
+	else if (GetMouseButtonDown(MOUSE_BUTTON_1))
+	{
+		if (click == false)
+		{
+			click = true;
+			GetMouseLocation(mXPos, mYPos);
+			for (int i = 0; i < m_aNodes.size(); i++)
+			{
+				if ((mXPos <= m_aNodes[i]->x + 50 && mYPos <= m_aNodes[i]->y + 50) && (mXPos >= m_aNodes[i]->x - 50 && mYPos >= m_aNodes[i]->y - 50))
+				{
+					if (i < 4)
+					{
+						StartNode = m_aNodes[i + 12];
+						StartPicked = true;
+						break;
+					}
+					else if (i < 8)
+					{
+						StartNode = m_aNodes[i + 4];
+						StartPicked = true;
+						break;
+					}
+					else if (i < 12)
+					{
+						StartNode = m_aNodes[i - 4];
+						StartPicked = true;
+						break;
+					}
+					else
+					{
+						StartNode = m_aNodes[i - 12];
+						StartPicked = true;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	//check to see if the user is trying to set an end point
+	else if (GetMouseButtonDown(MOUSE_BUTTON_2))
+	{
+		if (click == false)
+		{
+			click = true;
+			GetMouseLocation(mXPos, mYPos);
+			for (int i = 0; i < m_aNodes.size(); i++)
+			{
+				if ((mXPos <= m_aNodes[i]->x + 50 && mYPos <= m_aNodes[i]->y + 50) && (mXPos >= m_aNodes[i]->x - 50 && mYPos >= m_aNodes[i]->y - 50))
+				{
+					if (i < 4)
+					{
+						EndNode = m_aNodes[i + 12];
+						EndPicked = true;
+						break;
+					}
+					else if (i < 8)
+					{
+						EndNode = m_aNodes[i + 4];
+						EndPicked = true;
+						break;
+					}
+					else if (i < 12)
+					{
+						EndNode = m_aNodes[i - 4];
+						EndPicked = true;
+						break;
+					}
+					else
+					{
+						EndNode = m_aNodes[i - 12];
+						EndPicked = true;
+						break;
+					}
+				}
+			}
+			if (ClosedList.size() > 0)
+			{
+				ClosedList.clear();
+			}
+		}
+	}
+
+
+	else
+	{
+		click = false;
+	}
+
+	if ((StartPicked == true) && (EndPicked == true))
+	{
+		ClosedList = BuildPath(StartNode, EndNode);
 		StartNode = EndNode;
 		EndPicked = false;
 		AIAPathNumber = 0;

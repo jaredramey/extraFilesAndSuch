@@ -147,6 +147,7 @@ void Agent::CheckNeighbors(std::vector<Agent*> in_Agents)
 
 void Agent::GetPath(std::vector<GraphNode*> in_closedList)
 {
+	//Get the closed list to move on later
 	if (in_closedList.size() != 0)
 	{
 		closedList = in_closedList;
@@ -156,16 +157,20 @@ void Agent::GetPath(std::vector<GraphNode*> in_closedList)
 void Agent::MoveOnGraphPath(float speed)
 {
 	GraphNode* CurrentNode;
+	//if the closed list is empty then don't move
 	if (closedList.size() != 0)
 	{
+		//get the last node ID
 		int LastNode = closedList.size() - 1;
 
 		if (NodeNumber <= closedList.size() - 1)
 		{
+			//current node is whatever node is next in the closed list
 			CurrentNode = closedList[NodeNumber];
 		}
 		else
 		{
+			//else the last node is where the AI should stay so erase the rest of the nodes
 			CurrentNode = closedList[LastNode];
 			for (int i = closedList.size() - 2; i > 0; i--)
 			{
@@ -173,6 +178,7 @@ void Agent::MoveOnGraphPath(float speed)
 			}
 		}
 
+		//if the AI isn't at the current node then move towards it
 		if (Pos.x != CurrentNode->x || Pos.y != CurrentNode->y)
 		{
 			if (Pos.x <= CurrentNode->x)
@@ -194,11 +200,13 @@ void Agent::MoveOnGraphPath(float speed)
 			}
 		}
 
-		if (Pos.x == CurrentNode->x && Pos.y == CurrentNode->y) //(Pos.x <= (CurrentNode->x + 100.0f) && Pos.x >= (CurrentNode->x - 100.0f)) && (Pos.y <= (CurrentNode->y + 100.0f) && Pos.y >= (CurrentNode->y - 100.0f))
+		//If the current node has been reached then ger to the next one if there is another one to reach
+		if (Pos.x == CurrentNode->x && Pos.y == CurrentNode->y)
 		{
 			NodeNumber++;
 		}
 
+		//Move the sprite
 		MoveSprite(textureHandler, Pos.x, Pos.y);
 		DrawSprite(textureHandler);
 	}
@@ -206,6 +214,7 @@ void Agent::MoveOnGraphPath(float speed)
 
 void Agent::AvoidGraphNode(std::vector<GraphNode*> GraphNodes)
 {
+	//This function just sorts through the entire list of other nodes and makes sure to avoid them (well, at least bounce off of it)
 	for (int i = 0; i < GraphNodes.size(); i++)
 	{
 		if ((Pos.x <= (GraphNodes[i]->x + (width / 2)) /**/ && /**/ Pos.x >= (GraphNodes[i]->x - (width / 2))) /**/ && /**/ (Pos.y <= (GraphNodes[i]->y + (height / 2)) /**/ && /**/ Pos.y >= (GraphNodes[i]->y - (height / 2))))

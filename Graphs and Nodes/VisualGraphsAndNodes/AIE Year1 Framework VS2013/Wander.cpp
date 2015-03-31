@@ -55,25 +55,32 @@ Point Wander::GetForce()
 	//force.y = force.y / forceMagnitude;
 	//return force;
 
-	//code based off quinn's code
+	//code based off quinn's code (Because it worked)
 	Point force;
 
+	//Set the the cricle center
 	Point CirclePos = owner->Pos;
+	//Add the velocity and times the velocity to pos so the the circle is where the line is
 	CirclePos.x += owner->Velocity.x*100.0f;
 	CirclePos.y += owner->Velocity.y*100.0f;
 
+	//Get a random float number
 	wanderPoint = (static_cast <float> (rand() / static_cast <float> (1.0f)));
+	//if the number is less then 0 then make it a negative
 	if (wanderPoint < 0.0f) {
 		wanderPoint *= -1;
 	}
+	//if it's greater then 2 then get it down below 2
 	while (wanderPoint > 2.0f)  {
 		wanderPoint -= 2.0f;
 	}
 
+	//get a random point on the circle
 	Point RandPos;
 	RandPos.x = CirclePos.x + radius * cos(wanderPoint * (3.14159265359f/180.0f));
 	RandPos.y = CirclePos.y + radius * sin(wanderPoint * (3.14159265359f/180.0f));
 
+	//normalize it
 	float randMagnitude = sqrt((RandPos.x*RandPos.x) + (RandPos.y*RandPos.y));
 	RandPos.x = RandPos.x / randMagnitude;
 	RandPos.y = RandPos.y / randMagnitude;
@@ -85,6 +92,7 @@ Point Wander::GetForce()
 
 	float speed = sqrt((force.x * force.x) + (force.y * force.y));
 
+	//normalize speed
 	force.x = force.x / speed;
 	force.y = force.y / speed;
 
@@ -92,6 +100,8 @@ Point Wander::GetForce()
 	force.y = force.y * owner->maxVelocity;
 
 	//Can't figure out why it always steers towards the top right so hacky slashy it chooses a random way now
+	//Couldn't solve ^^^ and this is working so i'm just gonna keep it
+	//Yes i'm gonna get yelled at for this but it's working so woot
 	int NegiX = rand() % 2 + 1;
 	int NegiY = rand() % 2 + 1;
 	if (NegiX == 1)
@@ -103,5 +113,6 @@ Point Wander::GetForce()
 		force.y *= -1;
 	}
 
+	//Return the force
 	return force;
 }

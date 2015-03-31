@@ -1,0 +1,72 @@
+AI Techniques Used:
+	-Flocking
+		|-> Alignment
+		|-> Cohesion
+		|-> Separation
+		
+PathFinding Used:
+		|-> A*
+		|-> Dijkstra
+
+||====================================================================================================================||
+			Explanation:
+				 I used three AI behaviours to create Flocking AI. These three AI behaviours each have a
+				 modifiable value (between 0.0-1.0) that measures how strong that specific behaviour should
+				 be in the end calculation. The best values so far for decent looking flocking so far is as follows:
+				 Alignment:  0.03
+				 Cohesion:   0.6
+				 Separation: 0.45
+				 
+				 There are other Behaviours that can used in conjunction in the same fashion.
+				 All Behaviours:
+				 |-> Alignment (Allingment in the code. Yes it's misspelled)
+				 |-> Cohesion
+				 |-> Flee
+				 |-> Seek
+				 |-> Separation (Seperation in the Code. Another misspell)
+				 |-> Wander
+				 
+				Function Calls to set up Behaviours-
+					1. Create your Agent or "List" of Agents
+					(Creating a Single Agent)
+					||   Agent* myAgent = new Agent(xPos, yPos, width, height, CreateSprite(), speed)           ||
+					
+					(Creating "List" of Agents)
+					||   vector<Agent*> myAgents;                                                               ||
+					||   myAgents.push_back(new Agent(xPos, yPos, width, height, CreateSprite(), speed));       ||
+					
+					2. Create your "List" of behaviours
+					|| vector<SteeringBehavior*> myBehaviors;                                                   ||
+					
+						(Fill with whatever behaviours you want)
+					|| myBehaviors.push_back({Behaviour}); /*Repeat for however many behaviours you're adding*/ ||
+					
+					3. Set the weight of each behaviour depending on how powerful you want it to be
+					|| myBehaviors[#]->weight = 0.weight(f); /*Float*/                                          ||
+					
+					4. Set the list to your agent
+					(singular)
+					|| myAgent->SetBehaviors(myBehaviors);                                                      ||
+					
+					(Multiple)
+					|| myAgents[#]->SetBehaviors(myBehaviors);                                                  ||
+				
+				
+				Function Calls for Updating your Agent(s)-
+					Update the Agents in a for loop
+					
+				Function calls to set up a graph and agent
+					1. Create your graph
+					||  Graph MyGraph = Graph();                                                                 ||
+					||  MyGraph.CreateGraph(); /*Creates a 4x4 graph*/                                           ||
+					
+					2. Create an Agent that will traverse the graph (Described above)
+					
+					3. Have Fun
+					|| MyGraph.DrawGraph();                                                                      ||
+					(For A* path finding)
+					|| MyGraph.CheckMouseClick();                                                                ||
+					(For Dijkstra Path Finding)
+					|| MyGraph.DCheckMouseClick();                                                               ||
+					|| MyAgent->GetPath(MyGraph.ClosedList);                                                     ||
+					|| MyAgent->MoveOnGraphPath(Speed);                                                          ||
