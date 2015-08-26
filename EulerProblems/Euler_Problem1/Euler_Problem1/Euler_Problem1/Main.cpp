@@ -9,37 +9,33 @@ using namespace std;
 
 //base value will be used in order to start counting at 0
 int base; 
-int findAllValue(int max, float value);
+int findAllValue(int max, int value);
 
 int main()
 {
-	base = findAllValue(1000, 3.0f);
-	base = (base + findAllValue(1000, 5.0f));
+	base = findAllValue(1000, 3);
+	//base = (base + findAllValue(1000, 5));
 
 	cout << "Sum of all multiples = " << base << endl;
 	system("PAUSE");
 	return 0;
 }
 
-int findAllValue(int max, float value)
+int findAllValue(int max, int value)
 {
 	//Curent value will start at 1 and then rise until set max
-	float currentValue;
+	int currentValue;
 	int currentTotal = 0;
 
 	//loop through until max is met
 	for (int i = 1; i < max; i++)
 	{
 		//set current value to the current number we are on
-		currentValue = (float)i;
+		currentValue = i;
 
-		//devide the current value by value we are trying to find multiples of
-		currentValue = (currentValue / value);
-
-		//if the current value returns as a whole number then it should be a multiple of the value
-		if (currentValue == (int)currentValue)
+		if (currentValue % 3 == 0 || currentValue % 5 == 0)
 		{
-			//cout << i << endl;
+			cout << i << endl;
 			currentTotal = currentTotal + i;
 		}
 		else
