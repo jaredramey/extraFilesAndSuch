@@ -1,0 +1,16 @@
+﻿Build started 8/27/2015 10:38:45 AM.
+     1>Project "C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\EulerProblems\Euler_Problem3\Euler_Problem3\Euler_Problem3.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
+         Main.cpp
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\eulerproblems\euler_problem3\euler_problem3\main.cpp(26): warning C4244: 'initializing': conversion from 'double' to '__int64', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\eulerproblems\euler_problem3\euler_problem3\main.cpp(63): warning C4244: 'initializing': conversion from 'double' to '__int64', possible loss of data
+     1>c:\users\jared.ramey\documents\github\extrafilesandsuch\eulerproblems\euler_problem3\euler_problem3\main.cpp(69): warning C4018: '<': signed/unsigned mismatch
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\EulerProblems\Euler_Problem3\Debug\Euler_Problem3.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\EulerProblems\Euler_Problem3\Debug\Euler_Problem3.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\EulerProblems\Euler_Problem3\Debug\Euler_Problem3.lib" /MACHINE:X86 Debug\Main.obj
+         Euler_Problem3.vcxproj -> C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\EulerProblems\Euler_Problem3\Debug\Euler_Problem3.exe
+     1>Done Building Project "C:\Users\jared.ramey\Documents\GitHub\extraFilesAndSuch\EulerProblems\Euler_Problem3\Euler_Problem3\Euler_Problem3.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.52
