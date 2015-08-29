@@ -24,12 +24,18 @@
     <ClCompile Include="Headers\Gizmos.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="Planet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\gl_core_4_4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Gizmos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
