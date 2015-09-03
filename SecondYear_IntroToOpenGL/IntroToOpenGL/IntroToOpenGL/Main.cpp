@@ -49,15 +49,20 @@ int main()
 	//starting gizmos
 	Gizmos::create();
 
-	vec3 LookX = vec3(10, 10, 10);
+	vec3 LookX = vec3(10);
 	vec3 LookY = vec3(0, 0, 0);
 	vec3 LookZ = vec3(0, 1, 0);
 
-	mat4 view = glm::lookAt(vec3(10), vec3(0), vec3(0));
+	//Setting up the camera
+	mainCam.setPosition(vec3());
+	mainCam.setLookAt(vec3(10), vec3(0), vec3(0, 1, 0));
+	mainCam.setPerspective(glm::pi<float>()*0.25f, 16/9.f, 0.1f, 1000.f);
+
+	mat4 view = glm::lookAt(vec3(10), vec3(0), vec3(0, 1, 0));
 	mat4 projection = glm::perspective(glm::pi<float>() * 0.25f, 16 / 9.f, 0.1f, 1000.f);
 
 	//Clear color buffer
-	glClearColor(0.f, 0.f, 0.f, 1);
+	glClearColor(0.25f, 0.25f, 0.25f, 1);
 	glEnable(GL_DEPTH_TEST);
 
 	//Init planets
@@ -74,6 +79,8 @@ int main()
 
 	//Getting ready for currentTime
 	float currentTime = 0;
+	float deltaTime = 0;
+	float newTime = 0;
 
 	while (glfwWindowShouldClose(window) == false && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
@@ -84,6 +91,8 @@ int main()
 		//Gizmos update
 		Gizmos::clear();
 		currentTime = glfwGetTime();
+		deltaTime = currentTime - newTime;
+		newTime = currentTime;
 		//so does render code
 
 		//Rotation for planets
@@ -188,26 +197,26 @@ int main()
 			* (glm::translate(vec3(0, 0, 1.5)));
 
 		//Movement Controls
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		{
-			LookY -= vec3(1, 0, 1);
-			view = glm::lookAt(LookX, LookY, LookZ);
-		}
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		{
-			LookY += vec3(1, 0, 1);
-			view = glm::lookAt(LookX, LookY, LookZ);
-		}
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		{
-			LookY += vec3(0, 1, 1);
-			view = glm::lookAt(LookX, LookY, LookZ);
-		}
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		{
-			LookY -= vec3(0, 1, 1);
-			view = glm::lookAt(LookX, LookY, LookZ);
-		}
+		//if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		//{
+		//	LookY -= vec3(1, 0, 1);
+		//	view = glm::lookAt(LookX, LookY, LookZ);
+		//}
+		//if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		//{
+		//	LookY += vec3(1, 0, 1);
+		//	view = glm::lookAt(LookX, LookY, LookZ);
+		//}
+		//if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		//{
+		//	LookY += vec3(0, 1, 1);
+		//	view = glm::lookAt(LookX, LookY, LookZ);
+		//}
+		//if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		//{
+		//	LookY -= vec3(0, 1, 1);
+		//	view = glm::lookAt(LookX, LookY, LookZ);
+		//}
 
 
 		//Gizmos code from tutorial
@@ -233,9 +242,14 @@ int main()
 			Gizmos::addLine(vec3(10, 0, -10 + i), vec3(-10, 0, -10 + i), i == 10 ? white : black);
 		}
 
-		
 
-		Gizmos::draw(projection * view);
+		mainCam.update(deltaTime, window);
+
+		//new draw from mainCam
+		Gizmos::draw(mainCam.GetProjection() * mainCam.GetView());
+
+		//old draw
+		//Gizmos::draw(projection * view);
 
 		//shut down the window
 		glfwSwapBuffers(window);
