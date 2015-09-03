@@ -149,12 +149,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Headers\Gizmos.cpp" />
     <ClCompile Include="Headers\gl_core_4_4.c" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Planet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Headers\Gizmos.h" />
     <ClInclude Include="Headers\gl_core_4_4.h" />
     <ClInclude Include="Planet.h" />
