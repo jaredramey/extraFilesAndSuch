@@ -37,17 +37,22 @@ void Camera::update(float deltaTime, GLFWwindow* window)
 	nY = cY;
 
 
-	mat4 yaw = glm::rotate(float(deltaTime * dX), vec3(0,1,0));
-	mat4 pitch = glm::rotate(float(deltaTime * dY), vec3(worldTransform[0])); // pitch
+	mat4 yaw = glm::rotate(float((deltaTime/2) * dX), vec3(0,1,0));
+	mat4 pitch = glm::rotate(float((deltaTime/2) * dY), vec3(worldTransform[0])); // pitch
 
-	worldTransform[0] = pitch*worldTransform[0];
-	worldTransform[1] = pitch*worldTransform[1];
-	worldTransform[2] = pitch*worldTransform[2];
+	if (cX != 0.0f)
+	{
+		worldTransform[0] = pitch*worldTransform[0];
+		worldTransform[1] = pitch*worldTransform[1];
+		worldTransform[2] = pitch*worldTransform[2];
+	}
 
-	worldTransform[0] = yaw*worldTransform[0];
-	worldTransform[1] = yaw*worldTransform[1];
-	worldTransform[2] = yaw*worldTransform[2];
-
+	if (cY != 0.0f)
+	{
+		worldTransform[0] = yaw*worldTransform[0];
+		worldTransform[1] = yaw*worldTransform[1];
+		worldTransform[2] = yaw*worldTransform[2];
+	}
 
 	// float pitch,yaw,roll;
 	//glm::extractEulerAngleXYZ(worldTransform,pitch,yaw,roll);
@@ -72,21 +77,27 @@ void Camera::update(float deltaTime, GLFWwindow* window)
 	*/
 
 	//Movement controls
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+
+
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) // UP
 	{
-		worldTransform = worldTransform*glm::translate(glm::vec3(worldTransform[1])*.16);
+		//worldTransform = worldTransform*glm::translate(glm::vec3(worldTransform[1])*.16);
+		worldTransform[3] += worldTransform[1] * deltaTime;
 	}
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) // DOWN
 	{
-		worldTransform = worldTransform*glm::translate(glm::vec3(-(worldTransform[1]))*.16);
+		//worldTransform = worldTransform*glm::translate(glm::vec3(-(worldTransform[1]))*.16);
+		worldTransform[3] -= worldTransform[1] * deltaTime;
 	}
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) // LEFT
 	{
-		worldTransform = worldTransform*glm::translate(glm::vec3(-(worldTransform[0]))*.16);
+		//worldTransform = worldTransform*glm::translate(glm::vec3(-(worldTransform[0]))*.16);
+		worldTransform[3] -= worldTransform[0] * deltaTime;
 	}
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) // RIGHT
 	{
-		worldTransform = worldTransform*glm::translate(glm::vec3((worldTransform[0]))*.16);
+		//worldTransform = worldTransform*glm::translate(glm::vec3((worldTransform[0]))*.16);
+		worldTransform[3] += worldTransform[0] * deltaTime;
 	}
 }
 
